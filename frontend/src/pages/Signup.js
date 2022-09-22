@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { userSignup } from "../store/authReducer";
+import { useNavigate, Link } from "react-router-dom";
+
+import CircularProgress from "@mui/material/CircularProgress";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
+
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -32,13 +37,32 @@ function Copyright(props) {
 const theme = createTheme();
 
 function Signup() {
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  // states for taking input values
+  const [fName, setFname] = useState("");
+  const [lName, setLname] = useState("");
+  const [uEmail, setUemail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   // states to handle validation
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [confirmpassword, setConfirmPassword] = useState(null);
+  const [upassword, setuPassword] = useState(null);
+  const [cpassword, setCPassword] = useState(null);
 
+  // to empty fileds
+  const emptyFields = () => {
+    setFname("");
+    setLname("");
+    setUemail("");
+    setPassword("");
+    setConfirmPassword("");
+  };
   //   doing form submission and handling validation
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -60,6 +84,7 @@ function Signup() {
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
     };
+
     console.log(userData);
     if (userData.firstName === "") {
       setFirstName(true);
@@ -70,26 +95,54 @@ function Signup() {
     if (userData.email === "" || !userData.email.includes("@")) {
       setEmail(true);
     }
-    if (userData.password === "" || userData.password.length < 6) {
-      setPassword(true);
+    if (userData.password === "" || userData.password.length < 5) {
+      setuPassword(true);
     }
     if (userData.password !== userData.confirmpassword) {
-      setConfirmPassword(true);
+      setCPassword(true);
     }
+    if (
+      fName === "" ||
+      lName === "" ||
+      email === "" ||
+      password === "" ||
+      confirmPassword === ""
+    ) {
+      console.log("error");
+      return;
+    }
+
+    dispatch(
+      userSignup({
+        FirstName: fName,
+        LastName: lName,
+        email: uEmail,
+        password: password,
+        confirmPassword: confirmPassword,
+      })
+    );
+    navigate("/home");
+    emptyFields();
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 0.5,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
+          {isLoading && (
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress />
+            </Box>
+          )}
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -111,8 +164,11 @@ function Signup() {
                   fullWidth
                   id="firstName"
                   label="First Name"
+                  value={fName}
                   autoFocus
-                  onChange={() => {
+                  onChange={(event) => {
+                    setFname(event.target.value);
+                    console.log(fName);
                     setFirstName(false);
                   }}
                 />
@@ -128,7 +184,10 @@ function Signup() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
-                  onChange={() => {
+                  value={lName}
+                  onChange={(event) => {
+                    setLname(event.target.value);
+                    console.log(lName);
                     setLastName(false);
                   }}
                 />
@@ -144,7 +203,10 @@ function Signup() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  onChange={() => {
+                  value={uEmail}
+                  onChange={(event) => {
+                    setUemail(event.target.value);
+                    console.log(uEmail);
                     setEmail(false);
                   }}
                 />
@@ -163,11 +225,14 @@ function Signup() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  onChange={() => {
-                    setPassword(false);
+                  value={password}
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                    // console.log(password);
+                    setuPassword(false);
                   }}
                 />
-                {password && (
+                {upassword && (
                   <p style={{ color: "red", fontSize: 13 }}>
                     Password should be greater or equal to six characters long
                   </p>
@@ -182,11 +247,14 @@ function Signup() {
                   type="password"
                   id="confirmpasswordpassword"
                   autoComplete="new-password"
-                  onChange={() => {
-                    setConfirmPassword(false);
+                  value={confirmPassword}
+                  onChange={(event) => {
+                    setConfirmPassword(event.target.value);
+                    // console.log(confirmPassword);
+                    setCPassword(false);
                   }}
                 />
-                {confirmpassword && (
+                {cpassword && (
                   <p style={{ color: "red", fontSize: 13 }}>
                     Password and confirm password must be same
                   </p>
@@ -203,7 +271,7 @@ function Signup() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link style={{ textDecoration: "none" }} to="/signin">
                   Already have an account? Sign in
                 </Link>
               </Grid>

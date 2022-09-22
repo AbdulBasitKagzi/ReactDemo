@@ -34,10 +34,10 @@ function Navbar(props) {
         Kagzi Transports
       </Typography>
       <Divider />
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item.val} disablePadding>
-            <Link to={item.Link}>
+      <List style={{ textDecoration: "none" }}>
+        {navItems.map((item, index) => (
+          <ListItem key={index} disablePadding>
+            <Link style={{ textDecoration: "none" }} to={item.Link}>
               <ListItemButton sx={{ textAlign: "center" }}>
                 <ListItemText primary={item.val} />
               </ListItemButton>
@@ -72,11 +72,13 @@ function Navbar(props) {
             Kagzi Transports
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <Link to={item.Link}>
-                <Button key={item.val} sx={{ color: "#fff" }}>
-                  {item.val}
-                </Button>
+            {navItems.map((item, index) => (
+              <Link
+                style={{ textDecoration: "none" }}
+                to={item.Link}
+                key={index}
+              >
+                <Button sx={{ color: "#fff" }}>{item.val}</Button>
               </Link>
             ))}
           </Box>

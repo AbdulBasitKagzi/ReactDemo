@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
+
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -20,8 +22,12 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link
+        style={{ textDecoration: "none" }}
+        color="inherit"
+        href="https://mui.com/"
+      >
+        Kagzi Transports
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -61,26 +67,10 @@ function Signin() {
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} square>
           <Box
             sx={{
-              my: 8,
+              my: 0,
               mx: 4,
               display: "flex",
               flexDirection: "column",
@@ -100,7 +90,7 @@ function Signin() {
               sx={{ mt: 1 }}
             >
               <TextField
-                margin="normal"
+                 margin="normal"
                 required
                 fullWidth
                 type="email"
@@ -146,12 +136,10 @@ function Signin() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
+                  <Link href="#" >Forgot password?</Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link style={{ textDecoration: "none" }} to="/signup">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
@@ -160,6 +148,22 @@ function Signin() {
             </Box>
           </Box>
         </Grid>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundRepeat: "no-repeat",
+            backgroundColor: (t) =>
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
       </Grid>
     </ThemeProvider>
   );
