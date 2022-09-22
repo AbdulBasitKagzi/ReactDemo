@@ -31,10 +31,11 @@ customerUserRoute.post(
   ],
   async (req, res) => {
     let success = false;
-    console.log("sign in user");
+    console.log("sign in user", req.body);
 
     const errors = validationResult(req);
     console.log(req.body);
+
     if (!errors.isEmpty()) {
       return res.status(422).json(
         errors
@@ -50,11 +51,12 @@ customerUserRoute.post(
         req.body;
 
       // comparing password and confirm password
-      if (password !== confirmPassword) {
-        return res
-          .status(400)
-          .send("Password and Confirm Password must be same");
-      }
+
+      // if (password !== confirmPassword) {
+      //   return res
+      //     .status(400)
+      //     .send("Password and Confirm Password must be same");
+      // }
 
       // finding the if the user is already there
       const registeredUser = await customer.findOne({ email: email });
@@ -81,10 +83,10 @@ customerUserRoute.post(
         success = true;
         return res.status(200).json({ success, user, token });
       }
-      return res.status(400).json(success, "User is already there");
+      return res.status(400).send({ success, error: "User is already there" });
     } catch (error) {
       console.log("user signup", error);
-      return res.status(500).send("Internal Error occured");
+      return res.status(500).json({ error: "Internal Error occured" });
     }
   }
 );
@@ -120,7 +122,9 @@ customerUserRoute.post(
 
       if (!registeredUser) {
         success = false;
-        return res.status(400).json(success, "User is not registered");
+        return res
+          .status(400)
+          .json({ success, error: "User is not registered" });
       }
 
       //   comparing passwords
@@ -132,7 +136,7 @@ customerUserRoute.post(
       console.log(registeredUser.password);
 
       if (!comparePass) {
-        return res.status(400).send("Enter correct password");
+        return res.status(400).json({ error: "Enter correct password" });
       }
       console.log("user logged in");
       const data = {
@@ -148,7 +152,7 @@ customerUserRoute.post(
       return res.status(200).json({ success, token });
     } catch (error) {
       console.log("usersignuperror", error);
-      return res.status(500).send("Internal Error occured");
+      return res.status(500).json({ error: "Internal Error occured" });
     }
   }
 );
