@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { userSignin } from "../store/authReducer";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -39,11 +43,24 @@ const theme = createTheme();
 
 function Signin() {
   // states to handle validation
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [uemail, setuEmail] = useState(null);
+  const [upassword, setuPassword] = useState(null);
 
+  // states to handle user log in
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { isLoading, error, token } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // to empty fileds
+  const emptyFields = () => {
+    setEmail("");
+    setPassword("");
+  };
   //   doing form submission and handling validation
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -56,12 +73,36 @@ function Signin() {
     };
 
     if (userData.email === "" || !userData.email.includes("@")) {
-      setEmail(true);
+      setuEmail(true);
     }
     if (userData.password === "" || userData.password.length < 6) {
-      setPassword(true);
+      setuPassword(true);
     }
+
+    if (email === "" || password === "") {
+      console.log("all fields must be filled");
+      return;
+    }
+    // const variable = await dispatch(userSignin({ email, password }));
+    // console.log(variable);
+
+    // checkError(variable.error.message);
+    dispatch(userSignin({ email, password }));
   };
+
+  useEffect(() => {
+    console.log(token);
+    !error && token && navigate("/home");
+    emptyFields();
+  }, [token]);
+
+  // const checkError = (variable) => {
+  //   if (variable) {
+  //     return;
+  //   }
+  //   navigate("/home");
+  //   emptyFields();
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -77,12 +118,18 @@ function Signin() {
               alignItems: "center",
             }}
           >
+            {error && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">{error}</Alert>
+              </Stack>
+            )}
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
+
             <Box
               component="form"
               noValidate
@@ -90,7 +137,7 @@ function Signin() {
               sx={{ mt: 1 }}
             >
               <TextField
-                 margin="normal"
+                margin="normal"
                 required
                 fullWidth
                 type="email"
@@ -99,11 +146,14 @@ function Signin() {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                onChange={() => {
-                  setEmail(false);
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                  console.log(email);
+                  setuEmail(false);
                 }}
               />
-              {email && (
+              {uemail && (
                 <p style={{ color: " red", fontSize: 13 }}>Enter valid email</p>
               )}
 
@@ -115,12 +165,15 @@ function Signin() {
                 label="Password"
                 type="password"
                 id="password"
+                value={password}
                 autoComplete="current-password"
-                onChange={() => {
-                  setPassword(false);
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                  console.log(password);
+                  setuPassword(false);
                 }}
               />
-              {password && (
+              {upassword && (
                 <p style={{ color: "red", fontSize: 13 }}>
                   Password should be greater or equal to six characters long
                 </p>
@@ -136,7 +189,7 @@ function Signin() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" >Forgot password?</Link>
+                  <Link href="#">Forgot password?</Link>
                 </Grid>
                 <Grid item>
                   <Link style={{ textDecoration: "none" }} to="/signup">

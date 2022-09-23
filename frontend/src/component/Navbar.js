@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -28,6 +30,8 @@ function Navbar(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const { token } = useSelector((state) => state.user);
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
@@ -39,11 +43,18 @@ function Navbar(props) {
           <ListItem key={index} disablePadding>
             <Link style={{ textDecoration: "none" }} to={item.Link}>
               <ListItemButton sx={{ textAlign: "center" }}>
-                <ListItemText primary={item.val} />
+                {!token && <ListItemText primary={item.val} />}
               </ListItemButton>
             </Link>
           </ListItem>
         ))}
+        <ListItem disablePadding>
+          <Link style={{ textDecoration: "none" }} to="#">
+            <ListItemButton sx={{ textAlign: "center" }}>
+              {token && <ListItemText primary="Log Out" />}
+            </ListItemButton>
+          </Link>
+        </ListItem>
       </List>
     </Box>
   );
@@ -72,15 +83,24 @@ function Navbar(props) {
             Kagzi Transports
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item, index) => (
-              <Link
-                style={{ textDecoration: "none" }}
-                to={item.Link}
-                key={index}
-              >
-                <Button sx={{ color: "#fff" }}>{item.val}</Button>
+            {navItems.map(
+              (item, index) =>
+                !token && (
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    to={item.Link}
+                    key={index}
+                  >
+                    <Button sx={{ color: "#fff" }}>{item.val}</Button>
+                  </Link>
+                )
+            )}
+
+            {token && (
+              <Link style={{ textDecoration: "none" }} to="#">
+                <Button sx={{ color: "#fff" }}>Log Out</Button>
               </Link>
-            ))}
+            )}
           </Box>
         </Toolbar>
       </AppBar>

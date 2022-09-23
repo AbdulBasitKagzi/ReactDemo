@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userSignup } from "../store/authReducer";
 import { useNavigate, Link } from "react-router-dom";
@@ -8,7 +8,8 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -38,7 +39,7 @@ const theme = createTheme();
 
 function Signup() {
   const dispatch = useDispatch();
-  const { isLoading, error } = useSelector((state) => state.user);
+  const { isLoading, error, token } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   // states for taking input values
@@ -121,15 +122,22 @@ function Signup() {
         confirmPassword: confirmPassword,
       })
     );
-    navigate("/home");
-    emptyFields();
   };
+  useEffect(() => {
+    !error && token && navigate("/home");
+    emptyFields();
+  }, [token]);
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
 
+        {error && (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert severity="error">{error}</Alert>
+          </Stack>
+        )}
         <Box
           sx={{
             marginTop: 0.5,
