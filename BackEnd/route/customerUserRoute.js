@@ -122,9 +122,7 @@ customerUserRoute.post(
 
       if (!registeredUser) {
         success = false;
-        return res
-          .status(400)
-          .json({ success, error: "User is not registered" });
+        return res.status(400).json({ success, error: "User  not registered" });
       }
 
       //   comparing passwords
