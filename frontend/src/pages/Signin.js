@@ -83,18 +83,15 @@ function Signin() {
       console.log("all fields must be filled");
       return;
     }
-    // const variable = await dispatch(userSignin({ email, password }));
-    // console.log(variable);
 
-    // checkError(variable.error.message);
     dispatch(userSignin({ email, password }));
   };
 
+  // to prevent user login without correct credentials
   useEffect(() => {
     console.log(token);
     !error && token && navigate("/home");
     emptyFields();
-
     // eslint-disable-next-line
   }, [token]);
 

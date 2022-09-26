@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Navbar from "./component/Navbar";
 import Home from "./pages/Home";
@@ -12,6 +12,8 @@ function App() {
 
       {/* Making Routes */}
       <Routes>
+        <Route exact path="/" element={<Navigate to="/home" />} />
+
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/home" element={<Home />} />

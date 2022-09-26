@@ -123,6 +123,8 @@ function Signup() {
       })
     );
   };
+
+  // to prevent user signup without correct credentials
   useEffect(() => {
     !error && token && navigate("/home");
     emptyFields();

@@ -21,9 +21,11 @@ import Button from "@mui/material/Button";
 
 const drawerWidth = 240;
 const navItems = [
+  { val: "Home", Link: "/home" },
   { val: "SignUp", Link: "/signup" },
   { val: "LogIn", Link: "/signin" },
 ];
+const newNavItems = [{ val: "LogOut" }, { val: "BookTruck" }];
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -45,11 +47,22 @@ function Navbar(props) {
       </Typography>
       <Divider />
       <List style={{ textDecoration: "none" }}>
+        !value &&{" "}
         {navItems.map((item, index) => (
           <ListItem key={index} disablePadding>
             <Link style={{ textDecoration: "none" }} to={item.Link}>
               <ListItemButton sx={{ textAlign: "center" }}>
-                {!value && <ListItemText primary={item.val} />}
+                !value && <ListItemText primary={item.val} />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+        ))}
+        value &&
+        {newNavItems.map((item, index) => (
+          <ListItem key={index} disablePadding>
+            <Link style={{ textDecoration: "none" }} to={item.Link}>
+              <ListItemButton sx={{ textAlign: "center" }}>
+                <ListItemText primary={item.val} />
               </ListItemButton>
             </Link>
           </ListItem>
@@ -102,19 +115,26 @@ function Navbar(props) {
             Kagzi Transports
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map(
-              (item, index) =>
-                !value && (
-                  <Link
-                    style={{ textDecoration: "none" }}
-                    to={item.Link}
-                    key={index}
-                  >
-                    <Button sx={{ color: "#fff" }}>{item.val}</Button>
-                  </Link>
-                )
-            )}
-
+            {!value &&
+              navItems.map((item, index) => (
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={item.Link}
+                  key={index}
+                >
+                  <Button sx={{ color: "#fff" }}>{item.val}</Button>
+                </Link>
+              ))}
+            {value &&
+              newNavItems.map((item, index) => (
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={item.Link}
+                  key={index}
+                >
+                  <Button sx={{ color: "#fff" }}>{item.val}</Button>
+                </Link>
+              ))}
             {value && (
               <Link style={{ textDecoration: "none" }} to="#">
                 <Button
