@@ -1,8 +1,7 @@
-import { border } from "@mui/system";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const authState = {
+let authState = {
   token: "",
   isLoading: "",
   error: "",
@@ -46,6 +45,8 @@ export const userSignin = createAsyncThunk("signin", async (body, thunkAPI) => {
       }
     );
     console.log("login res", res);
+    const token = res.data.token;
+    localStorage.setItem("token", JSON.stringify(token));
     return res;
   } catch (error) {
     console.log(error.response.data.error);
@@ -56,6 +57,11 @@ export const userSignin = createAsyncThunk("signin", async (body, thunkAPI) => {
 const authSlice = createSlice({
   name: "authSlice",
   initialState: authState,
+  reducers: {
+    logOut(state, action) {
+      state.token = "";
+    },
+  },
   extraReducers: {
     [userSignup.fulfilled]: (state, action) => {
       state.isLoading = false;
@@ -84,5 +90,7 @@ const authSlice = createSlice({
     },
   },
 });
+
+export const authAction = authSlice.actions;
 
 export default authSlice.reducer;

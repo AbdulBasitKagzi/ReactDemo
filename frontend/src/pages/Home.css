@@ -1,0 +1,106 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* h1{
+    margin-top: -150px;
+    color: blue;
+    text-align: center;
+} */
+main{
+    display: block
+}
+.hero img{
+    margin-top: -160px;
+    width: 100%;
+    height: 400px;
+}
+
+.hero .banner-text{
+    margin-top: -380px;
+    margin-left: 600px;
+}
+
+
+.pad{
+    padding: 50px;
+}
+.tag-line{
+    margin-top: 280px;
+    text-align: center;
+}
+.container{
+    margin-top: 30px;
+}
+.about-h3{
+    
+        font-size: 20px;
+        color: var(--blue);
+        font-weight: 700;
+        margin-top: 0;
+    
+}
+.p1{
+  
+        color: var(--blue);
+        font-size: 16px;
+        line-height: 1.7;
+        padding: 20px;
+        padding-top: 0;
+}
+
+.accordion{
+    margin-top: 20px;
+    
+}
+.accordion h1 {
+    text-align: center;
+}
+
+.grid{
+    margin-top: 50px;
+    margin-left: 500px;
+}
+.grid h2{
+    margin-left: 200px;
+}
+
+.content{
+    display: flex;
+    margin-top: 30px;
+    padding-top: 25px;
+}
+.content img{
+    height: 120px;
+}
+.grid-p1 {
+    font-size: 25px;
+    margin-top: 5px;
+    padding: 10px;
+}
+.grid-p1 h3{
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+.content-1{
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 25px;
+}
+
+.content-1 img{
+    padding-top: 25px;
+    margin-left: 150px;
+}
+
+.grid-1 h2{
+    text-align: center;
+    padding-top: 100px;
+}
+ .grid1-p1{
+    padding:10px;
+    text-align: center;
+    font-size: 20px;
+    margin-left: 30px ;
+}

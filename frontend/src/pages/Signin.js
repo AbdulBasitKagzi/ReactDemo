@@ -50,7 +50,7 @@ function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { isLoading, error, token } = useSelector((state) => state.user);
+  const { error, token } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -94,6 +94,8 @@ function Signin() {
     console.log(token);
     !error && token && navigate("/home");
     emptyFields();
+
+    // eslint-disable-next-line
   }, [token]);
 
   // const checkError = (variable) => {

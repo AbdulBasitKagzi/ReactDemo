@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { authAction } from "../store/authReducer";
 
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
@@ -26,11 +28,15 @@ function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+  const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.user);
+  const [value, setValue] = React.useState(token);
+  // const [isLogOut, setIsLogOut] = React.useState(true);
+  const navigate = useNavigate();
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
-  const { token } = useSelector((state) => state.user);
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -43,7 +49,7 @@ function Navbar(props) {
           <ListItem key={index} disablePadding>
             <Link style={{ textDecoration: "none" }} to={item.Link}>
               <ListItemButton sx={{ textAlign: "center" }}>
-                {!token && <ListItemText primary={item.val} />}
+                {!value && <ListItemText primary={item.val} />}
               </ListItemButton>
             </Link>
           </ListItem>
@@ -51,7 +57,20 @@ function Navbar(props) {
         <ListItem disablePadding>
           <Link style={{ textDecoration: "none" }} to="#">
             <ListItemButton sx={{ textAlign: "center" }}>
-              {token && <ListItemText primary="Log Out" />}
+              {value && (
+                <ListItemText
+                  primary="Log Out"
+                  onClick={() => {
+                    const token = localStorage.getItem("token");
+                    console.log("sdfd", token);
+                    localStorage.removeItem("token");
+
+                    setValue("");
+                    dispatch(authAction.logOut());
+                    navigate("/home");
+                  }}
+                />
+              )}
             </ListItemButton>
           </Link>
         </ListItem>
@@ -85,7 +104,7 @@ function Navbar(props) {
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map(
               (item, index) =>
-                !token && (
+                !value && (
                   <Link
                     style={{ textDecoration: "none" }}
                     to={item.Link}
@@ -96,9 +115,22 @@ function Navbar(props) {
                 )
             )}
 
-            {token && (
+            {value && (
               <Link style={{ textDecoration: "none" }} to="#">
-                <Button sx={{ color: "#fff" }}>Log Out</Button>
+                <Button
+                  sx={{ color: "#fff" }}
+                  onClick={() => {
+                    const token = localStorage.getItem("token");
+                    console.log("sdfd", token);
+                    localStorage.removeItem("token");
+
+                    setValue("");
+                    dispatch(authAction.logOut());
+                    navigate("/home");
+                  }}
+                >
+                  Log Out
+                </Button>
               </Link>
             )}
           </Box>
