@@ -22,7 +22,7 @@ vehicleRoute.post(
     body("capacity", "Enter valid capacity of the vehicle")
       .not()
       .isEmpty()
-      .isInt({ min: 1 }),
+      .isFloat({ min: 1.0 }),
     body("initialPrice", "Enter valid price ").isInt({ min: 10 }),
   ],
   getUserId,
