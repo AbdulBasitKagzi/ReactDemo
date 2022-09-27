@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 let authState = {
+  user: "",
   token: "",
   isLoading: "",
   error: "",
@@ -21,10 +22,11 @@ export const userSignup = createAsyncThunk("signup", async (body, thunkAPI) => {
       }
     );
     const token = res.data.token;
-    console.log(res);
+    console.log(res.data.user);
 
     // console.log("---------res-------", res.data.token);
     localStorage.setItem("token", JSON.stringify(token));
+    localStorage.setItem("user", JSON.stringify(res.data.user));
     return res;
   } catch (err) {
     return thunkAPI.rejectWithValue(err.response.data.error);
@@ -47,6 +49,7 @@ export const userSignin = createAsyncThunk("signin", async (body, thunkAPI) => {
     console.log("login res", res);
     const token = res.data.token;
     localStorage.setItem("token", JSON.stringify(token));
+    localStorage.setItem("user", JSON.stringify(res.data.registeredUser));
     return res;
   } catch (error) {
     console.log(error.response.data.error);
@@ -60,10 +63,13 @@ const authSlice = createSlice({
   reducers: {
     logOut(state, action) {
       state.token = "";
+      state.user = "";
     },
   },
   extraReducers: {
+    // signup
     [userSignup.fulfilled]: (state, action) => {
+      state.user = action.payload.data.user;
       state.isLoading = false;
       console.log(action.payload.data.token);
       state.token = action.payload.data.token;
@@ -76,7 +82,9 @@ const authSlice = createSlice({
       state.error = action.payload;
       state.isLoading = false;
     },
+    // signin
     [userSignin.fulfilled]: (state, action) => {
+      state.user = action.payload.data.registeredUser;
       state.isLoading = false;
       state.token = action.payload.data.token;
       state.error = "";

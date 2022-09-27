@@ -25,7 +25,10 @@ const navItems = [
   { val: "SignUp", Link: "/signup" },
   { val: "LogIn", Link: "/signin" },
 ];
-const newNavItems = [{ val: "LogOut" }, { val: "BookTruck" }];
+const newNavItems = [
+  { val: "Home", Link: "/home" },
+  { val: "BookTruck", Link: "/bookTruck" },
+];
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -47,12 +50,12 @@ function Navbar(props) {
       </Typography>
       <Divider />
       <List style={{ textDecoration: "none" }}>
-        !value &&{" "}
+        !value &&
         {navItems.map((item, index) => (
           <ListItem key={index} disablePadding>
             <Link style={{ textDecoration: "none" }} to={item.Link}>
               <ListItemButton sx={{ textAlign: "center" }}>
-                !value && <ListItemText primary={item.val} />
+                <ListItemText primary={item.val} />
               </ListItemButton>
             </Link>
           </ListItem>
@@ -77,7 +80,7 @@ function Navbar(props) {
                     const token = localStorage.getItem("token");
                     console.log("sdfd", token);
                     localStorage.removeItem("token");
-
+                    localStorage.removeItem("user");
                     setValue("");
                     dispatch(authAction.logOut());
                     navigate("/home");
@@ -132,7 +135,14 @@ function Navbar(props) {
                   to={item.Link}
                   key={index}
                 >
-                  <Button sx={{ color: "#fff" }}>{item.val}</Button>
+                  <Button
+                    sx={{ color: "#fff" }}
+                    onClick={() => {
+                      console.log(`${item.val} page and ${value}`);
+                    }}
+                  >
+                    {item.val}
+                  </Button>
                 </Link>
               ))}
             {value && (
@@ -143,7 +153,7 @@ function Navbar(props) {
                     const token = localStorage.getItem("token");
                     console.log("sdfd", token);
                     localStorage.removeItem("token");
-
+                    localStorage.removeItem("user");
                     setValue("");
                     dispatch(authAction.logOut());
                     navigate("/home");
