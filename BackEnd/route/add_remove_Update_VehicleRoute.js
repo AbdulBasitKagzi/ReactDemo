@@ -49,7 +49,10 @@ vehicleRoute.post(
     if (userAdmin.role !== "Admin") {
       return res
         .status(400)
-        .send("You are not eligible to register the vehicle");
+        .json({
+          success,
+          message: "You are not eligible to register the vehicle",
+        });
     }
     const registeredVehicle = await Vehicles.findOne({
       vNumber: req.body.vNumber,
@@ -59,7 +62,9 @@ vehicleRoute.post(
       const { type, vNumber, capacity, initialPrice, owner } = req.body;
 
       if (registeredVehicle) {
-        return res.status(400).send("This vehicle is already registered");
+        return res
+          .status(400)
+          .json({ success, message: "This vehicle is already registered" });
       }
       const newVehicle = await Vehicles.create({
         owner: req.userId,
@@ -84,24 +89,42 @@ vehicleRoute.delete(`${api}/deletevehicle/:id`, getUserId, async (req, res) => {
 
   const findVehicle = await Vehicles.findById({ _id: ObjectId(vehicleId) });
   if (!findVehicle) {
-    return res.status(400).send("Vehicle not found");
+    return res.status(400).json({ success, message: "Vehicle not found" });
   }
   // console.log(JSON.stringify(findVehicle.owner));
   // console.log(JSON.stringify(req.userId));
   try {
     if (JSON.stringify(req.userId) !== JSON.stringify(findVehicle.owner)) {
-      return res.status(400).send("Your are not eligible to delete");
+      return res
+        .status(400)
+        .json({ success, message: "Your are not eligible to delete" });
     }
 
     const deletedVehicle = await Vehicles.findByIdAndDelete({
       _id: ObjectId(vehicleId),
     });
-    success: true;
+    success = true;
     return res
       .status(200)
-      .json({ "vehicle deleted": "", success, deletedVehicle });
+      .json({ message: "vehicle deleted", success, deletedVehicle });
   } catch (error) {
     return res.status(500).send("Internal server error");
+  }
+});
+
+vehicleRoute.get(`${api}/getVehicle`, async (req, res) => {
+  let success = false;
+
+  const findVehicle = await Vehicles.find();
+  try {
+    if (!findVehicle) {
+      return res.status(400).json({ success, error: "No data found" });
+    }
+    console.log(findVehicle);
+    return res.status(200).json({ success, findVehicle });
+  } catch (error) {
+    console.log("getvehcileerror", error);
+    return res.status(500).send("Internal Server Error");
   }
 });
 module.exports = vehicleRoute;

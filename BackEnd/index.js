@@ -4,6 +4,7 @@ const connectToMongo = require("./db/db");
 const cors = require("cors");
 const customerUserRoute = require("./route/customerUserRoute");
 const vehicleRoute = require("./route/add_remove_Update_VehicleRoute");
+const goodsRoute = require("./route/add_delete_goods");
 
 require("dotenv").config({ path: "config.env" });
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(route);
 app.use(customerUserRoute);
 app.use(vehicleRoute);
+app.use(goodsRoute);
 
 connectToMongo();
 // starting up the server
