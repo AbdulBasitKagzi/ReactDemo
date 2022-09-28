@@ -4,12 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { getVehicle } from "../store/vehicleReducer";
 import { getGoods } from "../store/goodsReducer";
 
+import { createTheme } from "@mui/material";
+import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import { ThemeProvider } from "@emotion/react";
+import Footer from "../component/Footer";
 
 // google maps api to use maps services
 // it will provide use with a varible called is loaded
@@ -29,6 +37,22 @@ function BookTruck() {
     { title: "Mumbai" },
   ];
 
+  const theme = createTheme({
+    typography: {
+      fontFamily: [
+        "-apple-system",
+        "BlinkMacSystemFont",
+        '"Segoe UI"',
+        "Roboto",
+        '"Helvetica Neue"',
+        "Arial",
+        "sans-serif",
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(","),
+    },
+  });
   // not working code
   // React.useEffect(() => {
   //   const fetchToken = async () => {
@@ -137,8 +161,21 @@ function BookTruck() {
   return (
     <>
       <Navbar />
+      <Box sx={{ backgroundColor: "whitesmoke" }}>
+        <ThemeProvider theme={theme}>
+          <Typography
+            variant="h1"
+            sx={{
+              textAlign: "center",
+              color: "lightBlue",
+              fontFamily: "Helvetica Neue",
+            }}
+          >
+            Book Truck
+          </Typography>
+        </ThemeProvider>
+      </Box>
 
-      <div>Book Truck</div>
       <div>
         <Box
           component="form"
@@ -146,8 +183,11 @@ function BookTruck() {
           onSubmit={handleSubmit}
           sx={{ mt: 3, textAlign: "-webkit-center" }}
         >
-          <Stack spacing={2} sx={{ width: 300 }}>
+          <Stack spacing={2} sx={{ width: 1000 }}>
             {/* for pickup location */}
+            <Typography variant="h6" sx={{ marginRight: 120, fontSize: 15 }}>
+              PickUpLocation
+            </Typography>
             <Autocomplete
               freeSolo
               id="free-solo-2-demo"
@@ -181,6 +221,12 @@ function BookTruck() {
             )}
 
             {/* for destination location */}
+            <div>
+              <Typography variant="h6" sx={{ marginRight: 120, fontSize: 15 }}>
+                DestinationLocation
+              </Typography>
+            </div>
+
             <Autocomplete
               freeSolo
               ref={destination}
@@ -214,6 +260,11 @@ function BookTruck() {
             )}
 
             {/* to select vehicle */}
+            <div>
+              <Typography variant="h6" sx={{ marginRight: 120, fontSize: 15 }}>
+                SelectTruckType
+              </Typography>
+            </div>
             <Autocomplete
               freeSolo
               ref={vehicle}
@@ -248,6 +299,11 @@ function BookTruck() {
             )}
 
             {/* to select goods */}
+            <div>
+              <Typography variant="h6" sx={{ marginRight: 120, fontSize: 15 }}>
+                SelectGoodsType
+              </Typography>
+            </div>
             <Autocomplete
               freeSolo
               ref={goodsType}
@@ -288,7 +344,7 @@ function BookTruck() {
           </Stack>
         </Box>
       </div>
-      <div></div>
+      <Footer/>
     </>
   );
 }

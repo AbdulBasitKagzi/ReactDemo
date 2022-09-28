@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authAction } from "../store/authReducer";
 
@@ -51,45 +51,47 @@ function Navbar(props) {
       </Typography>
       <Divider />
       <List style={{ textDecoration: "none" }}>
-        !value &&
-        {navItems.map((item, index) => (
-          <ListItem key={index} disablePadding>
-            <Link style={{ textDecoration: "none" }} to={item.Link}>
-              <ListItemButton sx={{ textAlign: "center" }}>
-                <ListItemText primary={item.val} />
-              </ListItemButton>
-            </Link>
-          </ListItem>
-        ))}
-        value &&
-        {newNavItems.map((item, index) => (
-          <ListItem key={index} disablePadding>
-            <Link style={{ textDecoration: "none" }} to={item.Link}>
-              <ListItemButton sx={{ textAlign: "center" }}>
-                <ListItemText primary={item.val} />
-              </ListItemButton>
-            </Link>
-          </ListItem>
-        ))}
+        {!value &&
+          navItems.map((item, index) => (
+            <ListItem key={index} disablePadding>
+              <Link style={{ textDecoration: "none" }} to={item.Link}>
+                <ListItemButton sx={{ textAlign: "center" }}>
+                  <ListItemText primary={item.val} />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+          ))}
+
+        {value &&
+          newNavItems.map((item, index) => (
+            <ListItem key={index} disablePadding>
+              <Link style={{ textDecoration: "none" }} to={item.Link}>
+                <ListItemButton sx={{ textAlign: "center" }}>
+                  <ListItemText primary={item.val} />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+          ))}
+
         <ListItem disablePadding>
-          <Link style={{ textDecoration: "none" }} to="#">
-            <ListItemButton sx={{ textAlign: "center" }}>
-              {value && (
-                <ListItemText
-                  primary="Log Out"
-                  onClick={() => {
-                    const token = localStorage.getItem("token");
-                    console.log("sdfd", token);
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("user");
-                    setValue("");
-                    dispatch(authAction.logOut());
-                    navigate("/home");
-                  }}
-                />
-              )}
-            </ListItemButton>
-          </Link>
+          <ListItemButton sx={{ textAlign: "center" }}>
+            {value && (
+              <Button
+                primary="Log Out"
+                onClick={() => {
+                  const token = localStorage.getItem("token");
+                  console.log("sdfd", token);
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("user");
+                  setValue("");
+                  navigate("/home");
+                  dispatch(authAction.logOut());
+                }}
+              >
+                Log Out
+              </Button>
+            )}
+          </ListItemButton>
         </ListItem>
       </List>
     </Box>
@@ -147,22 +149,22 @@ function Navbar(props) {
                 </Link>
               ))}
             {value && (
-              <Link style={{ textDecoration: "none" }} to="#">
-                <Button
-                  sx={{ color: "#fff" }}
-                  onClick={() => {
-                    const token = localStorage.getItem("token");
-                    console.log("sdfd", token);
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("user");
-                    setValue("");
-                    dispatch(authAction.logOut());
-                    navigate("/home");
-                  }}
-                >
-                  Log Out
-                </Button>
-              </Link>
+              // <Link style={{ textDecoration: "none" }} to="#">
+              <Button
+                sx={{ color: "#fff" }}
+                onClick={() => {
+                  const token = localStorage.getItem("token");
+                  console.log("sdfd", token);
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("user");
+                  setValue("");
+                  navigate("/home");
+                  dispatch(authAction.logOut());
+                }}
+              >
+                Log Out
+              </Button>
+              // </Link>
             )}
           </Box>
         </Toolbar>
