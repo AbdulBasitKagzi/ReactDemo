@@ -60,11 +60,13 @@ function BookTruck() {
   //   fetchToken();
   // }, []);
 
+  // states for validations
   const [pickUpLocation, setPickUpLocation] = React.useState(true);
   const [destinationLocation, setDestinationLocation] = React.useState(true);
   const [selectVehicle, setSelectVehicle] = React.useState(true);
   const [goodsSelectType, setGoodsSelectType] = React.useState(true);
 
+  // refs to store value
   const pickUp = React.useRef(null);
   const destination = React.useRef(null);
   const goodsType = React.useRef(null);
@@ -74,6 +76,7 @@ function BookTruck() {
   const { vehicleType } = useSelector((state) => state.vehicle);
   const { goods } = useSelector((state) => state.goods);
 
+  // function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -86,6 +89,7 @@ function BookTruck() {
       goodsSelectType: data.get("setGoodsSelectType"),
     };
 
+    // for validation purpose
     if (!newData.pickUpLocation) {
       setPickUpLocation(false);
     }
@@ -100,7 +104,7 @@ function BookTruck() {
       return;
     }
   };
-
+  // function to fetch vehicle and goods
   const fetchVehicles = () => {
     dispatch(getVehicle());
   };
@@ -143,12 +147,7 @@ function BookTruck() {
           sx={{ mt: 3, textAlign: "-webkit-center" }}
         >
           <Stack spacing={2} sx={{ width: 300 }}>
-            {/* <Autocomplete
-          id="free-solo-demo"
-          freeSolo
-          options={top100Films.map((option) => option.title)}
-          renderInput={(params) => <TextField {...params} label="freeSolo" />}
-        /> */}
+            {/* for pickup location */}
             <Autocomplete
               freeSolo
               id="free-solo-2-demo"
@@ -181,6 +180,7 @@ function BookTruck() {
               <Alert severity="error">Location can't be empty!</Alert>
             )}
 
+            {/* for destination location */}
             <Autocomplete
               freeSolo
               ref={destination}
@@ -212,6 +212,8 @@ function BookTruck() {
             {!destinationLocation && (
               <Alert severity="error">Location can't be empty!</Alert>
             )}
+
+            {/* to select vehicle */}
             <Autocomplete
               freeSolo
               ref={vehicle}
@@ -244,6 +246,8 @@ function BookTruck() {
             {!selectVehicle && (
               <Alert severity="error">Please select vehicle type!</Alert>
             )}
+
+            {/* to select goods */}
             <Autocomplete
               freeSolo
               ref={goodsType}

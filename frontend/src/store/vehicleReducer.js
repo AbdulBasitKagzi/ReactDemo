@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+
+// initial state
 const vehicleState = {
   vehicles: "",
   vehicleType: [],
@@ -7,6 +9,7 @@ const vehicleState = {
   error: "",
 };
 
+// api to get vehicles
 export const getVehicle = createAsyncThunk(
   "getVehicle",
   async (body, thunkAPI) => {
@@ -29,6 +32,7 @@ export const getVehicle = createAsyncThunk(
   }
 );
 
+// reducer to get vehicles
 const vehicleSlice = createSlice({
   name: "vehicle",
   initialState: vehicleState,

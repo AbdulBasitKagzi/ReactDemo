@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// initialState
 const goodsState = {
   goods: [],
   isLoading: "",
   error: "",
 };
 
+// to fetch goods type
 export const getGoods = createAsyncThunk("getGoods", async (body, thunkAPI) => {
   try {
     const response = await axios.get(
@@ -26,6 +28,7 @@ export const getGoods = createAsyncThunk("getGoods", async (body, thunkAPI) => {
   }
 });
 
+// reducers to get goods
 const goodsSlice = createSlice({
   name: "goods",
   initialState: goodsState,

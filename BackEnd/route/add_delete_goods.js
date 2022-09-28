@@ -7,6 +7,7 @@ require("dotenv").config({ path: "config.env" });
 const api = process.env.API;
 const goodsRoute = express.Router();
 
+// to add goods
 goodsRoute.post(`${api}/addgoods`, getUserId, async (req, res) => {
   let success = false;
   const findUser = await customer.findById({ _id: req.userId });
@@ -44,6 +45,7 @@ goodsRoute.post(`${api}/addgoods`, getUserId, async (req, res) => {
   }
 });
 
+// to get goodstype
 goodsRoute.get(`${api}/getGoods`, async (req, res) => {
   let success = false;
   const good = await goods.find();
