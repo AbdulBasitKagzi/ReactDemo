@@ -34,7 +34,8 @@ function Navbar(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.user);
+
+  const token = localStorage.getItem("token");
   const [value, setValue] = React.useState(token);
   // const [isLogOut, setIsLogOut] = React.useState(true);
   const navigate = useNavigate();

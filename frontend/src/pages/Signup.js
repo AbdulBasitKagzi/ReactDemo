@@ -128,6 +128,7 @@ function Signup() {
   useEffect(() => {
     !error && token && navigate("/home");
     emptyFields();
+    // eslint-disable-next-line
   }, [token]);
 
   return (
