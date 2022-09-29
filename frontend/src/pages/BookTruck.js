@@ -1,9 +1,13 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
+import Footer from "../component/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getVehicle } from "../store/vehicleReducer";
 import { getGoods } from "../store/goodsReducer";
+import { orderAction } from "../store/orderReducer";
 
+import InputLabel from "@mui/material/InputLabel";
 import { createTheme } from "@mui/material";
 import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -17,7 +21,6 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { ThemeProvider } from "@emotion/react";
-import Footer from "../component/Footer";
 
 // google maps api to use maps services
 // it will provide use with a varible called is loaded
@@ -25,16 +28,16 @@ import Footer from "../component/Footer";
 
 function BookTruck() {
   const topCities = [
-    { title: "Surat" },
-    { title: "Ahmedabad" },
-    { title: "Chennai" },
-    { title: "Delhi" },
-    { title: "Rajasthan" },
-    { title: "Banglore" },
-    { title: "Punjab" },
-    { title: "Kolkata" },
-    { title: "Hyderabad" },
-    { title: "Mumbai" },
+    "Surat",
+    "Ahmedabad",
+    "Chennai",
+    "Delhi",
+    "Rajasthan",
+    "Banglore",
+    "Pujab",
+    "Kolkata",
+    "Hyderabad",
+    "Mumbai",
   ];
 
   const theme = createTheme({
@@ -89,17 +92,19 @@ function BookTruck() {
   const [destinationLocation, setDestinationLocation] = React.useState(true);
   const [selectVehicle, setSelectVehicle] = React.useState(true);
   const [goodsSelectType, setGoodsSelectType] = React.useState(true);
+  const [goodsWeight, setGoodsWeight] = React.useState(true);
 
   // refs to store value
   const pickUp = React.useRef(null);
   const destination = React.useRef(null);
   const goodsType = React.useRef(null);
   const vehicle = React.useRef(null);
-
+  const Weight = React.useRef(null);
   const dispatch = useDispatch();
   const { vehicleType } = useSelector((state) => state.vehicle);
   const { goods } = useSelector((state) => state.goods);
 
+  const navigate = useNavigate();
   // function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -110,7 +115,8 @@ function BookTruck() {
       pickUpLocation: data.get("pickUpLocation"),
       destinationLocation: data.get("destinationLocation"),
       selectVehicle: data.get("selectVehicle"),
-      goodsSelectType: data.get("setGoodsSelectType"),
+      goodsSelectType: data.get("goodsSelectType"),
+      goodsWeight: data.get("goodsWeight"),
     };
 
     // for validation purpose
@@ -125,8 +131,32 @@ function BookTruck() {
     }
     if (!newData.goodsSelectType) {
       setGoodsSelectType(false);
-      return;
     }
+    if (!newData.goodsWeight) {
+      setGoodsWeight(false);
+    }
+
+    if (!topCities.includes(pickUp.current.value)) {
+      setPickUpLocation(false);
+    }
+    if (!topCities.includes(destination.current.value)) {
+      setDestinationLocation(false);
+      return;
+    } else {
+      setPickUpLocation(true);
+      setDestinationLocation(true);
+    }
+
+    dispatch(
+      orderAction.addOrder({
+        pickUp: pickUp.current.value,
+        destination: destination.current.value,
+        goodsType: goodsType.current.value,
+        vehicle: vehicle.current.value,
+        Weight: Weight.current.value,
+      })
+    );
+    navigate("/booktruckform");
   };
   // function to fetch vehicle and goods
   const fetchVehicles = () => {
@@ -135,7 +165,7 @@ function BookTruck() {
   const fetchGoods = () => {
     dispatch(getGoods());
   };
-
+  // console.log(vehicleType);
   // code to show gmaps
   // const { isLoaded } = useJsApiLoader({
   //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_LOCATION_API,
@@ -192,7 +222,7 @@ function BookTruck() {
               freeSolo
               id="free-solo-2-demo"
               disableClearable
-              options={topCities.map((option) => option.title)}
+              options={topCities}
               renderInput={(params) => (
                 <TextField
                   ref={pickUp}
@@ -206,18 +236,24 @@ function BookTruck() {
                   }}
                   onChange={(e) => {
                     pickUp.current.value = e.target.value;
-                    console.log(pickUp.current.value);
+                    //console.log(pickUp.current.value);
+
+                    // const value = topCities.map((city) => {
+                    //   if (city.title === pickUp.current.value) return true;
+                    //   else return false;
+                    // });
+                    // console.log(value);
                   }}
                   onSelect={(e) => {
                     setPickUpLocation(true);
                     pickUp.current.value = e.target.value;
-                    console.log(pickUp.current.value);
+                    //console.log(pickUp.current.value);
                   }}
                 />
               )}
             />
             {!pickUpLocation && (
-              <Alert severity="error">Location can't be empty!</Alert>
+              <Alert severity="error">Please Enter Correct Location!</Alert>
             )}
 
             {/* for destination location */}
@@ -232,7 +268,7 @@ function BookTruck() {
               ref={destination}
               id="free-solo-2-demo"
               disableClearable
-              options={topCities.map((option) => option.title)}
+              options={topCities}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -245,18 +281,18 @@ function BookTruck() {
                   }}
                   onChange={(e) => {
                     destination.current.value = e.target.value;
-                    console.log(destination.current.value);
+                    // console.log(destination.current.value);
                   }}
                   onSelect={(e) => {
                     setDestinationLocation(true);
                     destination.current.value = e.target.value;
-                    console.log(destination.current.value);
+                    //console.log(destination.current.value);
                   }}
                 />
               )}
             />
             {!destinationLocation && (
-              <Alert severity="error">Location can't be empty!</Alert>
+              <Alert severity="error">Please Enter Correct Destination</Alert>
             )}
 
             {/* to select vehicle */}
@@ -270,7 +306,9 @@ function BookTruck() {
               ref={vehicle}
               id="free-solo-2-demo"
               disableClearable
-              options={vehicleType.map((option) => option)}
+              options={vehicleType.map((option) => {
+                return option.type;
+              })}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -283,19 +321,19 @@ function BookTruck() {
                   }}
                   onChange={(e) => {
                     vehicle.current.value = e.target.value;
-                    console.log(vehicle.current.value);
                   }}
                   onClick={fetchVehicles}
                   onSelect={(e) => {
                     setSelectVehicle(true);
                     vehicle.current.value = e.target.value;
-                    console.log(vehicle.current.value);
                   }}
                 />
               )}
             />
             {!selectVehicle && (
-              <Alert severity="error">Please select vehicle type!</Alert>
+              <Alert severity="error">
+                Please select correct vehicle type!
+              </Alert>
             )}
 
             {/* to select goods */}
@@ -313,38 +351,105 @@ function BookTruck() {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  name="selectGoodsType"
+                  name="goodsSelectType"
                   label="select Goods Type"
-                  id="SelectGoodsType"
+                  id="goodsSelectType"
                   InputProps={{
                     ...params.InputProps,
                     type: "search",
                   }}
                   onChange={(e) => {
                     goodsType.current.value = e.target.value;
-                    console.log(goodsType.current.value);
+                    // console.log(goodsType.current.value);
                   }}
                   onClick={fetchGoods}
                   onSelect={(e) => {
                     setGoodsSelectType(true);
                     goodsType.current.value = e.target.value;
-                    console.log(goodsType.current.value);
+                    //console.log(goodsType.current.value);
                   }}
                 />
               )}
             />
             {!goodsSelectType && (
-              <Alert severity="error">Please Select type of good !</Alert>
+              <Alert severity="error">
+                Please Select correct type of goods !
+              </Alert>
+            )}
+
+            <Box sx={{ display: "-webkit-flex" }}>
+              <TextField
+                ref={Weight}
+                id="outlined-number"
+                name="goodsWeight"
+                label="Number"
+                type="number"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                placeholder="1000Kg=1TON"
+                sx={{ width: 950 }}
+                onChange={(e) => {
+                  Weight.current.value = e.target.value;
+
+                  setGoodsWeight(true);
+
+                  const capacity = vehicleType?.map((v) => {
+                    return v.type === vehicle.current.value ? v.capacity : 0;
+                  });
+                  // console.log("capacity", capacity);
+
+                  const newCapacity = capacity.filter((cap) => {
+                    if (JSON.stringify(Weight.current.value) >= cap) return cap;
+                    else if (JSON.stringify(Weight.current.value) <= cap)
+                      return cap;
+                    else return cap;
+                  });
+
+                  // console.log("newcap", newCapacity[0]);
+
+                  if (
+                    (Weight.current.value !== 0 &&
+                      Weight.current.value === newCapacity[0]) ||
+                    (Weight.current.value <= newCapacity[0] &&
+                      Weight.current.value > 0)
+                  ) {
+                    //return console.log("eligible");
+                  } else if (Weight.current.value === 0) {
+                    setGoodsWeight(false);
+                    //return console.log("not eligible");
+                  } else {
+                    setGoodsWeight(false);
+                    //return console.log("not eligible");
+                  }
+                }}
+              />
+
+              <TextField
+                id="outlined-number"
+                label="TON"
+                type="text"
+                sx={{ width: 65 }}
+                disabled
+              />
+            </Box>
+            {!goodsWeight && (
+              <Alert severity="error">Please Enter proper Weight !</Alert>
             )}
           </Stack>
-          <Stack spacing={2} direction="row">
-            <Button variant="contained" type="submit">
-              Contained
+
+          <Stack
+            spacing={2}
+            direction="row"
+            sx={{ marginLeft: 25, padding: 3 }}
+          >
+            <Button variant="contained" type="submit" sx={{ width: 900 }}>
+              <Link>Save</Link>
             </Button>
           </Stack>
         </Box>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

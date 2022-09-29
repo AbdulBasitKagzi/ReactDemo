@@ -249,7 +249,7 @@ function Home() {
             </div>
 
             <div className="grid-p1">
-              <h3 class="Full-Load">Full Load Services</h3>
+              <h3 className="Full-Load">Full Load Services</h3>
               <p className="">
                 We provide Full Truck load transportation services with varied{" "}
                 <br />
@@ -262,7 +262,7 @@ function Home() {
               <img alt="pricing" src={pricing} />
             </div>
             <div className="grid-p1">
-              <h3 class="Full-Load">Transparent pricing</h3>
+              <h3 className="Full-Load">Transparent pricing</h3>
               <p className="">
                 With our fare calculator, we instantaneously give you best
                 <br />
@@ -275,7 +275,7 @@ function Home() {
               <img alt="employee" src={employee} />
             </div>
             <div className="grid-p1">
-              <h3 class="Full-Load">Quick and easy porteling</h3>
+              <h3 className="Full-Load">Quick and easy porteling</h3>
               <p className="">
                 Hiring a truck is now just a click away,
                 <br /> through our hassle free online booking system

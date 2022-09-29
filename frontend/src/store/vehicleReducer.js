@@ -41,7 +41,7 @@ const vehicleSlice = createSlice({
       console.log("action", action.payload.data.findVehicle);
       state.vehicles = action.payload;
       state.vehicleType = action.payload.data.findVehicle.map((type) => {
-        return type.type;
+        return type;
       });
       state.isLoading = false;
     },

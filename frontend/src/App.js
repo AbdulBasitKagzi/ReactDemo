@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import BookTruck from "./pages/BookTruck";
 import Home from "./pages/Home";
+import OrderPage from "./pages/OrderPage";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/home" element={<Home />} />
         <Route path="/booktruck" element={<BookTruck />} />
+        <Route path="/booktruckform" element={<OrderPage />} />
       </Routes>
     </div>
   );

@@ -58,19 +58,19 @@ function Footer() {
                 <div style={{ paddingLeft: 25 }}>
                   <i
                     style={{ paddingLeft: 25 }}
-                    class="fa-brands fa-instagram fa-xl"
+                    className="fa-brands fa-instagram fa-xl"
                   ></i>
                   <i
                     style={{ paddingLeft: 25 }}
-                    class="fa-brands fa-facebook fa-xl"
+                    className="fa-brands fa-facebook fa-xl"
                   ></i>
                   <i
                     style={{ paddingLeft: 25 }}
-                    class="fa-brands fa-twitter fa-xl"
+                    className="fa-brands fa-twitter fa-xl"
                   ></i>
                   <i
                     style={{ paddingLeft: 25 }}
-                    class="fa-brands fa-snapchat fa-xl"
+                    className="fa-brands fa-snapchat fa-xl"
                   ></i>
                 </div>
               </div>
