@@ -76,6 +76,7 @@ const authSlice = createSlice({
     // signup
     [userSignup.fulfilled]: (state, action) => {
       state.user = action.payload.data.user;
+      console.log("users", state.user);
       state.isLoading = false;
       console.log(action.payload.data.token);
       state.token = action.payload.data.token;
@@ -91,6 +92,7 @@ const authSlice = createSlice({
     // signin
     [userSignin.fulfilled]: (state, action) => {
       state.user = action.payload.data.registeredUser;
+      console.log("user", state.user);
       state.isLoading = false;
       state.token = action.payload.data.token;
       state.error = "";

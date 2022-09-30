@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import BookTruck from "./pages/BookTruck";
+import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
-import OrderPage from "./pages/OrderPage";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 
@@ -17,7 +17,9 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/home" element={<Home />} />
         <Route path="/booktruck" element={<BookTruck />} />
-        <Route path="/booktruckform" element={<OrderPage />} />
+        {/* <Route path="/booktruckform" element={<OrderPage />} />
+        <Route path="/payment" element={<Payment />} /> */}
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </div>
   );

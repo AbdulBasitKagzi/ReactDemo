@@ -156,7 +156,7 @@ function BookTruck() {
         Weight: Weight.current.value,
       })
     );
-    navigate("/booktruckform");
+    navigate("/checkout");
   };
   // function to fetch vehicle and goods
   const fetchVehicles = () => {

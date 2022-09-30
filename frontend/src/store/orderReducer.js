@@ -1,13 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const orderState = {
-  pickupLocation: "",
-  destinationLocation: "",
-  vehicleType: "",
-  goodsType: "",
-  weight: "",
-};
-
+const orderState = {};
 
 const orderSlice = createSlice({
   name: "order",
@@ -15,11 +8,15 @@ const orderSlice = createSlice({
   reducers: {
     addOrder(state, action) {
       console.log("action for order", action);
-      state.pickupLocation = action.payload.pickUp;
-      state.destinationLocation = action.payload.destination;
-      state.vehicleType = action.payload.vehicle;
-      state.goodsType = action.payload.goodsType;
-      state.weight = action.payload.Weight;
+      // state.pickupLocation = action.payload.pickUp;
+      // state.destinationLocation = action.payload.destination;
+      // state.vehicleType = action.payload.vehicle;
+      // state.goodsType = action.payload.goodsType;
+      // state.weight = action.payload.Weight;
+      // state.pickUpAddress = action.payload.pAddress;
+      // state.deliveryAddress = action.payload.dAddress;
+
+      return { ...state, ...action.payload };
     },
   },
 });
