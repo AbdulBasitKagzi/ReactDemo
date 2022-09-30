@@ -60,7 +60,6 @@ orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
       deliveryAddress: req.body.deliveryAddress,
       date: req.body.date,
       time: req.body.time,
-      
     });
     console.log("sdfasf", order);
 

@@ -50,12 +50,12 @@ const orderSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    payment: {
+    paymentType: {
       type: String,
       required: true,
       default: "card",
     },
-    card: {
+    paymentStatus: {
       type: String,
       required: true,
       default: "done",
