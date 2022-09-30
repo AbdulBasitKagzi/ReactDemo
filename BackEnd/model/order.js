@@ -18,7 +18,11 @@ const orderSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    goods: {
+    goodsType: {
+      type: String,
+      required: true,
+    },
+    Weight: {
       type: String,
       required: true,
     },
@@ -37,6 +41,24 @@ const orderSchema = mongoose.Schema(
     deliveryAddress: {
       type: String,
       required: true,
+    },
+    date: {
+      type: Date,
+      required: true,
+    },
+    time: {
+      type: String,
+      required: true,
+    },
+    payment: {
+      type: String,
+      required: true,
+      default: "card",
+    },
+    card: {
+      type: String,
+      required: true,
+      default: "done",
     },
   },
   { timestamps: true }

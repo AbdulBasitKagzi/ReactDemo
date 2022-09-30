@@ -20,11 +20,7 @@ orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
     console.log("orderuser", user);
 
     //   validation
-    if (req.body.FirstName === "") {
-      return res.status(400).json({ message: "Please enter First Name" });
-    } else if (req.body.LastName === "") {
-      return res.status(400).json({ message: "Please enter Last Name" });
-    } else if (req.body.pickUp === "") {
+    if (req.body.pickUp === "") {
       return res.status(400).json({ message: "Please enter PickUp Location" });
     } else if (req.body.destination === "") {
       return res
@@ -32,16 +28,22 @@ orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
         .json({ message: "Please enter Destination Location" });
     } else if (req.body.vehicle === "") {
       return res.status(400).json({ message: "Please select vehicle" });
-    } else if (req.body.goods === "") {
+    } else if (req.body.goodsType === "") {
       return res
         .status(400)
         .json({ message: "Please select goods to deliver" });
+    } else if (req.body.Weight === "") {
+      return res.status(400).json({ message: "Please Enter Weight " });
     } else if (req.body.pickUpAddress === "") {
       return res.status(400).json({ message: "Please enter PickUp Address" });
     } else if (req.body.deliveryAddress === "") {
       return res
         .status(400)
         .json({ message: "Please enter Destination Address" });
+    } else if (req.body.date === "") {
+      return res.status(400).json({ message: "Please enter Date" });
+    } else if (req.body.time === "") {
+      return res.status(400).json({ message: "Please enter Time" });
     }
 
     //   to create orders
@@ -52,9 +54,13 @@ orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
       pickUp: req.body.pickUp,
       destination: req.body.destination,
       vehicle: req.body.vehicle,
-      goods: req.body.goods,
+      goodsType: req.body.goodsType,
+      Weight: req.body.Weight,
       pickUpAddress: req.body.pickUpAddress,
       deliveryAddress: req.body.deliveryAddress,
+      date: req.body.date,
+      time: req.body.time,
+      
     });
     console.log("sdfasf", order);
 
