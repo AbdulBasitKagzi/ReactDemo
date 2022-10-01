@@ -1,8 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
+
 import BookTruck from "./pages/BookTruck";
 import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
+import Home2 from "./pages/Home2";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 
@@ -20,6 +22,8 @@ function App() {
         {/* <Route path="/booktruckform" element={<OrderPage />} />
         <Route path="/payment" element={<Payment />} /> */}
         <Route path="/checkout" element={<Checkout />} />
+
+        <Route path="/home2" element={<Home2 />} />
       </Routes>
     </div>
   );

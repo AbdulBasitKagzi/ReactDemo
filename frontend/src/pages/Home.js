@@ -5,7 +5,10 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { createTheme } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 
 import truck from "../assets/truck.jpg";
 import artTruck from "../assets/artTruck.jpg";
@@ -17,8 +20,26 @@ import mail from "../assets/mail.webp";
 
 import "./Home.css";
 import Footer from "../component/Footer";
+import { textAlign } from "@mui/system";
 
 function Home() {
+  const theme = createTheme({
+    typography: {
+      fontFamily: [
+        "-apple-system",
+        "BlinkMacSystemFont",
+        '"Segoe UI"',
+        "Roboto",
+        '"Helvetica Neue"',
+        "Arial",
+        "sans-serif",
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(","),
+    },
+  });
+
   return (
     <div>
       <Navbar />
@@ -28,163 +49,220 @@ function Home() {
           <img alt="banner" src={truck} />
           <div className="banner-text">
             <h1>Transports</h1>
-            <p>One stop for all your transport need</p>
+            <Typography>One stop for all your transport need</Typography>
           </div>
         </div>
 
         <div className="pad">
-          <div className="tag-line">
-            <p>
+          <Box
+            sx={{ mt: 35, textAlign: "center", backgroundColor: "blue", mb: 2 }}
+          >
+            <Typography variant="h4" pb={2}>
               <strong>
                 TruckGuru – India’s most reliable, dedicated and expert online
                 Transport logistics services partner!
               </strong>
-            </p>
-          </div>
-          <div className="container">
-            <p className="p1">
-              TruckGuru is one of the foremost trucking companies, delivering
-              the plethora of
-              <a href="transportation-services">transport services</a> to its
-              esteemed consumers across India. We are the “best-in-class and
-              cost-effective transporter” as defined by our customers and
-              serving this industry for many years.
-            </p>
-            <p className="p1">
-              We have set high standards in every facet of transportation, and
-              strive to keep raising the bar. With our extensive industry
-              knowledge and skilled team, you can completely focus on your core
-              interests whereas leaving the tiring and complex moving process on
-              us.
-              <br />
-              Time-critical? No worries – TruckGuru will help you!
-            </p>
-            <p className="p1">
-              <a href="https://truckguru.co.in/about">Our company</a> is
-              equipped with advanced equipment, modern tools, and expertise that
-              enable us to help our consumers with crucial transportation and
-              supply chain solutions. We ensure businesses that they will get
-              excellent-quality, prompt, and secure transportation services
-              irrespective of time-constraint, the heavy load issue, and any
-              other related problem.
-            </p>
-            <p className="p1">
-              Being the prime logistics services provider, we believe that
-              people, technology, infrastructure and expertise all work together
-              to help businesses to succeed and henceforth, we are offering the
-              right blend of all these.
-            </p>
-            <p className="p1">
-              We are a customer-centric firm and our every action is aimed to
-              offer ease and comfort to them when it comes to booking a truck.
-              Our online truck booking app has tremendously simplified the
-              process of booking a truck. Whether you are looking for the
-              companies of
-              <a href="https://truckguru.co.in/hyderabad">
-                online truck booking Hyderabad
-              </a>{" "}
-              or online truck booking Mumbai, TruckGuru would always be your
-              right choice.
-            </p>
+            </Typography>
+          </Box>
 
-            <h3 className="about-h3">
-              Online Truck Booking- A Smart Trucking Move{" "}
-            </h3>
-            <p className="p1">
-              Bored with traditional truck booking practices? Looking for a
-              smart and quick way to book a truck? No worries! We have
-              introduced an innovative and sophisticated way to book trucks. Our
-              online truck booking app and online portal will allow you to book
-              truck online anywhere, anytime.{" "}
-            </p>
-            <p className="p1">
-              Online transport booking is just a click away! No matter what type
-              and size of your load is, we have the necessary infrastructure,
-              equipment and tools to accommodate your transportation needs. We
-              are a full-service transport company backed by a wide range of
-              tech-enabled trucks, and experienced &amp; skilled team players to
-              offer you best-in-class logistics and supply chain solutions.{" "}
-            </p>
-            <p className="p1">
-              We offer you an instant pricing option while you try to book a
-              truck using our mobile app. It will give you a better idea to
-              manage your transportation budget.{" "}
-            </p>
-            <h3 className="about-h3">
-              A trucking company – always there for you!
-            </h3>
-            <p className="p1">
-              Our safe and affordable transport services will help businesses to
-              drive business growth. We have years of experience in handling
-              different types of transportation projects which enable us to help
-              our businesses to focus on their core competencies and business
-              operations. Our trucking company adds value to businesses at every
-              stage, right from delivering advanced truck booking solutions to
-              time-bound deliveries of goods anywhere across the nation.{" "}
-            </p>
-            <p className="p1">
-              We are your trusted partner in your digital transformation
-              journey. We have designed our app while keeping your truck booking
-              needs in mind. No matter whether transportation involves short
-              distance or long-distance, we are committed to delivering your
-              goods in a hassle-free, safe and timely manner. How we can help
-              you?{" "}
-            </p>
+          <ThemeProvider theme={theme}>
+            <Box sx={{ border: 2, pt: 2, color: "#064b76" }}>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                TruckGuru is one of the foremost trucking companies, delivering
+                the plethora of
+                <a href="transportation-services">transport services</a> to its
+                esteemed consumers across India. We are the “best-in-class and
+                cost-effective transporter” as defined by our customers and
+                serving this industry for many years.
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                We have set high standards in every facet of transportation, and
+                strive to keep raising the bar. With our extensive industry
+                knowledge and skilled team, you can completely focus on your
+                core interests whereas leaving the tiring and complex moving
+                process on us.
+                <br />
+                Time-critical? No worries – TruckGuru will help you!
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                <a href="https://truckguru.co.in/about">Our company</a> is
+                equipped with advanced equipment, modern tools, and expertise
+                that enable us to help our consumers with crucial transportation
+                and supply chain solutions. We ensure businesses that they will
+                get excellent-quality, prompt, and secure transportation
+                services irrespective of time-constraint, the heavy load issue,
+                and any other related problem.
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                Being the prime logistics services provider, we believe that
+                people, technology, infrastructure and expertise all work
+                together to help businesses to succeed and henceforth, we are
+                offering the right blend of all these.
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                We are a customer-centric firm and our every action is aimed to
+                offer ease and comfort to them when it comes to booking a truck.
+                Our online truck booking app has tremendously simplified the
+                process of booking a truck. Whether you are looking for the
+                companies of
+                <a href="https://truckguru.co.in/hyderabad">
+                  online truck booking Hyderabad
+                </a>{" "}
+                or online truck booking Mumbai, TruckGuru would always be your
+                right choice.
+              </Typography>
+            </Box>
 
-            <h3 className="about-h3"> Rich industry experience</h3>
-            <p className="p1">
-              {" "}
-              We bring together years of diverse experience in the transport
-              industry. As the best online transport booking company, we know
-              what all it needs to bring you effective and affordable solutions
-              to suit your every transport need.{" "}
-            </p>
+            <Box sx={{ pt: 5, color: "#064b76" }}>
+              <Typography
+                variant="h3"
+                sx={{ textAlign: "center", backgroundColor: "blue", mb: 2 }}
+              >
+                Why You Should Choose Us?
+              </Typography>
+              <Typography variant="h5" pb={2} fontFamily="Roboto">
+                Online Truck Booking- A Smart Trucking Move{" "}
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                Bored with traditional truck booking practices? Looking for a
+                smart and quick way to book a truck? No worries! We have
+                introduced an innovative and sophisticated way to book trucks.
+                Our online truck booking app and online portal will allow you to
+                book truck online anywhere, anytime.{" "}
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                Online transport booking is just a click away! No matter what
+                type and size of your load is, we have the necessary
+                infrastructure, equipment and tools to accommodate your
+                transportation needs. We are a full-service transport company
+                backed by a wide range of tech-enabled trucks, and experienced
+                &amp; skilled team players to offer you best-in-class logistics
+                and supply chain solutions.{" "}
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                We offer you an instant pricing option while you try to book a
+                truck using our mobile app. It will give you a better idea to
+                manage your transportation budget.{" "}
+              </Typography>
+              <Typography variant="h5" pb={2} fontFamily="Roboto">
+                A trucking company – always there for you!
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                Our safe and affordable transport services will help businesses
+                to drive business growth. We have years of experience in
+                handling different types of transportation projects which enable
+                us to help our businesses to focus on their core competencies
+                and business operations. Our trucking company adds value to
+                businesses at every stage, right from delivering advanced truck
+                booking solutions to time-bound deliveries of goods anywhere
+                across the nation.{" "}
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                We are your trusted partner in your digital transformation
+                journey. We have designed our app while keeping your truck
+                booking needs in mind. No matter whether transportation involves
+                short distance or long-distance, we are committed to delivering
+                your goods in a hassle-free, safe and timely manner. How we can
+                help you?{" "}
+              </Typography>
 
-            <h3 className="about-h3">Advanced technology</h3>
-            <p className="p1">
-              {" "}
-              Our adoption of technology, proven expertise and a huge network of
-              fleet owners and drivers helps us to serve you anywhere, anytime
-              across any part of the country.{" "}
-            </p>
+              <Typography
+              
+                variant="h5"
+                pb={2}
+                fontFamily="Roboto"
+              >
+                {" "}
+                Rich industry experience
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                {" "}
+                We bring together years of diverse experience in the transport
+                industry. As the best online transport booking company, we know
+                what all it needs to bring you effective and affordable
+                solutions to suit your every transport need.{" "}
+              </Typography>
 
-            <h3 className="about-h3">On-time, every time</h3>
-            <p className="p1">
-              {" "}
-              We understand the value of time for you as well as for us. That is
-              why we try to deliver your consignment on time, every time.{" "}
-            </p>
+              <Typography
+               
+                variant="h5"
+                pb={2}
+                fontFamily="Roboto"
+              >
+                Advanced technology
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                {" "}
+                Our adoption of technology, proven expertise and a huge network
+                of fleet owners and drivers helps us to serve you anywhere,
+                anytime across any part of the country.{" "}
+              </Typography>
 
-            <h3 className="about-h3">Competitive pricing</h3>
-            <p className="p1">
-              {" "}
-              By designing innovative transport solutions that are targeted to
-              your unique business requirements, we have created a pricing
-              strategy that works for everyone. Cost can become a major
-              constraint while hiring our services, but with our most affordable
-              prices, we won’t let this happen with our clients.{" "}
-            </p>
+              <Typography
+               
+                variant="h5"
+                pb={2}
+                fontFamily="Roboto"
+              >
+                On-time, every time
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                {" "}
+                We understand the value of time for you as well as for us. That
+                is why we try to deliver your consignment on time, every time.{" "}
+              </Typography>
 
-            <h3 className="about-h3">Reliability and safety</h3>
-            <p className="p1">
-              We drive reliability and safety in transport operations through
-              the effective implementation of advanced security tools and
-              technologies. It further helps you to drive efficiency and achieve
-              operational excellence.{" "}
-            </p>
+              <Typography
+               
+                variant="h5"
+                pb={2}
+                fontFamily="Roboto"
+              >
+                Competitive pricing
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                {" "}
+                By designing innovative transport solutions that are targeted to
+                your unique business requirements, we have created a pricing
+                strategy that works for everyone. Cost can become a major
+                constraint while hiring our services, but with our most
+                affordable prices, we won’t let this happen with our clients.{" "}
+              </Typography>
 
-            <h3 className="about-h3">Hassle-free services</h3>
-            <p className="p1">
-              {" "}
-              We provide hassle-free shipping and flawless logistics solutions
-              for all your Transport needs, whether small or big, to all parts
-              across the country.
-              <br /> Are you looking for a reliable and experienced transport
-              company in India? Search online for “local transport near me” or
-              “transport company near me”, we are sure that you will find
-              TruckGuru in top results. So, call us now to book our services!{" "}
-            </p>
-          </div>
+              <Typography
+                
+                variant="h5"
+                pb={2}
+                fontFamily="Roboto"
+              >
+                Reliability and safety
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                We drive reliability and safety in transport operations through
+                the effective implementation of advanced security tools and
+                technologies. It further helps you to drive efficiency and
+                achieve operational excellence.{" "}
+              </Typography>
+
+              <Typography
+               
+                variant="h5"
+                pb={2}
+                fontFamily="Roboto"
+              >
+                Hassle-free services
+              </Typography>
+              <Typography className="p1" fontFamily="Roboto" fontSize={20}>
+                We provide hassle-free shipping and flawless logistics solutions
+                for all your Transport needs, whether small or big, to all parts
+                across the country.
+                <br /> Are you looking for a reliable and experienced transport
+                company in India? Search online for “local transport near me” or
+                “transport company near me”, we are sure that you will find
+                TruckGuru in top results. So, call us now to book our services!{" "}
+              </Typography>
+            </Box>
+          </ThemeProvider>
         </div>
 
         {/* accordion */}
@@ -249,12 +327,12 @@ function Home() {
             </div>
 
             <div className="grid-p1">
-              <h3 className="Full-Load">Full Load Services</h3>
-              <p className="">
+              <Typography className="Full-Load">Full Load Services</Typography>
+              <Typography className="">
                 We provide Full Truck load transportation services with varied{" "}
                 <br />
                 type of trucks available with the click of a button.
-              </p>
+              </Typography>
             </div>
           </div>
           <div className="content">
@@ -262,12 +340,12 @@ function Home() {
               <img alt="pricing" src={pricing} />
             </div>
             <div className="grid-p1">
-              <h3 className="Full-Load">Transparent pricing</h3>
-              <p className="">
+              <Typography className="Full-Load">Transparent pricing</Typography>
+              <Typography className="">
                 With our fare calculator, we instantaneously give you best
                 <br />
                 possible rates online.
-              </p>
+              </Typography>
             </div>
           </div>
           <div className="content">
@@ -275,11 +353,13 @@ function Home() {
               <img alt="employee" src={employee} />
             </div>
             <div className="grid-p1">
-              <h3 className="Full-Load">Quick and easy porteling</h3>
-              <p className="">
+              <Typography className="Full-Load">
+                Quick and easy porteling
+              </Typography>
+              <Typography className="">
                 Hiring a truck is now just a click away,
                 <br /> through our hassle free online booking system
-              </p>
+              </Typography>
             </div>
           </div>
         </div>
@@ -291,26 +371,33 @@ function Home() {
             <div>
               <img alt="person" src={person} />
               <div className="grid1-p1">
-                <p className="">Book Your truck through our webiste</p>
+                <Typography className="">
+                  Book Your truck through our webiste
+                </Typography>
               </div>
             </div>
 
             <div>
               <img alt="truck" src={truck_1} />
               <div className="grid1-p1">
-                <p className="">We provide best trucks for you</p>
+                <Typography className="">
+                  We provide best trucks for you
+                </Typography>
               </div>
             </div>
 
             <div>
               <img alt="mail" src={mail} />
               <div className="grid1-p1">
-                <p className="">Get Updates and notification from us</p>
+                <Typography className="">
+                  Get Updates and notification from us
+                </Typography>
               </div>
             </div>
           </div>
         </div>
       </main>
+
       <Footer />
     </div>
   );
