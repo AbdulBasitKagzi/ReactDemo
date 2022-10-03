@@ -107,7 +107,8 @@ function Signup() {
       lName === "" ||
       email === "" ||
       password === "" ||
-      confirmPassword === ""
+      confirmPassword === "" ||
+      password !== confirmPassword
     ) {
       console.log("error");
       return;
@@ -127,7 +128,7 @@ function Signup() {
 
   // to prevent user signup without correct credentials
   useEffect(() => {
-    !error && token && navigate("/home");
+    !error && token && navigate("/home2");
     emptyFields();
     // eslint-disable-next-line
   }, [token]);

@@ -3,7 +3,8 @@ import Payment from "./Payment";
 import Review from "./Review";
 import OrderPage from "./OrderPage";
 import NavBar from "../component/Navbar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { order } from "../store/orderReducer";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
@@ -60,7 +61,7 @@ function Checkout() {
         );
 
       case 2:
-        return <Review />;
+        return <Review setAlertError={setErrorAlert} errorAlert={errorAlert} />;
       default:
         throw new Error("Unknown step");
     }
@@ -68,17 +69,18 @@ function Checkout() {
 
   const [error, setError] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
-
+  const [errorAlert, setErrorAlert] = React.useState(null);
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
-
+  console.log("step", activeStep);
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
 
   const [orderData, setOrderData] = React.useState(null);
   const dispatch = useDispatch();
+  const { data } = useSelector((state) => state.order);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -133,9 +135,24 @@ function Checkout() {
                   <Button
                     variant="contained"
                     onClick={() => {
-                      handleNext();
-                      dispatch(orderAction.addOrder({ ...orderData }));
-                      setError(false);
+                      if (activeStep !== 2) {
+                        handleNext();
+                        dispatch(
+                          orderAction.addOrder({
+                            ...data,
+                            ...orderData,
+                          })
+                        );
+                        setError(false);
+                      } else {
+                        // tod0:main api call
+                        dispatch(order(data));
+                        setErrorAlert(true);
+                      }
+
+                      if (activeStep === 1) {
+                        setError(true);
+                      }
                     }}
                     sx={{ mt: 3, ml: 1 }}
                     disabled={!error}

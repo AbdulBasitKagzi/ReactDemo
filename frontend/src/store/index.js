@@ -4,6 +4,7 @@ import vehicleSlice from "./vehicleReducer";
 import goodsSlice from "./goodsReducer";
 import orderSlice from "./orderReducer";
 
+// store for reducers
 const store = configureStore({
   reducer: {
     user: authSlice,

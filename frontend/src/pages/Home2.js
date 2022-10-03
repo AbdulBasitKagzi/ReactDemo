@@ -10,10 +10,10 @@ import truck_2 from "../assets/1truck_2.jpg";
 import Box from "@mui/material/Box";
 import truck from "../assets/truck.jpg";
 import { Grid, Typography } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
+// import Card from "@mui/material/Card";
+// import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Footer from "../component/Footer";
+// import Footer from "../component/Footer";
 import Navbar from "../component/Navbar";
 import BasicFooter from "../component/BasicFooter";
 
@@ -215,7 +215,7 @@ function Home2() {
               </Box>
             </Grid>
             <Grid item lg={6}>
-              <img src={truck_2} style={{ height: 500 }} />
+              <img src={truck_2} alt="truck" style={{ height: 500 }} />
             </Grid>
           </Grid>
         </Box>

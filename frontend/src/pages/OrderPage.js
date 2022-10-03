@@ -28,6 +28,8 @@ function OrderPage({ setError, orderData, setOrderData }) {
       ...orderData,
       date: new Date(value).toDateString(),
       time: new Date(value).toISOString(),
+      FirstName: user.FirstName,
+      LastName: user.LastName,
     });
     // eslint-disable-next-line
   }, [value]);
@@ -42,7 +44,7 @@ function OrderPage({ setError, orderData, setOrderData }) {
 
   // data from redux
   const { user } = useSelector((state) => state.user);
-  const { pickUp, destination } = useSelector((state) => state.order);
+  const { data } = useSelector((state) => state.order);
 
   // validation function
   const Validatior1 = (e) => {
@@ -147,7 +149,7 @@ function OrderPage({ setError, orderData, setOrderData }) {
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
-            value={pickUp}
+            value={data.pickUp}
             disabled
           />
         </Grid>
@@ -160,7 +162,7 @@ function OrderPage({ setError, orderData, setOrderData }) {
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
-            value={destination}
+            value={data.destination}
             disabled
           />
         </Grid>

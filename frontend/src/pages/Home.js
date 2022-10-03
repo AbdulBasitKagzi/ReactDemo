@@ -20,7 +20,7 @@ import mail from "../assets/mail.webp";
 
 import "./Home.css";
 import Footer from "../component/Footer";
-import { textAlign } from "@mui/system";
+
 
 function Home() {
   const theme = createTheme({

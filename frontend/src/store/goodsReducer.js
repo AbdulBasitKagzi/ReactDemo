@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// initialState
+// initial state that can be updated by reducer action and can be sent to backend
 const goodsState = {
   goods: [],
   isLoading: "",

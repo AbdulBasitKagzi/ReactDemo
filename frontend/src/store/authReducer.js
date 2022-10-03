@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// initial state that can be updated by reducer action and can be sent to backend
 let authState = {
   user: "",
   token: "",
@@ -27,7 +28,8 @@ export const userSignup = createAsyncThunk(
       console.log(res.data.user);
 
       // console.log("---------res-------", res.data.token);
-      localStorage.setItem("token", JSON.stringify(token));
+      // setting up token and user
+      localStorage.setItem("token", JSON.stringify(token).replaceAll('"', ""));
       localStorage.setItem("user", JSON.stringify(res.data.user));
       return res;
     } catch (err) {
@@ -53,7 +55,8 @@ export const userSignin = createAsyncThunk(
       );
       console.log("login res", res);
       const token = res.data.token;
-      localStorage.setItem("token", JSON.stringify(token));
+      // setting up token and user
+      localStorage.setItem("token", JSON.stringify(token).replaceAll('"', ""));
       localStorage.setItem("user", JSON.stringify(res.data.registeredUser));
       return res;
     } catch (error) {
@@ -76,7 +79,6 @@ const authSlice = createSlice({
     // signup
     [userSignup.fulfilled]: (state, action) => {
       state.user = action.payload.data.user;
-      console.log("users", state.user);
       state.isLoading = false;
       console.log(action.payload.data.token);
       state.token = action.payload.data.token;
@@ -92,7 +94,7 @@ const authSlice = createSlice({
     // signin
     [userSignin.fulfilled]: (state, action) => {
       state.user = action.payload.data.registeredUser;
-      console.log("user", state.user);
+
       state.isLoading = false;
       state.token = action.payload.data.token;
       state.error = "";

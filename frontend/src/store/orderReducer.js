@@ -1,22 +1,57 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const orderState = {};
+const orderState = {
+  isLoading: "",
+  error: "",
+  data: "",
+};
+
+export const order = createAsyncThunk(
+  "orderSlice/order",
+  async (body, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/transportgoodsservice/placeOrder",
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("orderres", response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const orderSlice = createSlice({
   name: "order",
   initialState: orderState,
   reducers: {
     addOrder(state, action) {
-      console.log("action for order", action);
-      // state.pickupLocation = action.payload.pickUp;
-      // state.destinationLocation = action.payload.destination;
-      // state.vehicleType = action.payload.vehicle;
-      // state.goodsType = action.payload.goodsType;
-      // state.weight = action.payload.Weight;
-      // state.pickUpAddress = action.payload.pAddress;
-      // state.deliveryAddress = action.payload.dAddress;
+      state.data = action.payload;
+    },
+  },
 
-      return { ...state, ...action.payload };
+  // to handle api states:fullfilled, rejected, pending
+  extraReducers: {
+    [order.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.error = true;
+    },
+    [order.pending]: (state, action) => {
+      state.isLoading = true;
+      state.error = "";
+    },
+    [order.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
     },
   },
 });

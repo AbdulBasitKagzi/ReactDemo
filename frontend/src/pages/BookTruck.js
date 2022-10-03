@@ -7,7 +7,7 @@ import { getVehicle } from "../store/vehicleReducer";
 import { getGoods } from "../store/goodsReducer";
 import { orderAction } from "../store/orderReducer";
 
-import InputLabel from "@mui/material/InputLabel";
+// import InputLabel from "@mui/material/InputLabel";
 import { createTheme } from "@mui/material";
 import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -93,6 +93,8 @@ function BookTruck() {
   const [selectVehicle, setSelectVehicle] = React.useState(true);
   const [goodsSelectType, setGoodsSelectType] = React.useState(true);
   const [goodsWeight, setGoodsWeight] = React.useState(true);
+  const [Distance, setDistance] = React.useState(true);
+  const [price, setPrice] = React.useState(null);
 
   // refs to store value
   const pickUp = React.useRef(null);
@@ -100,23 +102,28 @@ function BookTruck() {
   const goodsType = React.useRef(null);
   const vehicle = React.useRef(null);
   const Weight = React.useRef(null);
+  const distance = React.useRef(null);
+
   const dispatch = useDispatch();
   const { vehicleType } = useSelector((state) => state.vehicle);
   const { goods } = useSelector((state) => state.goods);
 
   const navigate = useNavigate();
+
   // function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = new FormData(e.currentTarget);
 
+    // to get data
     const newData = {
       pickUpLocation: data.get("pickUpLocation"),
       destinationLocation: data.get("destinationLocation"),
       selectVehicle: data.get("selectVehicle"),
       goodsSelectType: data.get("goodsSelectType"),
       goodsWeight: data.get("goodsWeight"),
+      Distance: data.get("Distance"),
     };
 
     // for validation purpose
@@ -135,6 +142,9 @@ function BookTruck() {
     if (!newData.goodsWeight) {
       setGoodsWeight(false);
     }
+    if (!newData.Distance) {
+      setDistance(false);
+    }
 
     if (!topCities.includes(pickUp.current.value)) {
       setPickUpLocation(false);
@@ -147,6 +157,7 @@ function BookTruck() {
       setDestinationLocation(true);
     }
 
+    // dispatching order
     dispatch(
       orderAction.addOrder({
         pickUp: pickUp.current.value,
@@ -154,10 +165,13 @@ function BookTruck() {
         goodsType: goodsType.current.value,
         vehicle: vehicle.current.value,
         Weight: Weight.current.value,
+        distance: distance.current.value,
+        price: price,
       })
     );
     navigate("/checkout");
   };
+  
   // function to fetch vehicle and goods
   const fetchVehicles = () => {
     dispatch(getVehicle());
@@ -366,7 +380,7 @@ function BookTruck() {
                   onSelect={(e) => {
                     setGoodsSelectType(true);
                     goodsType.current.value = e.target.value;
-                    //console.log(goodsType.current.value);
+                    // console.log(goodsType.current.value);
                   }}
                 />
               )}
@@ -382,11 +396,8 @@ function BookTruck() {
                 ref={Weight}
                 id="outlined-number"
                 name="goodsWeight"
-                label="Number"
+                label="Weight"
                 type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
                 placeholder="1000Kg=1TON"
                 sx={{ width: 950 }}
                 onChange={(e) => {
@@ -397,7 +408,6 @@ function BookTruck() {
                   const capacity = vehicleType?.map((v) => {
                     return v.type === vehicle.current.value ? v.capacity : 0;
                   });
-                  // console.log("capacity", capacity);
 
                   const newCapacity = capacity.filter((cap) => {
                     if (JSON.stringify(Weight.current.value) >= cap) return cap;
@@ -436,6 +446,52 @@ function BookTruck() {
             {!goodsWeight && (
               <Alert severity="error">Please Enter proper Weight !</Alert>
             )}
+            <div>
+              <Typography variant="h6" sx={{ marginRight: 120, fontSize: 15 }}>
+                EnterDistance
+              </Typography>
+            </div>
+
+            <TextField
+              ref={distance}
+              id="outlined-basic"
+              label="Distance"
+              name="Distance"
+              variant="outlined"
+              sx={{ width: 1000 }}
+              placeholder="Enter Distance in KM"
+              type="number"
+              onChange={(e) => {
+                distance.current.value = e.target.value;
+                console.log(distance.current.value);
+
+                const rate = vehicleType?.map((v) => {
+                  return v.type === vehicle.current.value ? v.initialPrice : 0;
+                });
+
+                console.log("rate", rate);
+                const newRate = rate.filter((r) => {
+                  if (r !== 0) {
+                    return r;
+                  }
+                });
+                console.log(newRate);
+
+                setPrice(distance.current.value * newRate[0]);
+              }}
+            />
+            <Box>
+              {!Distance && (
+                <Alert severity="error">Please Enter Distance !</Alert>
+              )}
+              <iframe
+                src="https://distancecalculator.globefeed.com/India_Distance_Calculator.asp"
+                width="1000"
+                height="350"
+                title="distance calculator"
+                style={{ border: 0, paddingTop: 5 }}
+              />
+            </Box>
           </Stack>
 
           <Stack

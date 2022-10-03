@@ -7,21 +7,27 @@ import Checkbox from "@mui/material/Checkbox";
 import Alert from "@mui/material/Alert";
 
 function Payment({ setError, error, setOrderData, orderData }) {
+  // to get daata
   const [cardHolderName, setCardHolderName] = React.useState("");
   const [cardNumber, setCardNumber] = React.useState("");
   const [cardCVV, setCardCVV] = React.useState("");
   const [expireDate, setExpireDate] = React.useState("");
 
+  // for validation purpose
   const [expireDatevalidation, setExpireDateValidation] = React.useState(true);
   const [cardCVVvalidation, setCardCVVvalidation] = React.useState(true);
   const [cardHolderNameValidaton, setCardHolderNameValidation] =
     React.useState(true);
   const [cardNumberValidaton, setCardNumberValidation] = React.useState(true);
 
+  // validaton functions
   const cardNameValidation = (e) => {
     setCardHolderName(e.target.value);
+
+    // adding value in orderData object which then used in dispatch
     setOrderData({ ...orderData, cardHolderName: e.target.value });
 
+    // to show errors
     if (e.target.value.length === 0) {
       setCardHolderNameValidation(false);
     } else {
@@ -32,6 +38,7 @@ function Payment({ setError, error, setOrderData, orderData }) {
   const cardNumberValidation = (e) => {
     setCardNumber(e.target.value);
 
+    // adding value in orderData object which then used in dispatch
     setOrderData({ ...orderData, cardNumber: e.target.value });
     if (e.target.value.length < 16) {
       setCardNumberValidation(false);
@@ -41,6 +48,8 @@ function Payment({ setError, error, setOrderData, orderData }) {
   };
   const cardCVV_Validation = (e) => {
     setCardCVV(e.target.value);
+
+    // adding value in orderData object which then used in dispatch
     setOrderData({ ...orderData, cardCVV: e.target.value });
     if (e.target.value.length < 3) {
       setCardCVVvalidation(false);
@@ -51,6 +60,8 @@ function Payment({ setError, error, setOrderData, orderData }) {
 
   const expireValidation = (e) => {
     setExpireDate(e.target.value);
+
+    // adding value in orderData object which then used in dispatch
     setOrderData({ ...orderData, expireDate: e.target.value });
     if (e.target.value.length < 4) {
       setExpireDateValidation(false);
@@ -59,15 +70,17 @@ function Payment({ setError, error, setOrderData, orderData }) {
     }
   };
 
+  // to enable button
   React.useEffect(() => {
     if (
       cardHolderName !== "" &&
-      cardNumber.length == 16 &&
+      cardNumber.length === 16 &&
       cardCVV.length === 3 &&
       expireDate.length !== 0
     ) {
       setError(true);
     }
+    // eslint-disable-next-line
   }, [cardHolderName, cardNumber, cardCVV, expireDate]);
   return (
     <React.Fragment>
