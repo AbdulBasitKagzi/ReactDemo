@@ -42,6 +42,14 @@ const orderSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    distance: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
     date: {
       type: Date,
       required: true,
@@ -58,7 +66,7 @@ const orderSchema = mongoose.Schema(
     paymentStatus: {
       type: String,
       required: true,
-      default: "done",
+      default: "unpaid",
     },
   },
   { timestamps: true }

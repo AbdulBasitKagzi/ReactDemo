@@ -31,20 +31,20 @@ customerUserRoute.post(
   ],
   async (req, res) => {
     let success = false;
-    console.log("sign in user", req.body);
+    // console.log("sign in user", req.body);
 
     const errors = validationResult(req);
     console.log(req.body);
 
     if (!errors.isEmpty()) {
-      return res.status(422).json(
-        errors
+      return res.status(422).json({
+        error: errors
           .array()
           .map((err) => {
             return err.msg;
           })
-          .join(", ")
-      );
+          .join(", "),
+      });
     }
     try {
       const { FirstName, LastName, email, password, confirmPassword, role } =
@@ -64,8 +64,15 @@ customerUserRoute.post(
       //   generating encrypted password
       const salt = await bcrypt.genSalt(10);
       const securePass = await bcrypt.hash(password, salt);
+      const securePass2 = await bcrypt.hash(confirmPassword, salt);
       // registering the user
       if (!registeredUser) {
+        if (securePass !== securePass2) {
+          return res
+            .status(400)
+            .json({ error: "Password and confirm password must be same" });
+        }
+
         const user = await customer.create({
           FirstName,
           LastName,
@@ -85,7 +92,7 @@ customerUserRoute.post(
       }
       return res.status(400).send({ success, error: "User is already there" });
     } catch (error) {
-      console.log("user signup", error);
+      // console.log("user signup", error);
       return res.status(500).json({ error: "Internal Error occured" });
     }
   }
@@ -105,16 +112,16 @@ customerUserRoute.post(
     const { email, password } = req.body;
 
     const errors = validationResult(req);
-    console.log(req.body);
+    // console.log(req.body);
     if (!errors.isEmpty()) {
-      return res.status(422).json(
-        errors
+      return res.status(422).json({
+        error: errors
           .array()
           .map((err) => {
             return err.msg;
           })
-          .join(", ")
-      );
+          .join(", "),
+      });
     }
     try {
       const registeredUser = await customer.findOne({ email: email });
@@ -130,13 +137,13 @@ customerUserRoute.post(
         password,
         registeredUser.password
       );
-      console.log(comparePass);
-      console.log(registeredUser.password);
+      // console.log(comparePass);
+      // console.log(registeredUser.password);
 
       if (!comparePass) {
         return res.status(400).json({ error: "Enter correct password" });
       }
-      console.log("user logged in");
+      // console.log("user logged in");
       const data = {
         registeredUser: {
           id: registeredUser._id,
@@ -145,11 +152,11 @@ customerUserRoute.post(
 
       //   generating user token
       const token = jwt.sign(data, secret_key);
-      console.log("token from login", token);
+      // console.log("token from login", token);
       success = true;
       return res.status(200).json({ success, token, registeredUser });
     } catch (error) {
-      console.log("usersignuperror", error);
+      // console.log("usersignuperror", error);
       return res.status(500).json({ error: "Internal Error occured" });
     }
   }

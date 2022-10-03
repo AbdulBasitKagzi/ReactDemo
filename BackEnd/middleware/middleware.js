@@ -13,7 +13,7 @@ const getUserId = (req, res, next) => {
   try {
     const userId = jwt.verify(token, secret_key);
     req.userId = userId.registeredUser.id;
-    // console.log(id);
+    // console.log("id", userId);
     next();
   } catch (error) {
     console.log("middleware error", error);

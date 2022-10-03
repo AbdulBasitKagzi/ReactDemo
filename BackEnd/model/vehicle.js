@@ -7,7 +7,7 @@ const Vehicle = mongoose.Schema(
       ref: "customeruser",
     },
     type: {
-      type: String, 
+      type: String,
       required: true,
     },
     vNumber: {

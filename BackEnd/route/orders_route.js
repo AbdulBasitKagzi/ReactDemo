@@ -2,6 +2,7 @@ const express = require("express");
 const getUserId = require("../middleware/middleware");
 const customer = require("../model/customerUser");
 const orders = require("../model/order");
+const Vehicles = require("../model/vehicle");
 require("dotenv").config({ path: "config.env" });
 
 const orderRoute = express.Router();
@@ -46,6 +47,8 @@ orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
       return res.status(400).json({ message: "Please enter Time" });
     }
 
+    // const vehicle = await Vehicles.findOne({ type: goodsType });
+    // console.log()
     //   to create orders
     const order = await orders.create({
       owner: req.userId,
@@ -56,6 +59,8 @@ orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
       vehicle: req.body.vehicle,
       goodsType: req.body.goodsType,
       Weight: req.body.Weight,
+      distance: req.body.distance,
+      price: req.body.price,
       pickUpAddress: req.body.pickUpAddress,
       deliveryAddress: req.body.deliveryAddress,
       date: req.body.date,
