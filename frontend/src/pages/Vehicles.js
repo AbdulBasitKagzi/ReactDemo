@@ -49,6 +49,7 @@ function Vehicles() {
 
   React.useEffect(() => {
     dispatch(getVehicle());
+
     setTimeout(() => {
       dispatch(vehicleAction.clearMessage());
     }, 3000);
@@ -112,7 +113,6 @@ function Vehicles() {
                   <Button
                     onClick={() => {
                       const id = vehicle._id;
-
                       dispatch(deleteVehicle(id));
                     }}
                   >

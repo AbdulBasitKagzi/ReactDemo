@@ -70,7 +70,7 @@ const vehicleSlice = createSlice({
   },
   extraReducers: {
     [getVehicle.fulfilled]: (state, action) => {
-      console.log("action", action.payload.data.findVehicle);
+      console.log("actionfor get vehicle", action.payload.data.findVehicle);
       state.vehicles = action.payload;
       state.vehicleType = action.payload.data.findVehicle.map((type) => {
         return type;
@@ -86,14 +86,16 @@ const vehicleSlice = createSlice({
     },
     [deleteVehicle.fulfilled]: (state, action) => {
       state.update = true;
-
+      console.log("fullfileed", action.payload);
       state.error = action.payload.data.message;
     },
     [deleteVehicle.pending]: (state, action) => {
       state.isLoading = true;
     },
     [deleteVehicle.rejected]: (state, action) => {
+      console.log("rejected", action.payload);
       state.update = false;
+      state.error = action.payload.data.message;
     },
   },
 });
