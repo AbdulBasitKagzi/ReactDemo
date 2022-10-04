@@ -41,18 +41,16 @@ vehicleRoute.post(
       );
     }
 
-    // to find if user id admin or not
+    // to find if user is admin or not
     const userAdmin = await customer.findById({ _id: req.userId });
     console.log("admin", userAdmin);
     console.log(userAdmin.role);
 
     if (userAdmin.role !== "Admin") {
-      return res
-        .status(400)
-        .json({
-          success,
-          message: "You are not eligible to register the vehicle",
-        });
+      return res.status(400).json({
+        success,
+        message: "You are not eligible to register the vehicle",
+      });
     }
     const registeredVehicle = await Vehicles.findOne({
       vNumber: req.body.vNumber,
@@ -112,6 +110,7 @@ vehicleRoute.delete(`${api}/deletevehicle/:id`, getUserId, async (req, res) => {
   }
 });
 
+// to get all vehicles
 vehicleRoute.get(`${api}/getVehicle`, async (req, res) => {
   let success = false;
 
