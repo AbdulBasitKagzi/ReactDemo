@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userSignup } from "../store/authReducer";
+import { userSignup, authAction } from "../store/authReducer";
 import { useNavigate, Link } from "react-router-dom";
 
 import CircularProgress from "@mui/material/CircularProgress";
@@ -93,7 +93,7 @@ function Signup() {
     if (userData.lastName === "") {
       setLastName(true);
     }
-    if (userData.email === "" || !userData.email.includes("@")) {
+    if (userData.email === "") {
       setEmail(true);
     }
     if (userData.password === "" || userData.password.length < 5) {
@@ -221,6 +221,8 @@ function Signup() {
                     setUemail(event.target.value);
                     console.log(uEmail);
                     setEmail(false);
+
+                    dispatch(authAction.clearMessage());
                   }}
                 />
                 {email && (

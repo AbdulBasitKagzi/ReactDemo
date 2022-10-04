@@ -95,6 +95,7 @@ function BookTruck() {
   const [goodsWeight, setGoodsWeight] = React.useState(true);
   const [Distance, setDistance] = React.useState(true);
   const [price, setPrice] = React.useState(null);
+  const [info, setInfo] = React.useState(true);
 
   // refs to store value
   const pickUp = React.useRef(null);
@@ -144,6 +145,7 @@ function BookTruck() {
     }
     if (!newData.Distance) {
       setDistance(false);
+      setInfo(false);
     }
 
     if (!topCities.includes(pickUp.current.value)) {
@@ -171,7 +173,7 @@ function BookTruck() {
     );
     navigate("/checkout");
   };
-  
+
   // function to fetch vehicle and goods
   const fetchVehicles = () => {
     dispatch(getVehicle());
@@ -464,6 +466,8 @@ function BookTruck() {
               onChange={(e) => {
                 distance.current.value = e.target.value;
                 console.log(distance.current.value);
+                setDistance(true);
+                setInfo(true);
 
                 const rate = vehicleType?.map((v) => {
                   return v.type === vehicle.current.value ? v.initialPrice : 0;
@@ -481,6 +485,11 @@ function BookTruck() {
               }}
             />
             <Box>
+              {info && (
+                <Alert severity="info">
+                  Claculate Distance from below distance calculator
+                </Alert>
+              )}
               {!Distance && (
                 <Alert severity="error">Please Enter Distance !</Alert>
               )}

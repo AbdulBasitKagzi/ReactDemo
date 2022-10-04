@@ -70,6 +70,7 @@ function Checkout() {
   const [error, setError] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   const [errorAlert, setErrorAlert] = React.useState(null);
+
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -101,7 +102,7 @@ function Checkout() {
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
         >
           <Typography component="h1" variant="h4" align="center">
-            Checkout {error ? "true" : "false"}
+            Checkout
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { userSignin } from "../store/authReducer";
+import { userSignin, authAction } from "../store/authReducer";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -151,6 +151,7 @@ function Signin() {
                   setEmail(event.target.value);
                   console.log(email);
                   setuEmail(false);
+                  dispatch(authAction.clearMessage());
                 }}
               />
               {uemail && (
@@ -171,11 +172,12 @@ function Signin() {
                   setPassword(event.target.value);
                   console.log(password);
                   setuPassword(false);
+                  dispatch(authAction.clearMessage());
                 }}
               />
               {upassword && (
                 <p style={{ color: "red", fontSize: 13 }}>
-                  Password should be greater or equal to six characters long
+                  Enter Correct Password
                 </p>
               )}
 

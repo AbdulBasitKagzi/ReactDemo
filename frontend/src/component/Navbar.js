@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authAction } from "../store/authReducer";
 
@@ -29,6 +30,11 @@ const newNavItems = [
   { val: "Home", Link: "/home2" },
   { val: "BookTruck", Link: "/bookTruck" },
 ];
+const adminNavItems = [
+  { val: "Home", Link: "/home2" },
+  { val: "Vehicles", Link: "/admin/vehicles" },
+  { val: "Product", Link: "/admin/products" },
+];
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -36,8 +42,11 @@ function Navbar(props) {
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
   const [value, setValue] = React.useState(token);
-  // const [isLogOut, setIsLogOut] = React.useState(true);
+  const [userRole, setUserRole] = React.useState(role);
+
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
@@ -63,7 +72,20 @@ function Navbar(props) {
           ))}
 
         {value &&
+          userRole === "user" &&
           newNavItems.map((item, index) => (
+            <ListItem key={index} disablePadding>
+              <Link style={{ textDecoration: "none" }} to={item.Link}>
+                <ListItemButton sx={{ textAlign: "center" }}>
+                  <ListItemText primary={item.val} />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+          ))}
+
+        {value &&
+          userRole === "Admin" &&
+          adminNavItems.map((item, index) => (
             <ListItem key={index} disablePadding>
               <Link style={{ textDecoration: "none" }} to={item.Link}>
                 <ListItemButton sx={{ textAlign: "center" }}>
@@ -83,7 +105,9 @@ function Navbar(props) {
                   console.log("sdfd", token);
                   localStorage.removeItem("token");
                   localStorage.removeItem("user");
+                  localStorage.removeItem("role");
                   setValue("");
+                  setUserRole("");
                   navigate("/home2");
                   dispatch(authAction.logOut());
                 }}
@@ -132,7 +156,27 @@ function Navbar(props) {
                 </Link>
               ))}
             {value &&
+              userRole === "user" &&
               newNavItems.map((item, index) => (
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={item.Link}
+                  key={index}
+                >
+                  <Button
+                    sx={{ color: "#fff" }}
+                    onClick={() => {
+                      console.log(`${item.val} page and ${value}`);
+                    }}
+                  >
+                    {item.val}
+                  </Button>
+                </Link>
+              ))}
+
+            {value &&
+              userRole === "Admin" &&
+              adminNavItems.map((item, index) => (
                 <Link
                   style={{ textDecoration: "none" }}
                   to={item.Link}
@@ -157,7 +201,9 @@ function Navbar(props) {
                   console.log("sdfd", token);
                   localStorage.removeItem("token");
                   localStorage.removeItem("user");
+                  localStorage.removeItem("role");
                   setValue("");
+                  setUserRole("");
                   navigate("/home2");
                   dispatch(authAction.logOut());
                 }}

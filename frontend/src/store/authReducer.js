@@ -5,6 +5,7 @@ import axios from "axios";
 let authState = {
   user: "",
   token: "",
+  role: "",
   isLoading: "",
   error: "",
 };
@@ -31,6 +32,7 @@ export const userSignup = createAsyncThunk(
       // setting up token and user
       localStorage.setItem("token", JSON.stringify(token).replaceAll('"', ""));
       localStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem("role", res.data.user.role);
       return res;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data.error);
@@ -55,12 +57,14 @@ export const userSignin = createAsyncThunk(
       );
       console.log("login res", res);
       const token = res.data.token;
+      console.log(res.data.registeredUser.role);
       // setting up token and user
+
       localStorage.setItem("token", JSON.stringify(token).replaceAll('"', ""));
       localStorage.setItem("user", JSON.stringify(res.data.registeredUser));
+      localStorage.setItem("role", res.data.registeredUser.role);
       return res;
     } catch (error) {
-      console.log(error.response.data.error);
       return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
@@ -73,15 +77,22 @@ const authSlice = createSlice({
     logOut(state, action) {
       state.token = "";
       state.user = "";
+      state.role = "";
+    },
+    clearMessage(state, action) {
+      state.error = "";
     },
   },
   extraReducers: {
     // signup
     [userSignup.fulfilled]: (state, action) => {
       state.user = action.payload.data.user;
+      state.role = action.payload.data.user.role;
+
       state.isLoading = false;
-      console.log(action.payload.data.token);
+
       state.token = action.payload.data.token;
+
       state.error = "";
     },
     [userSignup.pending]: (state, action) => {
@@ -89,14 +100,18 @@ const authSlice = createSlice({
     },
     [userSignup.rejected]: (state, action) => {
       state.error = action.payload;
+
       state.isLoading = false;
     },
     // signin
     [userSignin.fulfilled]: (state, action) => {
       state.user = action.payload.data.registeredUser;
+      state.role = action.payload.data.registeredUser.role;
 
       state.isLoading = false;
+
       state.token = action.payload.data.token;
+
       state.error = "";
     },
     [userSignin.pending]: (state, action) => {
@@ -104,6 +119,7 @@ const authSlice = createSlice({
     },
     [userSignin.rejected]: (state, action) => {
       state.isLoading = false;
+
       state.error = action.payload;
     },
   },
