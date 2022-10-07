@@ -79,9 +79,9 @@ function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
-  const [orderData, setOrderData] = React.useState(null);
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.order);
+  const [orderData, setOrderData] = React.useState(data);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -136,6 +136,10 @@ function Checkout() {
                   <Button
                     variant="contained"
                     onClick={() => {
+                      localStorage.setItem(
+                        "orderData",
+                        JSON.stringify(orderData)
+                      );
                       if (activeStep !== 2) {
                         handleNext();
                         dispatch(

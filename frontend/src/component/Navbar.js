@@ -107,6 +107,8 @@ function Navbar(props) {
                   localStorage.removeItem("token");
                   localStorage.removeItem("user");
                   localStorage.removeItem("role");
+                  localStorage.removeItem("abdulOrder");
+                  localStorage.removeItem("orderData");
                   setValue("");
                   setUserRole("");
                   navigate("/home2");
@@ -203,6 +205,8 @@ function Navbar(props) {
                   localStorage.removeItem("token");
                   localStorage.removeItem("user");
                   localStorage.removeItem("role");
+                  localStorage.removeItem("abdulOrder");
+                  localStorage.removeItem("orderData");
                   setValue("");
                   setUserRole("");
                   navigate("/home2");

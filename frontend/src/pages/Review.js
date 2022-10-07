@@ -19,39 +19,42 @@ function Review({ setErrorAlert, errorAlert }) {
   // to use data from redux store
   const { data } = useSelector((state) => state.order);
 
+  const order = JSON.parse(localStorage.getItem("orderData"));
+  console.log("orderData", order);
+
   // objects to use data from {data} to use on this page
   const customers = [
     {
       Customer: "Customer Name",
-      name: `${data.FirstName} ${data.LastName}`,
+      name: `${order.FirstName} ${order.LastName}`,
     },
   ];
 
   const products = [
     {
       GoodsType: "Goods",
-      Goods: `${data.goodsType}`,
+      Goods: `${order.goodsType}`,
       Weight: "Weight",
-      Capacity: `${data.Weight}`,
+      Capacity: `${order.Weight}`,
     },
   ];
   const vehicles = [
     {
       vehicle: "Vehicle",
-      vehicleName: `${data.vehicle}`,
+      vehicleName: `${order.vehicle}`,
     },
   ];
   const price = [
     {
       price: "Amount",
-      amount: `${data.price}`,
+      amount: `${order.price}`,
     },
   ];
 
   const addresses = [
-    `${data.pickUp}`,
-    `${data.destination}`,
-    `${data.deliveryAddress}`,
+    `${order.pickUp}`,
+    `${order.destination}`,
+    `${order.deliveryAddress}`,
   ];
 
   return (

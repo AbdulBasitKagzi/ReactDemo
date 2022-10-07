@@ -100,14 +100,14 @@ function BookTruck() {
   // refs to store value
   const pickUp = React.useRef(null);
   const destination = React.useRef(null);
-  const goodsType = React.useRef(null);
+  const GoodsType = React.useRef(null);
   const vehicle = React.useRef(null);
   const Weight = React.useRef(null);
   const distance = React.useRef(null);
 
   const dispatch = useDispatch();
   const { vehicleType } = useSelector((state) => state.vehicle);
-  const { goods } = useSelector((state) => state.goods);
+  const { goodsType } = useSelector((state) => state.goods);
 
   const navigate = useNavigate();
 
@@ -164,7 +164,21 @@ function BookTruck() {
       orderAction.addOrder({
         pickUp: pickUp.current.value,
         destination: destination.current.value,
-        goodsType: goodsType.current.value,
+        goodsType: GoodsType.current.value,
+        vehicle: vehicle.current.value,
+        Weight: Weight.current.value,
+        distance: distance.current.value,
+        price: price,
+      })
+    );
+    // localStorage.setItem("pickUp", pickUp.current.value);
+    // localStorage.setItem("destination", destination.current.value);
+    localStorage.setItem(
+      "abdulOrder",
+      JSON.stringify({
+        pickUp: pickUp.current.value,
+        destination: destination.current.value,
+        goodsType: GoodsType.current.value,
         vehicle: vehicle.current.value,
         Weight: Weight.current.value,
         distance: distance.current.value,
@@ -360,10 +374,12 @@ function BookTruck() {
             </div>
             <Autocomplete
               freeSolo
-              ref={goodsType}
+              ref={GoodsType}
               id="free-solo-2-demo"
               disableClearable
-              options={goods.map((good) => good.type)}
+              options={goodsType.map((good) => {
+                return good.type;
+              })}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -375,13 +391,13 @@ function BookTruck() {
                     type: "search",
                   }}
                   onChange={(e) => {
-                    goodsType.current.value = e.target.value;
+                    GoodsType.current.value = e.target.value;
                     // console.log(goodsType.current.value);
                   }}
                   onClick={fetchGoods}
                   onSelect={(e) => {
                     setGoodsSelectType(true);
-                    goodsType.current.value = e.target.value;
+                    GoodsType.current.value = e.target.value;
                     // console.log(goodsType.current.value);
                   }}
                 />

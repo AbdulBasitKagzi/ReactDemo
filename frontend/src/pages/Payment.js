@@ -63,7 +63,7 @@ function Payment({ setError, error, setOrderData, orderData }) {
 
     // adding value in orderData object which then used in dispatch
     setOrderData({ ...orderData, expireDate: e.target.value });
-    if (e.target.value.length < 4) {
+    if (e.target.value.length < 4 || !e.target.value.includes("/")) {
       setExpireDateValidation(false);
     } else {
       setExpireDateValidation(true);

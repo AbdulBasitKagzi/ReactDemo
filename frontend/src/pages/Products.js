@@ -6,6 +6,7 @@ import { getGoods, deleteGoods, goodsAction } from "../store/goodsReducer";
 import Navbar from "../component/Navbar";
 
 import MuiAlert from "@mui/material/Alert";
+import Alert from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -16,6 +17,9 @@ import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
+import AddProductModal from "../component/AddProductModal";
+import Snackbar from "@mui/material/Snackbar";
+import Slide from "@mui/material/Slide";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,6 +41,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+// for snackbar
 function Products() {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -46,21 +51,50 @@ function Products() {
   React.useEffect(() => {
     dispatch(getGoods());
 
-    setTimeout(() => {
-      dispatch(goodsAction.clearMessage());
-    }, 3000);
+    // setTimeout(() => {
+    //   dispatch(goodsAction.clearMessage());
+    // }, 3000);
   }, []);
 
+  // for transition of the snackbar
+  function TransitionLeft(props) {
+    return <Slide {...props} direction="left" />;
+  }
 
-  const { goods, update, error } = useSelector((state) => state.goods);
+  const handleClose1 = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    dispatch(goodsAction.clearMessage());
+  };
+
+  const { goodsType, update, error, Delete, open } = useSelector(
+    (state) => state.goods
+  );
+
+  // state to open modal
+  const [modal, setModal] = React.useState(false);
+  const [Open, setOpen] = React.useState(false);
 
   return (
     <div>
       <Navbar />
-      {update && (
-        <Alert severity="success"  sx={{ width: "50%", marginLeft:42 }}>
-          {error}
-        </Alert>
+      {modal && <AddProductModal Open={Open} setOpen={setOpen} />}
+      {Delete && (
+        <Snackbar
+          TransitionComponent={TransitionLeft}
+          open={open}
+          autoHideDuration={3000}
+          onClose={handleClose1}
+        >
+          <Alert
+            onClose={handleClose1}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            {error}
+          </Alert>
+        </Snackbar>
       )}
       <TableContainer>
         <Typography variant="h4" align="center" sx={{ p: 2 }}>
@@ -81,7 +115,7 @@ function Products() {
             </StyledTableRow>
           </TableHead>
           <TableBody sx={{ border: 1 }}>
-            {goods.map((goods, index) => (
+            {goodsType.map((goods, index) => (
               <StyledTableRow
                 key={index}
                 sx={{
@@ -118,6 +152,16 @@ function Products() {
           </TableBody>
         </Table>
       </TableContainer>
+      <Button
+        variant="contained"
+        sx={{ ml: 40, mt: 2, width: "50%" }}
+        onClick={() => {
+          setModal(true);
+          setOpen(true);
+        }}
+      >
+        Add Goods
+      </Button>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import Moment from "react-moment";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -23,14 +24,27 @@ function OrderPage({ setError, orderData, setOrderData }) {
     setValue(newValue);
     // console.log(new Date(value));
   };
+
+  // to get user data and order from localstorage
+  const User = JSON.parse(localStorage.getItem("user"));
+  const orders = JSON.parse(localStorage.getItem("abdulOrder"));
+
   React.useEffect(() => {
     setOrderData({
       ...orderData,
       date: new Date(value).toDateString(),
       time: new Date(value).toISOString(),
-      FirstName: user.FirstName,
-      LastName: user.LastName,
+      FirstName: User.FirstName,
+      LastName: User.LastName,
+      pickUp: orders.pickUp,
+      destination: orders.destination,
+      Weight: orders.Weight,
+      vehicle: orders.vehicle,
+      goodsType: orders.goodsType,
+      distance: orders.distance,
+      price: orders.price,
     });
+
     // eslint-disable-next-line
   }, [value]);
 
@@ -42,10 +56,7 @@ function OrderPage({ setError, orderData, setOrderData }) {
   const [pvalidation, setPValidation] = React.useState(true);
   const [dvalidation, setDValidation] = React.useState(true);
 
-  // data from redux
-  const { user } = useSelector((state) => state.user);
-  const { data } = useSelector((state) => state.order);
-
+  const dummy = (e) => {};
   // validation function
   const Validatior1 = (e) => {
     setpickUpAddress(e.target.value);
@@ -53,11 +64,11 @@ function OrderPage({ setError, orderData, setOrderData }) {
     if (e.target.value.length === 0) {
       setPValidation(false);
       setError(false);
-    } else if (pickUpAddress.length === 0) {
-      setError(false);
-    } else {
+    } else if (e.target.value.length !== 0 && deliveryAddress.length !== 0) {
       setPValidation(true);
       setError(true);
+    } else {
+      setPValidation(true);
     }
 
     // console.log(user);
@@ -70,11 +81,11 @@ function OrderPage({ setError, orderData, setOrderData }) {
     if (e.target.value.length === 0) {
       setDValidation(false);
       setError(false);
-    } else if (deliveryAddress.length === 0) {
-      setError(false);
-    } else {
+    } else if (e.target.value.length !== 0 && pickUpAddress.length !== 0) {
       setDValidation(true);
       setError(true);
+    } else {
+      setDValidation(true);
     }
   };
   return (
@@ -92,7 +103,7 @@ function OrderPage({ setError, orderData, setOrderData }) {
             fullWidth
             autoComplete="given-name"
             variant="standard"
-            value={user.FirstName}
+            value={User.FirstName}
             disabled
           />
         </Grid>
@@ -105,7 +116,7 @@ function OrderPage({ setError, orderData, setOrderData }) {
             fullWidth
             autoComplete="family-name"
             variant="standard"
-            value={user.LastName}
+            value={User.LastName}
             disabled
           />
         </Grid>
@@ -149,7 +160,7 @@ function OrderPage({ setError, orderData, setOrderData }) {
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
-            value={data.pickUp}
+            value={orders.pickUp}
             disabled
           />
         </Grid>
@@ -162,7 +173,7 @@ function OrderPage({ setError, orderData, setOrderData }) {
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
-            value={data.destination}
+            value={orders.destination}
             disabled
           />
         </Grid>

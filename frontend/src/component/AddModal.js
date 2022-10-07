@@ -30,6 +30,7 @@ const style = {
 };
 
 function AddModal(props) {
+  
   // to close the model
   const handleClose = () => props.setOpen(false);
 
