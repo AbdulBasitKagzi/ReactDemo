@@ -5,8 +5,10 @@ const orderState = {
   isLoading: "",
   error: "",
   data: "",
+  orderData: [],
 };
 
+// to add order
 export const order = createAsyncThunk(
   "orderSlice/order",
   async (body, thunkAPI) => {
@@ -25,6 +27,29 @@ export const order = createAsyncThunk(
       return response;
     } catch (error) {
       console.log(error);
+      thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// to get order
+export const getOrder = createAsyncThunk(
+  "orderSlice/getOrder",
+  async (body, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/transportgoodsservice/orders",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("order res---", response);
+      return response;
+    } catch (error) {
+      console.log("get order error----", error);
       thunkAPI.rejectWithValue(error);
     }
   }
@@ -50,6 +75,20 @@ const orderSlice = createSlice({
       state.error = "";
     },
     [order.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [getOrder.fulfilled]: (state, action) => {
+      console.log("getorder fullfilled----", action.payload);
+      state.orderData = action.payload.data;
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [getOrder.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [getOrder.rejected]: (state, action) => {
+      console.log("getorder rejected----", action.payload);
       state.isLoading = false;
       state.error = action.payload;
     },

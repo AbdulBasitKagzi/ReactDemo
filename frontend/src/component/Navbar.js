@@ -34,6 +34,7 @@ const adminNavItems = [
   { val: "Home", Link: "/home2" },
   { val: "Vehicles", Link: "/admin/vehicles" },
   { val: "Product", Link: "/admin/products" },
+  { val: "Orders", Link: "/admin/orders" },
 ];
 function Navbar(props) {
   const { window } = props;

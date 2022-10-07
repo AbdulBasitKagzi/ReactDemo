@@ -8,6 +8,7 @@ import Signup from "./pages/Signup";
 import Error from "./pages/Error";
 import Vehicles from "./pages/Vehicles";
 import Products from "./pages/Products";
+import Order from "./pages/Order";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="*" element={<Error />} />
         <Route path="/admin/vehicles" element={<Vehicles />} />
         <Route path="/admin/products" element={<Products />} />
+        <Route path="/admin/orders" element={<Order/>} />
       </Routes>
     </div>
   );

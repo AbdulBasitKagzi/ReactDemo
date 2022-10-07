@@ -8,6 +8,9 @@ const vehicleState = {
   isLoading: "",
   error: "",
   update: "",
+  Delete: "",
+  add: "",
+  open: "",
 };
 
 const api = process.env.REACT_APP_URL;
@@ -54,18 +57,43 @@ export const deleteVehicle = createAsyncThunk(
       return response;
     } catch (error) {
       console.log("FrontEnd-deletevehicleError", error);
-      thunkApi.rejectWithValue(error);
+      return thunkApi.rejectWithValue(error);
     }
   }
 );
 
-// reducer to get vehicles
+// to add vehicle
+export const addVehicle = createAsyncThunk(
+  "vehicleSlice/addVehicle",
+  async (body, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/transportgoodsservice/addVehicle",
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("addVehicle----res", response);
+      thunkAPI.dispatch(getVehicle());
+      return response;
+    } catch (error) {
+      console.log("addvehiclethunk---rejected", error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+// reducer for vehicles
 const vehicleSlice = createSlice({
   name: "vehicle",
   initialState: vehicleState,
   reducers: {
     clearMessage(state, action) {
       state.update = false;
+      state.open = false;
     },
   },
   extraReducers: {
@@ -85,7 +113,8 @@ const vehicleSlice = createSlice({
       state.error = action.error.message;
     },
     [deleteVehicle.fulfilled]: (state, action) => {
-      state.update = true;
+      state.Delete = true;
+      state.open = true;
       console.log("fullfileed", action.payload);
       state.error = action.payload.data.message;
     },
@@ -94,8 +123,27 @@ const vehicleSlice = createSlice({
     },
     [deleteVehicle.rejected]: (state, action) => {
       console.log("rejected", action.payload);
-      state.update = false;
+      state.Delete = true;
       state.error = action.payload.data.message;
+      state.open = true;
+    },
+    [addVehicle.fulfilled]: (state, action) => {
+      console.log("addVehicle---full", action.payload);
+      state.vehicles = action.payload.data.newVehicle;
+      state.isLoading = false;
+      state.add = true;
+      state.error = action.payload.data.message;
+      state.open = true;
+    },
+    [addVehicle.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [addVehicle.rejected]: (state, action) => {
+      console.log("addVehicle Rejected", action.payload);
+      state.error = action.payload.response.data.message;
+      state.isLoading = false;
+      state.add = false;
+      state.open = true;
     },
   },
 });

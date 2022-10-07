@@ -50,7 +50,8 @@ function Products() {
       dispatch(goodsAction.clearMessage());
     }, 3000);
   }, []);
-  const [refresh, setRefresh] = React.useState(false);
+
+
   const { goods, update, error } = useSelector((state) => state.goods);
 
   return (
