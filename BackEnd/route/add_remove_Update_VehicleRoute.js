@@ -72,7 +72,9 @@ vehicleRoute.post(
         initialPrice,
       });
       success = true;
-      return res.status(200).json({ success, newVehicle });
+      return res
+        .status(200)
+        .json({ success, newVehicle, message: "New vehicle Added" });
     } catch (error) {
       return res.status(500).send("Internal server error");
     }
@@ -117,7 +119,7 @@ vehicleRoute.get(`${api}/getVehicle`, async (req, res) => {
   const findVehicle = await Vehicles.find();
   try {
     if (!findVehicle) {
-      return res.status(400).json({ success, error: "No data found" });
+      return res.status(400).json({ success, message: "No data found" });
     }
     console.log(findVehicle);
     return res.status(200).json({ success, findVehicle });

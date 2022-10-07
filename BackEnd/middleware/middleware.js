@@ -8,7 +8,7 @@ const getUserId = (req, res, next) => {
   console.log("token from middleware", token);
 
   if (!token) {
-    return res.status(400).send("User not logged in");
+    return res.status(400).json({message:"User not logged in"});
   }
   try {
     const userId = jwt.verify(token, secret_key);

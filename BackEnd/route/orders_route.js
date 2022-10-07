@@ -2,7 +2,7 @@ const express = require("express");
 const getUserId = require("../middleware/middleware");
 const customer = require("../model/customerUser");
 const orders = require("../model/order");
-const Vehicles = require("../model/vehicle");
+
 require("dotenv").config({ path: "config.env" });
 
 const orderRoute = express.Router();
@@ -16,6 +16,7 @@ orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
   //   console.log(new Date(date.getFullYear(), date.getMonth(), date.getDate()));
 
   try {
+    // to find user
     const user = await customer.findOne({ _id: req.userId });
     if (!user) return res.status(400).json({ Message: "No user Found" });
     console.log("orderuser", user);
@@ -49,6 +50,7 @@ orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
 
     // const vehicle = await Vehicles.findOne({ type: goodsType });
     // console.log()
+
     //   to create orders
     const order = await orders.create({
       owner: req.userId,
@@ -74,5 +76,25 @@ orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
   // to find user for first name last name and id
+});
+
+// api to get orders
+orderRoute.get(`${api}/orders`, getUserId, async (req, res) => {
+  try {
+    // to find user role
+    const findAdmin = await customer.findOne({ _id: req.userId });
+    console.log("find---", findAdmin);
+    if (findAdmin.role !== "Admin") {
+      return res
+        .status(400)
+        .json({ message: "You are not authorised to view orders detail" });
+    }
+    // to get orders
+    const allOrders = await orders.find();
+    return res.status(200).json(allOrders);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal Server Error", error);
+  }
 });
 module.exports = orderRoute;

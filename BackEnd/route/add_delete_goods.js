@@ -40,7 +40,9 @@ goodsRoute.post(`${api}/addgoods`, getUserId, async (req, res) => {
       type: req.body.type,
     });
     success = true;
-    return res.status(200).json({ success, good });
+    return res
+      .status(200)
+      .json({ success, good, message: "Goods Added Successfully" });
   } catch (error) {
     console.log("addgoodserror", error);
     return res.status(500).send("Internal Server Error");
