@@ -10,39 +10,104 @@ import truck_2 from "../assets/1truck_2.jpg";
 import Box from "@mui/material/Box";
 import truck from "../assets/truck.jpg";
 import { Grid, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 // import Card from "@mui/material/Card";
 // import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 // import Footer from "../component/Footer";
 import Navbar from "../component/Navbar";
 import BasicFooter from "../component/BasicFooter";
+import Paper from "@mui/material/Paper";
 
 function Home2() {
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  }));
   return (
     <div>
       <Navbar />
+      {/* grid  */}
+      {/* <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={6} md={8} lg={12}>
+            <Item>
+              <img src={truck} alt="truck" />
+            </Item>
+ 
+          </Grid>
+          <Grid item xs={6} md={4}>
+            <Item>xs=6 md=4</Item>
+          </Grid>
+          <Grid item xs={6} md={4}>
+            <Item>xs=6 md=4</Item>
+          </Grid>
+          <Grid item xs={6} md={8}>
+            <Item>xs=6 md=8</Item>
+          </Grid>
+        </Grid>
+      </Box> */}
+
       <Box sx={{ mt: -6 }}>
         <img src={truck} alt="truck" />
         <Typography
           variant="h4"
-          sx={{ mt: -40, ml: 30, color: "white", fontSize: 60 }}
+          sx={{
+            mt: -40,
+            ml: {
+              lg: 30,
+              sm: 20,
+            },
+            color: "white",
+            fontSize: {
+              lg: 60,
+              sm: 30,
+            },
+            pl: {
+              sm: 2,
+            },
+          }}
         >
           The Service
           <br /> You can trust
         </Typography>
-        <Typography sx={{ ml: 30, color: "white" }}>
+        <Typography
+          sx={{
+            ml: {
+              lg: 30,
+              sm: 20,
+            },
+            color: "white",
+            fontSize: {
+              sm: 12,
+            },
+          }}
+        >
           "Lorem ipsum dolor sit amet, consectetur adipiscing
           <br /> sed do eiusmod tempor incididunt ut labore et dolo
           <br /> Ut enim ad minim veniam, quis nostrud exercitation
         </Typography>
       </Box>
       <Box display="flex">
-        <Box sx={{ mt: 11, backgroundColor: "gray" }}>
+        <Box className="abdul_box" sx={{ mt: 11, backgroundColor: "gray" }}>
           <Box sx={{ ml: 10 }}>
             <Typography variant="h4" sx={{ ml: 4, color: "black", pt: 5 }}>
               Our Commitment
             </Typography>
-            <Typography sx={{ p: 2 }}>
+            <Typography
+              sx={{
+                p: 2,
+                wordWrap: {
+                  xs: "break-word",
+                },
+                width: {
+                  xs: 10,
+                },
+              }}
+            >
               "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
               accusantium doloremque laudantium, totam rem aperiam, eaq quae ab
               illo inventore veritatis et quasi architecto beatae vitae dicta
@@ -56,11 +121,7 @@ function Home2() {
           </Box>
         </Box>
         <Box>
-          <img
-            src={iTruck}
-            alt="itruck"
-            style={{ width: 700, height: 400, marginTop: 88 }}
-          />
+          <img className="red_truck" src={iTruck} alt="itruck" />
         </Box>
       </Box>
       <Box sx={{ backgroundColor: "yellowgreen" }} display="flex">
@@ -110,7 +171,7 @@ function Home2() {
 
       <Box sx={{ backgroundColor: "gray" }}>
         <Grid container spacing={3} sx={{ width: 1000, ml: 20 }}>
-          <Grid item lg={4}>
+          <Grid item lg={4} xs={12}>
             <CardContent>
               <Typography variant="h5" component="div" sx={{ pb: 2 }}>
                 Why <br />
@@ -177,7 +238,7 @@ function Home2() {
         <Box sx={{ ml: 5 }}>
           <Grid container>
             <Grid item lg={6}>
-              <Box display="flex" sx={{ pb: 2 }}>
+              <Box sx={{ pb: 2, display: { lg: "flex", xs: "block" } }}>
                 <img
                   src={truckArt}
                   alt="truckart"
@@ -189,7 +250,7 @@ function Home2() {
                   type of trucks available with the click of a button.
                 </Typography>
               </Box>
-              <Box display="flex" sx={{ pb: 2 }}>
+              <Box sx={{ pb: 2, display: { lg: "flex", xs: "block" } }}>
                 <img
                   src={employeeArt}
                   alt="truckart"
@@ -201,7 +262,7 @@ function Home2() {
                   type of trucks available with the click of a button.
                 </Typography>
               </Box>
-              <Box display="flex">
+              <Box sx={{ display: { lg: "flex", xs: "block" } }}>
                 <img
                   src={pricingArt}
                   alt="truckart"

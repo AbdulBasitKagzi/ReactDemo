@@ -9,8 +9,10 @@ import Error from "./pages/Error";
 import Vehicles from "./pages/Vehicles";
 import Products from "./pages/Products";
 import Order from "./pages/Order";
+import MainHome from "./pages/MainHome";
 
 function App() {
+  const role = localStorage.getItem("role");
   return (
     <div className="App">
       {/* Making Routes */}
@@ -23,9 +25,11 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/home2" element={<Home2 />} />
         <Route path="*" element={<Error />} />
+
         <Route path="/admin/vehicles" element={<Vehicles />} />
         <Route path="/admin/products" element={<Products />} />
-        <Route path="/admin/orders" element={<Order/>} />
+        <Route path="/admin/orders" element={<Order />} />
+        <Route path="/mainhome" element={<MainHome/>} />
       </Routes>
     </div>
   );
