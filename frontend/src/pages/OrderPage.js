@@ -25,6 +25,10 @@ function OrderPage({ setError, orderData, setOrderData }) {
     // console.log(new Date(value));
   };
 
+  // to get value
+  const [pickUpAddress, setpickUpAddress] = React.useState("");
+  const [deliveryAddress, setdeliveryAddress] = React.useState("");
+
   // to get user data and order from localstorage
   const User = JSON.parse(localStorage.getItem("user"));
   const orders = JSON.parse(localStorage.getItem("abdulOrder"));
@@ -48,15 +52,12 @@ function OrderPage({ setError, orderData, setOrderData }) {
     // eslint-disable-next-line
   }, [value]);
 
-  // to get value
-  const [pickUpAddress, setpickUpAddress] = React.useState("");
-  const [deliveryAddress, setdeliveryAddress] = React.useState("");
-
   // for validation
   const [pvalidation, setPValidation] = React.useState(true);
   const [dvalidation, setDValidation] = React.useState(true);
 
   const dummy = (e) => {};
+
   // validation function
   const Validatior1 = (e) => {
     setpickUpAddress(e.target.value);

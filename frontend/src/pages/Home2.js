@@ -155,17 +155,11 @@ function Home2() {
             Services
           </Typography>
           <Typography sx={{ pb: 3, pt: 3 }}>
-            Lorem Ipsum doler sit amet <hr />
+            Lorem Ipsum doler sit amet ""
           </Typography>
-          <Typography sx={{ pb: 3 }}>
-            Lorem Ipsum doler sit amet <hr />
-          </Typography>
-          <Typography sx={{ pb: 3 }}>
-            Lorem Ipsum doler sit amet <hr />
-          </Typography>
-          <Typography sx={{ pb: 6 }}>
-            Lorem Ipsum doler sit amet <hr />
-          </Typography>
+          <Typography sx={{ pb: 3 }}>Lorem Ipsum doler sit amet ""</Typography>
+          <Typography sx={{ pb: 3 }}>Lorem Ipsum doler sit amet ""</Typography>
+          <Typography sx={{ pb: 6 }}>Lorem Ipsum doler sit amet ""</Typography>
         </Box>
       </Box>
 

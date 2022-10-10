@@ -171,6 +171,7 @@ function Signup() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  sx={{ pb: 1 }}
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -185,12 +186,11 @@ function Signup() {
                     setFirstName(false);
                   }}
                 />
-                {firstName && (
-                  <p style={{ color: "red", fontSize: 13 }}>Enter First Name</p>
-                )}
+                {firstName && <Alert severity="error">Enter First Name</Alert>}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  sx={{ pb: 1 }}
                   required
                   fullWidth
                   id="lastName"
@@ -204,12 +204,11 @@ function Signup() {
                     setLastName(false);
                   }}
                 />
-                {lastName && (
-                  <p style={{ color: "red", fontSize: 13 }}>Enter last Name</p>
-                )}
+                {lastName && <Alert severity="error">Enter Last Name</Alert>}
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  sx={{ pb: 1 }}
                   required
                   fullWidth
                   id="email"
@@ -225,14 +224,11 @@ function Signup() {
                     dispatch(authAction.clearMessage());
                   }}
                 />
-                {email && (
-                  <p style={{ color: " red", fontSize: 13 }}>
-                    Enter valid email
-                  </p>
-                )}
+                {email && <Alert severity="error">Enter email address</Alert>}
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  sx={{ pb: 1 }}
                   required
                   fullWidth
                   name="password"
@@ -248,13 +244,14 @@ function Signup() {
                   }}
                 />
                 {upassword && (
-                  <p style={{ color: "red", fontSize: 13 }}>
-                    Password should be greater or equal to six characters long
-                  </p>
+                  <Alert severity="error">
+                    Password should be greater or equal to 6 characters
+                  </Alert>
                 )}
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  sx={{ pb: 1 }}
                   required
                   fullWidth
                   name="confirmpassword"
@@ -270,9 +267,9 @@ function Signup() {
                   }}
                 />
                 {cpassword && (
-                  <p style={{ color: "red", fontSize: 13 }}>
+                  <Alert severity="error">
                     Password and confirm password must be same
-                  </p>
+                  </Alert>
                 )}
               </Grid>
             </Grid>

@@ -72,14 +72,14 @@ function Signin() {
       password: data.get("password"),
     };
 
-    if (userData.email === "" || !userData.email.includes("@")) {
+    if (userData.email === "") {
       setuEmail(true);
     }
-    if (userData.password === "" || userData.password.length < 6) {
+    if (userData.password === "") {
       setuPassword(true);
     }
 
-    if (email === "" || password === "") {
+    if (userData.email === "" || userData.password === "") {
       console.log("all fields must be filled");
       return;
     }
@@ -155,7 +155,7 @@ function Signin() {
                 }}
               />
               {uemail && (
-                <p style={{ color: " red", fontSize: 13 }}>Enter valid email</p>
+                <Alert severity="error">"Enter registered email"</Alert>
               )}
 
               <TextField
@@ -176,9 +176,7 @@ function Signin() {
                 }}
               />
               {upassword && (
-                <p style={{ color: "red", fontSize: 13 }}>
-                  Enter Correct Password
-                </p>
+                <Alert severity="error">"Enter correct password"</Alert>
               )}
 
               <Button
