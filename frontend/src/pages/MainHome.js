@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../component/Navbar";
+import BasicFooter from "../component/BasicFooter";
 
 import truck from "../assets/truck.jpg";
 import truck_2 from "../assets/1truck_2.jpg";
@@ -7,37 +8,50 @@ import iTruck from "../assets/iTruck.jpg";
 import truckArt from "../assets/artTruck.jpg";
 import employeeArt from "../assets/employee.webp";
 import pricingArt from "../assets/pricing.webp";
+import truck_image from "../assets/img.jpg";
+import truck_image2 from "../assets/img1.webp";
 
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import CardContent from "@mui/material/CardContent";
 import { Typography } from "@mui/material";
-import { fontSize } from "@mui/system";
 
 function MainHome() {
+  // color for navbar #e60023
   return (
     <div>
       <Navbar />
-      <Box>
-        <img src={truck} alt="truck" style={{ width: "100%", height: 400 }} />
+      <Box sx={{ mt: -6 }}>
+        <img
+          src={truck_image}
+          alt="truck"
+          style={{ width: "100%", height: 400 }}
+        />
         <Typography
-          variant="h4"
+          variant="h3"
           sx={{
-            mt: -40,
+            mt: { lg: -35, xs: -28 },
             ml: {
               lg: 10,
-              sm: 5,
+              xs: 2,
             },
+            fontSize: {
+              lg: 60,
+              xs: 30,
+            },
+
             pl: 5,
             wordWrap: "break-word",
             color: "white",
           }}
         >
-          Service You
+          <span style={{ backgroundColor: "#e60023", padding: 5 }}>
+            Service You
+          </span>
           <br /> can Trust
         </Typography>
       </Box>
-      <Typography
+      {/* <Typography
         sx={{
           pl: 5,
           width: 350,
@@ -51,26 +65,27 @@ function MainHome() {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      </Typography>
+      </Typography> */}
       <Box
         sx={{
           mt: {
-            lg: 20,
-            xs: 14,
+            lg: 17,
+            xs: 18,
           },
           justifyContent: "space-between",
-          backgroundColor: "gray",
+
           display: {
             lg: "flex",
             xs: "block",
           },
         }}
       >
-        <Box>
+        <Box sx={{ backgroundColor: " #e60023", color: "#e3e3e5" }}>
           <Typography
             variant="h4"
             sx={{
               p: 2,
+
               ml: {
                 lg: 10,
                 xs: 5,
@@ -86,6 +101,7 @@ function MainHome() {
                 lg: 500,
                 xs: 350,
               },
+              pb: 2,
               ml: {
                 lg: 10,
               },
@@ -104,7 +120,7 @@ function MainHome() {
           </Typography>
         </Box>
         <Box>
-          <img src={truck_2} alt="truck" />
+          <img style={{ width: 750 }} src={truck_image2} alt="truck" />
         </Box>
       </Box>
       <Box
@@ -121,7 +137,8 @@ function MainHome() {
       >
         <Box
           sx={{
-            backgroundColor: "red",
+            backgroundColor: "#232325",
+            color: "#e3e3e5",
           }}
         >
           <Typography
@@ -143,6 +160,7 @@ function MainHome() {
                 xs: 350,
               },
               p: 2,
+              pb: 5,
               ml: {
                 lg: 10,
               },
@@ -159,7 +177,8 @@ function MainHome() {
         </Box>
         <Box
           sx={{
-            backgroundColor: "gray",
+            backgroundColor: "#38383a",
+            color: "#e3e3e5",
             width: {
               lg: 800,
               xs: 380,
@@ -236,7 +255,8 @@ function MainHome() {
             xs: "none",
           },
 
-          backgroundColor: "green",
+          backgroundColor: "#e1e1e1",
+          color: "#0e0e0e",
         }}
       >
         <Box>
@@ -414,6 +434,7 @@ function MainHome() {
           </Grid>
         </Box>
       </Box>
+      <BasicFooter />
     </div>
   );
 }

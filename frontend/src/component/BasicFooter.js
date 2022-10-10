@@ -80,13 +80,13 @@ function BasicFooter() {
   //   );
   return (
     <div>
-      <Box sx={{ backgroundColor: "gray", mt: 5 }}>
+      <Box sx={{ backgroundColor: "#e60023", mt: 5, color: "#e3e3e5" }}>
         <Grid container spacing={4}>
-          <Grid item lg={4}>
-            <Typography variant="h4" sx={{ pb: 2 }}>
+          <Grid item lg={4} xs={12}>
+            <Typography variant="h4" sx={{ pb: 1, ml: 2 }}>
               About Our Company
             </Typography>
-            <Typography>
+            <Typography sx={{ p: 2 }}>
               TruckGuru, a leading transport and logistics service provider is
               introducing a truly innovative, modern and high-tech online
               platform to book the truck in a few simple steps.
@@ -96,27 +96,86 @@ function BasicFooter() {
               exceed industry benchmarks.
             </Typography>
 
-            <Typography varinat="h4" sx={{ p: 2 }}>
+            <Typography variant="h4" sx={{ p: 1, ml: 2 }}>
               Contact Information
             </Typography>
-            <Typography>
+            <Typography sx={{ p: 2 }}>
               Phone : 72020 45678
               <br /> WhatsApp : 7202045678
               <br /> Email : info@truckguru.co.in Office
               <br /> Timing: 09:00 AM to 07:00 PM
             </Typography>
           </Grid>
-          <Grid item lg={4}>
-            <Typography variant="h4" sx={{ pb: 2 }}>
+          <Grid item lg={4} xs={12}>
+            <Typography variant="h4" sx={{ p: 1, ml: 2 }}>
               Quick Links
             </Typography>
-            <Typography>
-              <Link to="/signin">LogIn</Link>
-              <Link to="/signup">Signup</Link>
+            <Typography sx={{ p: 2 }}>
+              <ul
+                style={{
+                  textDecoration: "none",
+                  listStyleType: "none",
+                }}
+              >
+                <li>
+                  <Link
+                    style={{ textDecoration: "none", color: "#e3e3e5" }}
+                    to="/mainhome"
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    style={{ textDecoration: "none", color: "#e3e3e5" }}
+                    to="#"
+                  >
+                    FAQs
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    style={{ textDecoration: "none", color: "#e3e3e5" }}
+                    to="#"
+                  >
+                    Terms and Condition
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    style={{ textDecoration: "none", color: "#e3e3e5" }}
+                    to="#"
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    style={{ textDecoration: "none", color: "#e3e3e5" }}
+                    to="#"
+                  >
+                    Partner With us
+                  </Link>
+                </li>
+              </ul>
             </Typography>
           </Grid>
-          <Grid item lg={4}>
-            hello
+          <Grid item lg={4} xs={12}>
+            <Typography variant="h4" sx={{ p: 1, ml: 2 }}>
+              Our Socials
+            </Typography>
+            <Typography>
+              <Box display="flex" sx={{ p: 2 }}>
+                <i class="fa-brands fa-instagram fa-3x"></i>
+                <Box sx={{ p: 3 }}></Box>
+                <i class="fa-brands fa-facebook fa-3x"></i>
+              </Box>
+              <Box display="flex" sx={{ p: 2 }}>
+                <i class="fa-brands fa-square-twitter fa-3x"></i>
+                <Box sx={{ p: 3 }}></Box>
+                <i class="fa-brands fa-snapchat fa-3x"></i>
+              </Box>
+            </Typography>
           </Grid>
         </Grid>
       </Box>

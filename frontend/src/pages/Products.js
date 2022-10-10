@@ -22,6 +22,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Slide from "@mui/material/Slide";
 
 import UpdateProductModal from "../component/UpdateProductModal";
+import BasicFooter from "../component/BasicFooter";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -198,6 +199,7 @@ function Products() {
       >
         Add Goods
       </Button>
+      <BasicFooter />
     </div>
   );
 }

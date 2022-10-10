@@ -17,7 +17,7 @@ function App() {
     <div className="App">
       {/* Making Routes */}
       <Routes>
-        <Route exact path="/" element={<Navigate to="/home2" />} />
+        <Route exact path="/" element={<Navigate to="/mainhome" />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/home2" element={<Home2 />} />
@@ -29,7 +29,7 @@ function App() {
         <Route path="/admin/vehicles" element={<Vehicles />} />
         <Route path="/admin/products" element={<Products />} />
         <Route path="/admin/orders" element={<Order />} />
-        <Route path="/mainhome" element={<MainHome/>} />
+        <Route path="/mainhome" element={<MainHome />} />
       </Routes>
     </div>
   );

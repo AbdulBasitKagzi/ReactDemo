@@ -128,7 +128,7 @@ function Signup() {
 
   // to prevent user signup without correct credentials
   useEffect(() => {
-    !error && token && navigate("/home2");
+    !error && token && navigate("/mainhome");
     emptyFields();
     // eslint-disable-next-line
   }, [token]);

@@ -20,6 +20,7 @@ import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
+import BasicFooter from "../component/BasicFooter";
 
 // to style table
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -185,6 +186,7 @@ function Vehicles() {
       >
         Add Vehicle
       </Button>
+      <BasicFooter />
     </div>
   );
 }

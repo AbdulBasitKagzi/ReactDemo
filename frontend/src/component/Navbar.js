@@ -22,16 +22,16 @@ import Button from "@mui/material/Button";
 
 const drawerWidth = 240;
 const navItems = [
-  { val: "Home", Link: "/home2" },
+  { val: "Home", Link: "/mainhome" },
   { val: "SignUp", Link: "/signup" },
   { val: "LogIn", Link: "/signin" },
 ];
 const newNavItems = [
-  { val: "Home", Link: "/home2" },
+  { val: "Home", Link: "/mainhome" },
   { val: "BookTruck", Link: "/bookTruck" },
 ];
 const adminNavItems = [
-  { val: "Home", Link: "/home2" },
+  { val: "Home", Link: "/mainhome" },
   { val: "Vehicles", Link: "/admin/vehicles" },
   { val: "Product", Link: "/admin/products" },
   { val: "Orders", Link: "/admin/orders" },
@@ -111,7 +111,7 @@ function Navbar(props) {
                   localStorage.removeItem("orderData");
                   setValue("");
                   setUserRole("");
-                  navigate("/home2");
+                  navigate("/mainhome");
                   dispatch(authAction.logOut());
                 }}
               >
@@ -209,7 +209,7 @@ function Navbar(props) {
                   localStorage.removeItem("orderData");
                   setValue("");
                   setUserRole("");
-                  navigate("/home2");
+                  navigate("/mainhome");
                   dispatch(authAction.logOut());
                 }}
               >

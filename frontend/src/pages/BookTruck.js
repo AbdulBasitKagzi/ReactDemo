@@ -21,6 +21,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { ThemeProvider } from "@emotion/react";
+import BasicFooter from "../component/BasicFooter";
 
 // google maps api to use maps services
 // it will provide use with a varible called is loaded
@@ -574,7 +575,7 @@ function BookTruck() {
           </Stack>
         </Box>
       </div>
-      <Footer />
+      <BasicFooter />
     </>
   );
 }
