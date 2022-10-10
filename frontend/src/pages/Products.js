@@ -21,6 +21,8 @@ import AddProductModal from "../component/AddProductModal";
 import Snackbar from "@mui/material/Snackbar";
 import Slide from "@mui/material/Slide";
 
+import UpdateProductModal from "../component/UpdateProductModal";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -76,10 +78,26 @@ function Products() {
   const [modal, setModal] = React.useState(false);
   const [Open, setOpen] = React.useState(false);
 
+  const [updateModal, setUpdateModal] = React.useState(false);
+  const [updateOpen, setUpdateOpen] = React.useState(false);
+
+  const [type, setType] = React.useState();
+  const [id, setId] = React.useState();
   return (
     <div>
       <Navbar />
+      {updateModal && (
+        <UpdateProductModal
+          Open={updateOpen}
+          setOpen={setUpdateOpen}
+          type={type}
+          setType={setType}
+          id={id}
+        />
+      )}
       {modal && <AddProductModal Open={Open} setOpen={setOpen} />}
+
+      {/* to show alert */}
       {Delete && (
         <Snackbar
           TransitionComponent={TransitionLeft}
@@ -107,11 +125,17 @@ function Products() {
         >
           <TableHead sx={{ border: 1 }}>
             <StyledTableRow sx={{ border: 1 }}>
-              <StyledTableCell align="center">No.</StyledTableCell>
+              <StyledTableCell align="center" sx={{ border: 1 }}>
+                No.
+              </StyledTableCell>
 
               <StyledTableCell align="center" sx={{ border: 1 }}>
                 Type
               </StyledTableCell>
+              <StyledTableCell
+                align="center"
+                sx={{ border: 1 }}
+              ></StyledTableCell>
             </StyledTableRow>
           </TableHead>
           <TableBody sx={{ border: 1 }}>
@@ -145,6 +169,18 @@ function Products() {
                     }}
                   >
                     Delete
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setUpdateModal(true);
+                      setUpdateOpen(true);
+
+                      console.log(goodsType[index].type);
+                      setType(goodsType[index].type);
+                      setId(goodsType[index]._id);
+                    }}
+                  >
+                    Update
                   </Button>
                 </StyledTableCell>
               </StyledTableRow>

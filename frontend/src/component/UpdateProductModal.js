@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addGoods, goodsAction } from "../store/goodsReducer";
+import { goodsAction } from "../store/goodsReducer";
 
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import { updateGoods } from "../store/goodsReducer";
 
 const style = {
   position: "absolute",
@@ -25,16 +26,9 @@ const style = {
   p: 4,
 };
 
-export default function AddProductModal(props) {
-  //   const [open, setOpen] = React.useState(false);
-
-  //   to close the modal
+export default function UpdateProductModal(props) {
   const handleClose = () => props.setOpen(false);
 
-  const dispatch = useDispatch();
-  const { open, add, error } = useSelector((state) => state.goods);
-
-  // for snackbar
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
@@ -46,6 +40,10 @@ export default function AddProductModal(props) {
   });
   const { vertical, horizontal } = state;
 
+  const dispatch = useDispatch();
+  const { update, updateMessage, open } = useSelector((state) => state.goods);
+
+  //   to close the alert
   const handleClose1 = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -54,26 +52,19 @@ export default function AddProductModal(props) {
     setState({ ...state, open: false });
   };
 
-  //   to get value
-  const [type, setType] = React.useState("");
-
   //   for validation
   const [typeError, setTypeError] = React.useState(true);
 
-  //   to handle validation and dispatch
   const handleSubmit = () => {
-    if (type === "") {
+    if (props.type === "") {
       setTypeError(false);
       return;
     }
-    dispatch(addGoods({ type }));
-
-    setType("");
+    dispatch(updateGoods({ id: props.id, type: props.type }));
   };
 
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -93,9 +84,9 @@ export default function AddProductModal(props) {
               component="h2"
               sx={{ ml: "35%" }}
             >
-              Add Product
+              Update Product
             </Typography>
-            {add && (
+            {update && (
               <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
                 open={open}
@@ -108,11 +99,11 @@ export default function AddProductModal(props) {
                   severity="success"
                   sx={{ width: "100%" }}
                 >
-                  {error}
+                  {updateMessage}
                 </Alert>
               </Snackbar>
             )}
-            {add === false && (
+            {/* {add === false && (
               <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
                 open={open}
@@ -128,16 +119,17 @@ export default function AddProductModal(props) {
                   {error}
                 </Alert>
               </Snackbar>
-            )}
+            )} */}
             <Box>
               <TextField
                 sx={{ ml: 12, mt: 2 }}
                 id="type"
                 name="type"
                 label="Enter goods Type"
-                value={type}
+                value={props.type}
                 onChange={(e) => {
-                  setType(e.target.value);
+                  props.setType(e.target.value);
+                  console.log(props.type);
                   setTypeError(true);
 
                   if (e.target.value === "") {

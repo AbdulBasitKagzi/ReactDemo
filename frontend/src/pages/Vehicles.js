@@ -133,6 +133,10 @@ function Vehicles() {
               <StyledTableCell align="center" sx={{ border: 1 }}>
                 InitialPrice
               </StyledTableCell>
+              <StyledTableCell
+                align="center"
+                sx={{ border: 1 }}
+              ></StyledTableCell>
             </StyledTableRow>
           </TableHead>
           <TableBody>

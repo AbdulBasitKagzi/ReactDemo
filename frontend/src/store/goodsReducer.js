@@ -8,6 +8,7 @@ const goodsState = {
   isLoading: "",
   error: "",
   update: "",
+  updateMessage: "",
   Delete: "",
   add: "",
   open: "",
@@ -50,7 +51,7 @@ export const deleteGoods = createAsyncThunk(
       return response;
     } catch (error) {
       console.log("delete goods rejectwith value error", error);
-      thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -71,10 +72,36 @@ export const addGoods = createAsyncThunk(
         }
       );
       console.log("addGoods--res", response);
+
       thunkAPI.dispatch(getGoods());
       return response;
     } catch (error) {
       console.log("rejectwith--Error--addGoods", error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// to update goods
+export const updateGoods = createAsyncThunk(
+  "goodsSlice/updateGood",
+  async (body, thunkAPI) => {
+    try {
+      console.log("-----", body.id);
+      const response = await axios.patch(
+        `http://localhost:5000/transportgoodsservice/updateGoods/${body.id}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      thunkAPI.dispatch(getGoods());
+      return response;
+    } catch (error) {
+      console.log("updateGoods thunk error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -88,6 +115,7 @@ const goodsSlice = createSlice({
     clearMessage(state, action) {
       state.update = false;
       state.open = false;
+      state.Delete = false;
     },
   },
   extraReducers: {
@@ -121,14 +149,12 @@ const goodsSlice = createSlice({
       console.log("errorpayload", action.payload);
       state.error = action.payload;
       state.Delete = false;
-      state.open = true
+      state.open = true;
     },
     [addGoods.fulfilled]: (state, action) => {
       state.add = true;
       state.isLoading = false;
-      console.log("addGoods===full", action.payload);
       state.goods = action.payload.data.good;
-      console.log("fulfilled", state.goods);
       state.open = true;
       state.error = action.payload.data.message;
     },
@@ -138,8 +164,20 @@ const goodsSlice = createSlice({
     [addGoods.rejected]: (state, action) => {
       console.log(action.payload);
       state.add = false;
-      state.open = "true";
+      state.open = true;
       state.error = action.payload.response.data.message;
+    },
+    [updateGoods.fulfilled]: (state, action) => {
+      state.update = true;
+      state.updateMessage = action.payload.data.message;
+      state.open = true;
+    },
+    [updateGoods.rejected]: (state, action) => {
+      state.isLoading = true;
+    },
+    [updateGoods.rejected]: (state, action) => {
+      console.log("update_rejected", action.payload);
+      state.update = false;
     },
   },
 });
