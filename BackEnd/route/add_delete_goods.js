@@ -1,4 +1,5 @@
 const express = require("express");
+const { type } = require("os");
 const getUserId = require("../middleware/middleware");
 const customer = require("../model/customerUser");
 const goods = require("../model/goods");
@@ -84,4 +85,39 @@ goodsRoute.delete(`${api}/deletegoods/:id`, getUserId, async (req, res) => {
   }
 });
 
+// to update goods
+goodsRoute.patch(`${api}/updateGoods/:id`, getUserId, async (req, res) => {
+  const id = req.params.id;
+  let success = false;
+  try {
+    const findGoods = await goods.findOne({ _id: id });
+    if (!findGoods)
+      return res.status(400).json({ success, message: "Goods not found" });
+
+    if (JSON.stringify(req.userId) !== JSON.stringify(findGoods.owner)) {
+      return res
+        .status(400)
+        .json({ success, message: "Not eligible to delete" });
+    } else {
+      if (req.body.type === "") {
+        return res.status(400).json({ message: "Update Type is required" });
+      }
+      const updatedGood = await goods.findByIdAndUpdate(
+        { _id: id },
+        {
+          type: req.body.type,
+        },
+        {
+          new: true,
+        }
+      );
+      success = true;
+      return res
+        .status(200)
+        .json({ success, message: "Good Updated", updatedGood });
+    }
+  } catch (error) {
+    return res.status(500).send("Internal Server Error");
+  }
+});
 module.exports = goodsRoute;

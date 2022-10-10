@@ -24,9 +24,9 @@ customerUserRoute.post(
     body("LastName", "Enter valid LastName").not().isEmpty(),
     body("email", "Enter valid Email").isEmail(),
     // password must be at least 5 chars long
-    body("password", "Password must be 5 characters long").isLength({ min: 5 }),
-    body("confirmPassword", "Password must be 5 characters long").isLength({
-      min: 5,
+    body("password", "Password must be 6 characters long").isLength({ min: 6 }),
+    body("confirmPassword", "Password must be 6 characters long").isLength({
+      min: 6,
     }),
   ],
   async (req, res) => {
@@ -104,8 +104,8 @@ customerUserRoute.post(
   [
     body("email", "Enter valid Email").isEmail(),
 
-    // password must be at least 5 chars long
-    body("password", "Password must be 5 characters long").isLength({ min: 5 }),
+    // password must be at least 6 chars long
+    // body("password", "Password must be 6 characters long").isLength({ min: 6 }),
   ],
   async (req, res) => {
     success = false;
