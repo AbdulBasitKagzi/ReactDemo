@@ -8,6 +8,7 @@ const vehicleState = {
   isLoading: "",
   error: "",
   update: "",
+  updateMessage: "",
   Delete: "",
   add: "",
   open: "",
@@ -86,6 +87,31 @@ export const addVehicle = createAsyncThunk(
     }
   }
 );
+
+// to update vehicle
+export const updateVehicles = createAsyncThunk(
+  "/vehicleSlice/updateVehicles",
+  async (body, thunkAPI) => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:5000/transportgoodsservice/updateVehicle/${body.id}`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("updateVehicle", response);
+      return response;
+    } catch (error) {
+      console.log("thunk reject error", error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // reducer for vehicles
 const vehicleSlice = createSlice({
   name: "vehicle",
@@ -143,6 +169,23 @@ const vehicleSlice = createSlice({
       state.error = action.payload.response.data.message;
       state.isLoading = false;
       state.add = false;
+      state.open = true;
+    },
+    [updateVehicles.fulfilled]: (state, action) => {
+      console.log("update fulfilled", action.payload);
+      state.update = true;
+      state.updateMessage = action.payload.data.message;
+      state.isLoading = false;
+      state.open = true;
+    },
+    [updateVehicles.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [updateVehicles.rejected]: (state, action) => {
+      console.log("update rejected", action.payload.response.data.message);
+      state.update = false;
+      state.updateMessage = action.payload.response.data.message;
+      state.isLoading = false;
       state.open = true;
     },
   },

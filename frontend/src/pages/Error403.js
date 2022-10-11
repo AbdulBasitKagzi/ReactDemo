@@ -1,13 +1,18 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-import error_truck from "../assets/error_truck.webp";
+import error_403 from "../assets/403_error.png";
 
 import Box from "@mui/material/Box";
-function Error() {
+
+function Error403() {
   return (
     <div>
-      <img src={error_truck} alt="error_truck" />
+      <img
+        src={error_403}
+        alt="error_truck"
+        style={{ width: "100%", height: "100%" }}
+      />
       <Box sx={{ mt: -20, ml: 70 }}>
         <Link to="/mainhome">Go to Home</Link>
       </Box>
@@ -15,4 +20,4 @@ function Error() {
   );
 }
 
-export default Error;
+export default Error403;

@@ -91,7 +91,7 @@ function Signin() {
   // to prevent user login without correct credentials
   useEffect(() => {
     console.log(token);
-    !error && token && navigate("/mainhome");
+    !error && token && navigate("/");
     emptyFields();
     // eslint-disable-next-line
   }, [token]);

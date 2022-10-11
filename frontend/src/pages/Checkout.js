@@ -5,6 +5,7 @@ import OrderPage from "./OrderPage";
 import NavBar from "../component/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { order } from "../store/orderReducer";
+import emailjs from "@emailjs/browser";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
@@ -61,7 +62,13 @@ function Checkout() {
         );
 
       case 2:
-        return <Review setAlertError={setErrorAlert} errorAlert={errorAlert} />;
+        return (
+          <Review
+            setAlertError={setErrorAlert}
+            errorAlert={errorAlert}
+            sendEmail={sendEmail}
+          />
+        );
       default:
         throw new Error("Unknown step");
     }
@@ -82,6 +89,29 @@ function Checkout() {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.order);
   const [orderData, setOrderData] = React.useState(data);
+  const orders = JSON.parse(localStorage.getItem("orderData"));
+  console.log("order", orders);
+
+  const templateParams = {
+    pickUp: orders.pickUp,
+    destination: orders.destination,
+    goods: orders.goodsType,
+    vehicle: orders.vehicle,
+    amount: orders.price,
+    note: `The truck will be at your door step on ${order.date} at ${order.time}`,
+  };
+  const sendEmail = (e) => {
+    emailjs
+      .send(
+        "service_xyhz50h",
+        "template_44ddzvu",
+        templateParams,
+        "pzqzsz34NbZltbo-B"
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -153,6 +183,7 @@ function Checkout() {
                         // tod0:main api call
                         dispatch(order(data));
                         setErrorAlert(true);
+                        sendEmail();
                       }
 
                       if (activeStep === 1) {

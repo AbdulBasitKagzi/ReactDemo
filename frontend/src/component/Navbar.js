@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -22,16 +22,16 @@ import Button from "@mui/material/Button";
 
 const drawerWidth = 240;
 const navItems = [
-  { val: "Home", Link: "/mainhome" },
+  { val: "Home", Link: "/" },
   { val: "SignUp", Link: "/signup" },
   { val: "LogIn", Link: "/signin" },
 ];
 const newNavItems = [
-  { val: "Home", Link: "/mainhome" },
-  { val: "BookTruck", Link: "/bookTruck" },
+  { val: "Home", Link: "/" },
+  { val: "BookTruck", Link: "/user/bookTruck" },
 ];
 const adminNavItems = [
-  { val: "Home", Link: "/mainhome" },
+  { val: "Home", Link: "/" },
   { val: "Vehicles", Link: "/admin/vehicles" },
   { val: "Product", Link: "/admin/products" },
   { val: "Orders", Link: "/admin/orders" },
@@ -42,6 +42,7 @@ function Navbar(props) {
 
   const dispatch = useDispatch();
 
+  // getting data from local storage
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
 
@@ -64,11 +65,11 @@ function Navbar(props) {
         {!value &&
           navItems.map((item, index) => (
             <ListItem key={index} disablePadding>
-              <Link style={{ textDecoration: "none" }} to={item.Link}>
+              <NavLink style={{ textDecoration: "none" }} to={item.Link}>
                 <ListItemButton sx={{ textAlign: "center" }}>
                   <ListItemText primary={item.val} />
                 </ListItemButton>
-              </Link>
+              </NavLink>
             </ListItem>
           ))}
 
@@ -76,11 +77,11 @@ function Navbar(props) {
           userRole === "user" &&
           newNavItems.map((item, index) => (
             <ListItem key={index} disablePadding>
-              <Link style={{ textDecoration: "none" }} to={item.Link}>
+              <NavLink style={{ textDecoration: "none" }} to={item.Link}>
                 <ListItemButton sx={{ textAlign: "center" }}>
                   <ListItemText primary={item.val} />
                 </ListItemButton>
-              </Link>
+              </NavLink>
             </ListItem>
           ))}
 
@@ -88,11 +89,11 @@ function Navbar(props) {
           userRole === "Admin" &&
           adminNavItems.map((item, index) => (
             <ListItem key={index} disablePadding>
-              <Link style={{ textDecoration: "none" }} to={item.Link}>
+              <NavLink style={{ textDecoration: "none" }} to={item.Link}>
                 <ListItemButton sx={{ textAlign: "center" }}>
                   <ListItemText primary={item.val} />
                 </ListItemButton>
-              </Link>
+              </NavLink>
             </ListItem>
           ))}
 
@@ -111,7 +112,7 @@ function Navbar(props) {
                   localStorage.removeItem("orderData");
                   setValue("");
                   setUserRole("");
-                  navigate("/mainhome");
+                  navigate("/");
                   dispatch(authAction.logOut());
                 }}
               >
@@ -129,8 +130,8 @@ function Navbar(props) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <AppBar component="nav">
-        <Toolbar sx={{ color: "red" }}>
+      <AppBar component="nav" sx={{ backgroundColor: "#e00029" }}>
+        <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -143,25 +144,28 @@ function Navbar(props) {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", sm: "block", color: "white" },
+            }}
           >
             Kagzi Transports
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {!value &&
               navItems.map((item, index) => (
-                <Link
+                <NavLink
                   style={{ textDecoration: "none" }}
                   to={item.Link}
                   key={index}
                 >
                   <Button sx={{ color: "#fff" }}>{item.val}</Button>
-                </Link>
+                </NavLink>
               ))}
             {value &&
               userRole === "user" &&
               newNavItems.map((item, index) => (
-                <Link
+                <NavLink
                   style={{ textDecoration: "none" }}
                   to={item.Link}
                   key={index}
@@ -174,13 +178,13 @@ function Navbar(props) {
                   >
                     {item.val}
                   </Button>
-                </Link>
+                </NavLink>
               ))}
 
             {value &&
               userRole === "Admin" &&
               adminNavItems.map((item, index) => (
-                <Link
+                <NavLink
                   style={{ textDecoration: "none" }}
                   to={item.Link}
                   key={index}
@@ -193,10 +197,10 @@ function Navbar(props) {
                   >
                     {item.val}
                   </Button>
-                </Link>
+                </NavLink>
               ))}
             {value && (
-              // <Link style={{ textDecoration: "none" }} to="#">
+              // <NavLink style={{ textDecoration: "none" }} to="#">
               <Button
                 sx={{ color: "#fff" }}
                 onClick={() => {
@@ -209,13 +213,13 @@ function Navbar(props) {
                   localStorage.removeItem("orderData");
                   setValue("");
                   setUserRole("");
-                  navigate("/mainhome");
+                  navigate("/");
                   dispatch(authAction.logOut());
                 }}
               >
                 Log Out
               </Button>
-              // </Link>
+              // </NavLink>
             )}
           </Box>
         </Toolbar>

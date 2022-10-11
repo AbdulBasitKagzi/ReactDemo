@@ -6,6 +6,7 @@ import { deleteVehicle, vehicleAction } from "../store/vehicleReducer";
 
 import Navbar from "../component/Navbar";
 import AddModal from "../component/AddModal";
+import UpdateVehicleModal from "../component/UpdateVehicleModal";
 
 import Slide from "@mui/material/Slide";
 import MuiAlert from "@mui/material/Alert";
@@ -73,11 +74,16 @@ function Vehicles() {
     return <Slide {...props} direction="left" />;
   }
 
-  // state to open modal
+  // state to open addvehicle modal
   const [modal, setModal] = React.useState(false);
 
   // this state is passed as a prop to open modal
   const [Open, setOpen] = React.useState(false);
+
+  // state to open update vehicle modal
+  const [updateModal, setUpdateModal] = React.useState(false);
+  const [updateOpen, setUpdateOpen] = React.useState(false);
+  const [value, setValue] = React.useState();
 
   // data from redux
   const { vehicleType, update, error, Delete, open } = useSelector(
@@ -91,6 +97,17 @@ function Vehicles() {
         <AddModal
           setOpen={setOpen}
           open={Open}
+          typeLabel="type"
+          vnumberLabel={"vNumber"}
+          capacityLabel={"capacity"}
+          initialpriceLabel={"initialPrice"}
+        />
+      )}
+      {updateModal && (
+        <UpdateVehicleModal
+          update={updateOpen}
+          setUpdateOpen={setUpdateOpen}
+          value={value}
           typeLabel="type"
           vnumberLabel={"vNumber"}
           capacityLabel={"capacity"}
@@ -169,6 +186,16 @@ function Vehicles() {
                     }}
                   >
                     Delete
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setUpdateModal(true);
+                      setUpdateOpen(true);
+                      setValue(vehicleType[index]);
+                      console.log(vehicleType[index]);
+                    }}
+                  >
+                    Update
                   </Button>
                 </StyledTableCell>
               </StyledTableRow>

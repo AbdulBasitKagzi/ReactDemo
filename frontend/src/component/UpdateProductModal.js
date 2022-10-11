@@ -103,7 +103,7 @@ export default function UpdateProductModal(props) {
                 </Alert>
               </Snackbar>
             )}
-            {/* {add === false && (
+            {update === false && (
               <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
                 open={open}
@@ -116,10 +116,10 @@ export default function UpdateProductModal(props) {
                   severity="error"
                   sx={{ width: "100%" }}
                 >
-                  {error}
+                  {updateMessage}
                 </Alert>
               </Snackbar>
-            )} */}
+            )}
             <Box>
               <TextField
                 sx={{ ml: 12, mt: 2 }}

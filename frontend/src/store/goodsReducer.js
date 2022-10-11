@@ -178,6 +178,8 @@ const goodsSlice = createSlice({
     [updateGoods.rejected]: (state, action) => {
       console.log("update_rejected", action.payload);
       state.update = false;
+      state.updateMessage = action.payload.response.data.message;
+      state.open = true;
     },
   },
 });

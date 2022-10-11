@@ -56,19 +56,19 @@ function BasicFooter() {
   //                 <div style={{ paddingLeft: 25 }}>
   //                   <i
   //                     style={{ paddingLeft: 25 }}
-  //                     class="fa-brands fa-instagram fa-xl"
+  //                     className="fa-brands fa-instagram fa-xl"
   //                   ></i>
   //                   <i
   //                     style={{ paddingLeft: 25 }}
-  //                     class="fa-brands fa-facebook fa-xl"
+  //                     className="fa-brands fa-facebook fa-xl"
   //                   ></i>
   //                   <i
   //                     style={{ paddingLeft: 25 }}
-  //                     class="fa-brands fa-twitter fa-xl"
+  //                     className="fa-brands fa-twitter fa-xl"
   //                   ></i>
   //                   <i
   //                     style={{ paddingLeft: 25 }}
-  //                     class="fa-brands fa-snapchat fa-xl"
+  //                     className="fa-brands fa-snapchat fa-xl"
   //                   ></i>
   //                 </div>
   //               </div>
@@ -110,72 +110,70 @@ function BasicFooter() {
             <Typography variant="h4" sx={{ p: 1, ml: 2 }}>
               Quick Links
             </Typography>
-            <Typography sx={{ p: 2 }}>
-              <ul
-                style={{
-                  textDecoration: "none",
-                  listStyleType: "none",
-                }}
-              >
-                <li>
-                  <Link
-                    style={{ textDecoration: "none", color: "#e3e3e5" }}
-                    to="/mainhome"
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    style={{ textDecoration: "none", color: "#e3e3e5" }}
-                    to="#"
-                  >
-                    FAQs
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    style={{ textDecoration: "none", color: "#e3e3e5" }}
-                    to="#"
-                  >
-                    Terms and Condition
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    style={{ textDecoration: "none", color: "#e3e3e5" }}
-                    to="#"
-                  >
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    style={{ textDecoration: "none", color: "#e3e3e5" }}
-                    to="#"
-                  >
-                    Partner With us
-                  </Link>
-                </li>
-              </ul>
-            </Typography>
+
+            <ul
+              style={{
+                textDecoration: "none",
+                listStyleType: "none",
+              }}
+            >
+              <li>
+                <Link
+                  style={{ textDecoration: "none", color: "#e3e3e5" }}
+                  to="/mainhome"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  style={{ textDecoration: "none", color: "#e3e3e5" }}
+                  to="#"
+                >
+                  FAQs
+                </Link>
+              </li>
+              <li>
+                <Link
+                  style={{ textDecoration: "none", color: "#e3e3e5" }}
+                  to="#"
+                >
+                  Terms and Condition
+                </Link>
+              </li>
+              <li>
+                <Link
+                  style={{ textDecoration: "none", color: "#e3e3e5" }}
+                  to="#"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  style={{ textDecoration: "none", color: "#e3e3e5" }}
+                  to="#"
+                >
+                  Partner With us
+                </Link>
+              </li>
+            </ul>
           </Grid>
           <Grid item lg={4} xs={12}>
             <Typography variant="h4" sx={{ p: 1, ml: 2 }}>
               Our Socials
             </Typography>
-            <Typography>
-              <Box display="flex" sx={{ p: 2 }}>
-                <i class="fa-brands fa-instagram fa-3x"></i>
-                <Box sx={{ p: 3 }}></Box>
-                <i class="fa-brands fa-facebook fa-3x"></i>
-              </Box>
-              <Box display="flex" sx={{ p: 2 }}>
-                <i class="fa-brands fa-square-twitter fa-3x"></i>
-                <Box sx={{ p: 3 }}></Box>
-                <i class="fa-brands fa-snapchat fa-3x"></i>
-              </Box>
-            </Typography>
+
+            <Box display="flex" sx={{ p: 2 }}>
+              <i className="fa-brands fa-instagram fa-3x"></i>
+              <Box sx={{ p: 3 }}></Box>
+              <i className="fa-brands fa-facebook fa-3x"></i>
+            </Box>
+            <Box display="flex" sx={{ p: 2 }}>
+              <i className="fa-brands fa-square-twitter fa-3x"></i>
+              <Box sx={{ p: 3 }}></Box>
+              <i className="fa-brands fa-snapchat fa-3x"></i>
+            </Box>
           </Grid>
         </Grid>
       </Box>

@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 
+import emailjs from "@emailjs/browser";
+
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -15,12 +17,24 @@ import Alert from "@mui/material/Alert";
 //   { name: "Expiry date", detail: "04/2024" },
 // ];
 
-function Review({ setErrorAlert, errorAlert }) {
+function Review({ setErrorAlert, errorAlert, sendEmail }) {
   // to use data from redux store
   const { data } = useSelector((state) => state.order);
 
   const order = JSON.parse(localStorage.getItem("orderData"));
   console.log("orderData", order);
+
+  // const sendEmail = (e) => {
+  //   emailjs
+  //     .sendForm(
+  //       "service_xyhz50h",
+  //       "template_44ddzvu",
+  //       e.target,
+  //       "qC3CfL1PeFwzfG5aTOysy"
+  //     )
+  //     .then((res) => console.log(res))
+  //     .catch((err) => console.log(err));
+  // };
 
   // objects to use data from {data} to use on this page
   const customers = [
@@ -62,48 +76,53 @@ function Review({ setErrorAlert, errorAlert }) {
       <Typography variant="h4" gutterBottom>
         Order summary
       </Typography>
-      <List disablePadding>
-        {customers.map((customer) => (
-          <ListItem key={customer.Customer} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={customer.Customer} />
-            <Typography variant="body2">{customer.name}</Typography>
-          </ListItem>
-        ))}
+      <form onSubmit={sendEmail}>
+        <List disablePadding>
+          {customers.map((customer) => (
+            <ListItem key={customer.Customer} sx={{ py: 1, px: 0 }}>
+              <ListItemText primary={customer.Customer} />
+              <Typography variant="body2" name="name">
+                {customer.name}
+              </Typography>
+            </ListItem>
+          ))}
 
-        {products.map((product) => (
-          <ListItem key={product.Goods} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.GoodsType} />
-            <Typography variant="body2">{product.Goods}</Typography>
-          </ListItem>
-        ))}
+          {products.map((product) => (
+            <ListItem key={product.Goods} sx={{ py: 1, px: 0 }}>
+              <ListItemText primary={product.GoodsType} />
+              <Typography variant="body2" name="product">{product.Goods}</Typography>
+            </ListItem>
+          ))}
 
-        {products.map((product) => (
-          <ListItem key={product.Weight} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.Weight} />
-            <Typography variant="body2">{product.Capacity}</Typography>
-          </ListItem>
-        ))}
+          {products.map((product) => (
+            <ListItem key={product.Weight} sx={{ py: 1, px: 0 }}>
+              <ListItemText primary={product.Weight} />
+              <Typography variant="body2" name="capacity">{product.Capacity}</Typography>
+            </ListItem>
+          ))}
 
-        {vehicles.map((vehicle) => (
-          <ListItem key={vehicle.vehicle} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={vehicle.vehicle} />
-            <Typography variant="body2">{vehicle.vehicleName}</Typography>
-          </ListItem>
-        ))}
+          {vehicles.map((vehicle) => (
+            <ListItem key={vehicle.vehicle} sx={{ py: 1, px: 0 }}>
+              <ListItemText primary={vehicle.vehicle} />
+              <Typography variant="body2" name="vehicle">{vehicle.vehicleName}</Typography>
+            </ListItem>
+          ))}
 
-        {price.map((price) => (
-          <ListItem key={price.price} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={price.price} />
-            <Typography variant="body2"> $ {price.amount}</Typography>
-          </ListItem>
-        ))}
-        {/* <ListItem sx={{ py: 1, px: 0 }}>
+          {price.map((price) => (
+            <ListItem key={price.price} sx={{ py: 1, px: 0 }}>
+              <ListItemText primary={price.price} />
+              <Typography variant="body2" name="amount"> $ {price.amount}</Typography>
+            </ListItem>
+          ))}
+
+          {/* <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
             $34.06
           </Typography>
         </ListItem> */}
-      </List>
+        </List>
+      </form>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h4" gutterBottom sx={{ mt: 2 }}>
