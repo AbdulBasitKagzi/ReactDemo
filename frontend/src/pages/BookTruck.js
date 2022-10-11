@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
-import Footer from "../component/Footer";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getVehicle } from "../store/vehicleReducer";
 import { getGoods } from "../store/goodsReducer";
 import { orderAction } from "../store/orderReducer";
 
-// import InputLabel from "@mui/material/InputLabel";
+import "./BookTruck.css";
+
+import { Paper } from "@mui/material";
 import { createTheme } from "@mui/material";
 import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -209,7 +211,7 @@ function BookTruck() {
         price: price,
       })
     );
-    navigate("/checkout");
+    navigate("/user/checkout");
   };
 
   // function to fetch vehicle and goods
@@ -246,335 +248,361 @@ function BookTruck() {
   return (
     <>
       <Navbar />
-      <Box sx={{ backgroundColor: "whitesmoke" }}>
+      <Box sx={{ backgroundColor: "whitesmoke", mt: -6, pt: 5 }}>
         <ThemeProvider theme={theme}>
           <Typography
-            variant="h1"
+            variant="h3"
             sx={{
               textAlign: "center",
-              color: "lightBlue",
-              fontFamily: "Helvetica Neue",
+              color: "black",
+              fontFamily: "Roboto ",
             }}
           >
-            Book Truck
+            <span
+              style={{ color: "white", backgroundColor: "#e00029", padding: 5 }}
+            >
+              Book
+            </span>{" "}
+            Vehicle
           </Typography>
         </ThemeProvider>
-      </Box>
 
-      <div>
-        <Box
-          component="form"
-          noValidate
-          onSubmit={handleSubmit}
-          sx={{ mt: 3, textAlign: "-webkit-center" }}
-        >
-          <Stack spacing={2} sx={{ width: 1000 }}>
-            {/* for pickup location */}
-            <Typography variant="h6" sx={{ marginRight: 120, fontSize: 15 }}>
-              PickUpLocation
-            </Typography>
-            <Autocomplete
-              freeSolo
-              id="free-solo-2-demo"
-              disableClearable
-              options={topCities}
-              defaultValue={data.pickUp}
-              renderInput={(params) => (
-                <TextField
-                  ref={pickUp}
-                  {...params}
-                  name="pickUpLocation"
-                  label="PickUp Location"
-                  id="pickUpLocation"
-                  defaultValue={data.pickUp}
-                  InputProps={{
-                    ...params.InputProps,
-                    type: "search",
-                  }}
-                  onChange={(e) => {
-                    pickUp.current.value = e.target.value;
-                    setPickUpLocation(true);
-                  }}
-                  onSelect={(e) => {
-                    setPickUpLocation(true);
-
-                    pickUp.current.value = e.target.value;
-                  }}
-                />
-              )}
-            />
-            {!pickUpLocation && (
-              <Alert severity="error">Please Enter Correct Location!</Alert>
-            )}
-
-            {/* for destination location */}
-            <div>
+        <div>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3, textAlign: "-webkit-center" }}
+          >
+            <Stack spacing={2} sx={{ width: { lg: 1000, xs: 350 } }}>
+              {/* for pickup location */}
               <Typography variant="h6" sx={{ marginRight: 120, fontSize: 15 }}>
-                DestinationLocation
+                PickUpLocation
               </Typography>
-            </div>
-            <Autocomplete
-              freeSolo
-              ref={destination}
-              id="free-solo-2-demo"
-              disableClearable
-              options={topCities}
-              defaultValue={data.destination}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  name="destinationLocation"
-                  label="Destination Location"
-                  id="destinationLocation"
-                  InputProps={{
-                    ...params.InputProps,
-                    type: "search",
-                  }}
-                  onChange={(e) => {
-                    destination.current.value = e.target.value;
-                  }}
-                  onSelect={(e) => {
-                    setDestinationLocation(true);
-                    destination.current.value = e.target.value;
-                  }}
-                />
-              )}
-            />
-            {!destinationLocation && (
-              <Alert severity="error">Please Enter Correct Destination</Alert>
-            )}
+              <Autocomplete
+                freeSolo
+                id="free-solo-2-demo"
+                disableClearable
+                options={topCities}
+                defaultValue={data.pickUp}
+                renderInput={(params) => (
+                  <TextField
+                    ref={pickUp}
+                    {...params}
+                    name="pickUpLocation"
+                    label="PickUp Location"
+                    id="pickUpLocation"
+                    defaultValue={data.pickUp}
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                    }}
+                    onChange={(e) => {
+                      pickUp.current.value = e.target.value;
+                      setPickUpLocation(true);
+                    }}
+                    onSelect={(e) => {
+                      setPickUpLocation(true);
 
-            {/* to select vehicle */}
-            <div>
-              <Typography variant="h6" sx={{ marginRight: 120, fontSize: 15 }}>
-                SelectTruckType
-              </Typography>
-            </div>
-            <Autocomplete
-              freeSolo
-              ref={vehicle}
-              id="free-solo-2-demo"
-              disableClearable
-              options={vehicleType.map((option, index) => {
-                return option.type;
-              })}
-              defaultValue={data.vehicle}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  name="selectVehicle"
-                  label="Select Vehicle"
-                  id="selectVehicle"
-                  InputProps={{
-                    ...params.InputProps,
-                    type: "search",
-                  }}
-                  onChange={(e) => {
-                    vehicle.current.value = e.target.value;
-                  }}
-                  onClick={fetchVehicles}
-                  onSelect={(e) => {
-                    setSelectVehicle(true);
-                    vehicle.current.value = e.target.value;
-
-                    console.log(vehicle.current.value);
-
-                    // taking rate
-                    const rate = vehicleType?.map((v) => {
-                      return v.type === vehicle.current.value
-                        ? v.initialPrice
-                        : 0;
-                    });
-                    // console.log("reate", rate);
-
-                    const newRate = rate.filter((r) => {
-                      if (r !== 0) {
-                        return r;
-                      }
-                    });
-
-                    setRate(newRate[0]);
-
-                    // getting capacity
-                    const capacity = vehicleType?.map((v) => {
-                      return v.type === vehicle.current.value ? v.capacity : 0;
-                    });
-                    console.log("====capacty", capacity);
-
-                    const newCapacity = capacity.filter((cap) => {
-                      if (cap !== 0) {
-                        return cap;
-                      }
-                    });
-
-                    setCapacity(newCapacity[0]);
-                  }}
-                />
-              )}
-            />
-            {!selectVehicle && (
-              <Alert severity="error">
-                Please select correct vehicle type!
-              </Alert>
-            )}
-            {/* Capacity of vehicle */}
-            {Capacity && (
-              <TextField
-                name="Capacity"
-                id="Capacity"
-                label="Capacity"
-                value={Capacity}
-                disabled
-              ></TextField>
-            )}
-            {/* Rate of vehicle */}
-            {Rate && (
-              <TextField
-                name="Rate"
-                id="Rate"
-                label="Rate"
-                value={Rate}
-                disabled
-              ></TextField>
-            )}
-
-            {/* to select goods */}
-            <div>
-              <Typography variant="h6" sx={{ marginRight: 120, fontSize: 15 }}>
-                SelectGoodsType
-              </Typography>
-            </div>
-            <Autocomplete
-              freeSolo
-              ref={GoodsType}
-              id="free-solo-2-demo"
-              disableClearable
-              options={goodsType.map((good) => {
-                return good.type;
-              })}
-              defaultValue={data.goodsType}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  name="goodsSelectType"
-                  label="select Goods Type"
-                  id="goodsSelectType"
-                  InputProps={{
-                    ...params.InputProps,
-                    type: "search",
-                  }}
-                  onChange={(e) => {
-                    GoodsType.current.value = e.target.value;
-                  }}
-                  onClick={fetchGoods}
-                  onSelect={(e) => {
-                    setGoodsSelectType(true);
-                    GoodsType.current.value = e.target.value;
-                  }}
-                />
-              )}
-            />
-            {!goodsSelectType && (
-              <Alert severity="error">
-                Please Select correct type of goods !
-              </Alert>
-            )}
-            {/* for wieght */}
-            <Box sx={{ display: "-webkit-flex" }}>
-              <TextField
-                ref={Weight}
-                id="outlined-number"
-                name="goodsWeight"
-                label="Weight"
-                type="number"
-                placeholder="1000Kg=1TON"
-                value={data.Weight}
-                sx={{ width: 950 }}
-                onChange={(e) => {
-                  Weight.current.value = e.target.value;
-
-                  setGoodsWeight(true);
-
-                  // for weight validation
-                  if (
-                    (Weight.current.value !== 0 &&
-                      Weight.current.value === +Capacity) ||
-                    (Weight.current.value <= +Capacity &&
-                      Weight.current.value > 0)
-                  ) {
-                  } else if (Weight.current.value === 0) {
-                    setGoodsWeight(false);
-                  } else {
-                    setGoodsWeight(false);
-                  }
-                }}
+                      pickUp.current.value = e.target.value;
+                    }}
+                  />
+                )}
               />
+              {!pickUpLocation && (
+                <Alert severity="error">Please Enter Correct Location!</Alert>
+              )}
 
-              <TextField
-                id="outlined-number"
-                label="TON"
-                type="text"
-                sx={{ width: 65 }}
-                disabled
+              {/* for destination location */}
+              <div>
+                <Typography
+                  variant="h6"
+                  sx={{ marginRight: 120, fontSize: 15 }}
+                >
+                  DestinationLocation
+                </Typography>
+              </div>
+              <Autocomplete
+                freeSolo
+                ref={destination}
+                id="free-solo-2-demo"
+                disableClearable
+                options={topCities}
+                defaultValue={data.destination}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    name="destinationLocation"
+                    label="Destination Location"
+                    id="destinationLocation"
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                    }}
+                    onChange={(e) => {
+                      destination.current.value = e.target.value;
+                    }}
+                    onSelect={(e) => {
+                      setDestinationLocation(true);
+                      destination.current.value = e.target.value;
+                    }}
+                  />
+                )}
               />
-            </Box>
-            {!goodsWeight && (
-              <Alert severity="error">Please Enter proper Weight !</Alert>
-            )}
-            <div>
-              <Typography variant="h6" sx={{ marginRight: 120, fontSize: 15 }}>
-                EnterDistance
-              </Typography>
-            </div>
-            <TextField
-              ref={distance}
-              id="outlined-basic"
-              label="Distance"
-              name="Distance"
-              variant="outlined"
-              value={data.distance}
-              sx={{ width: 1000 }}
-              placeholder="Enter Distance in KM"
-              type="number"
-              onChange={(e) => {
-                distance.current.value = e.target.value;
+              {!destinationLocation && (
+                <Alert severity="error">Please Enter Correct Destination</Alert>
+              )}
 
-                setDistance(true);
-                setInfo(true);
+              {/* to select vehicle */}
+              <div>
+                <Typography
+                  variant="h6"
+                  sx={{ marginRight: 120, fontSize: 15 }}
+                >
+                  SelectTruckType
+                </Typography>
+              </div>
+              <Autocomplete
+                freeSolo
+                ref={vehicle}
+                id="free-solo-2-demo"
+                disableClearable
+                options={vehicleType.map((option, index) => {
+                  return option.type;
+                })}
+                defaultValue={data.vehicle}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    name="selectVehicle"
+                    label="Select Vehicle"
+                    id="selectVehicle"
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                    }}
+                    onChange={(e) => {
+                      vehicle.current.value = e.target.value;
+                    }}
+                    onClick={fetchVehicles}
+                    onSelect={(e) => {
+                      setSelectVehicle(true);
+                      vehicle.current.value = e.target.value;
 
-                setPrice(distance.current.value * Rate);
-              }}
-            />
-            <Box>
-              {info && (
-                <Alert severity="info">
-                  Claculate Distance from below distance calculator
+                      console.log(vehicle.current.value);
+
+                      // taking rate
+                      const rate = vehicleType?.map((v) => {
+                        return v.type === vehicle.current.value
+                          ? v.initialPrice
+                          : 0;
+                      });
+                      // console.log("reate", rate);
+
+                      const newRate = rate.filter((r) => {
+                        if (r !== 0) {
+                          return r;
+                        }
+                      });
+
+                      setRate(newRate[0]);
+
+                      // getting capacity
+                      const capacity = vehicleType?.map((v) => {
+                        return v.type === vehicle.current.value
+                          ? v.capacity
+                          : 0;
+                      });
+                      console.log("====capacty", capacity);
+
+                      const newCapacity = capacity.filter((cap) => {
+                        if (cap !== 0) {
+                          return cap;
+                        }
+                      });
+
+                      setCapacity(newCapacity[0]);
+                    }}
+                  />
+                )}
+              />
+              {!selectVehicle && (
+                <Alert severity="error">
+                  Please select correct vehicle type!
                 </Alert>
               )}
-              {!Distance && (
-                <Alert severity="error">Please Enter Correct Distance !</Alert>
+              {/* Capacity of vehicle */}
+              {Capacity && (
+                <TextField
+                  name="Capacity"
+                  id="Capacity"
+                  label="Capacity"
+                  value={Capacity}
+                  disabled
+                ></TextField>
               )}
-              <iframe
-                src="https://distancecalculator.globefeed.com/India_Distance_Calculator.asp"
-                width="1000"
-                height="350"
-                title="distance calculator"
-                style={{ border: 0, paddingTop: 5 }}
-              />
-            </Box>
-          </Stack>
+              {/* Rate of vehicle */}
+              {Rate && (
+                <TextField
+                  name="Rate"
+                  id="Rate"
+                  label="Rate"
+                  value={Rate}
+                  disabled
+                ></TextField>
+              )}
 
-          <Stack
-            spacing={2}
-            direction="row"
-            sx={{ marginLeft: 25, padding: 3 }}
-          >
-            <Button variant="contained" type="submit" sx={{ width: 900 }}>
-              <Link>Save</Link>
-            </Button>
-          </Stack>
-        </Box>
-      </div>
+              {/* to select goods */}
+              <div>
+                <Typography
+                  variant="h6"
+                  sx={{ marginRight: 120, fontSize: 15 }}
+                >
+                  SelectGoodsType
+                </Typography>
+              </div>
+              <Autocomplete
+                freeSolo
+                ref={GoodsType}
+                id="free-solo-2-demo"
+                disableClearable
+                options={goodsType.map((good) => {
+                  return good.type;
+                })}
+                defaultValue={data.goodsType}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    name="goodsSelectType"
+                    label="select Goods Type"
+                    id="goodsSelectType"
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                    }}
+                    onChange={(e) => {
+                      GoodsType.current.value = e.target.value;
+                    }}
+                    onClick={fetchGoods}
+                    onSelect={(e) => {
+                      setGoodsSelectType(true);
+                      GoodsType.current.value = e.target.value;
+                    }}
+                  />
+                )}
+              />
+              {!goodsSelectType && (
+                <Alert severity="error">
+                  Please Select correct type of goods !
+                </Alert>
+              )}
+              {/* for wieght */}
+              <Box sx={{ display: "-webkit-flex" }}>
+                <TextField
+                  ref={Weight}
+                  id="outlined-number"
+                  name="goodsWeight"
+                  label="Weight"
+                  type="number"
+                  placeholder="1000Kg=1TON"
+                  value={data.Weight}
+                  sx={{ width: { lg: 950, xs: 300 } }}
+                  onChange={(e) => {
+                    Weight.current.value = e.target.value;
+
+                    setGoodsWeight(true);
+
+                    // for weight validation
+                    if (
+                      (Weight.current.value !== 0 &&
+                        Weight.current.value === +Capacity) ||
+                      (Weight.current.value <= +Capacity &&
+                        Weight.current.value > 0)
+                    ) {
+                    } else if (Weight.current.value === 0) {
+                      setGoodsWeight(false);
+                    } else {
+                      setGoodsWeight(false);
+                    }
+                  }}
+                />
+
+                <TextField
+                  id="outlined-number"
+                  label="TON"
+                  type="text"
+                  sx={{ width: 65 }}
+                  disabled
+                />
+              </Box>
+              {!goodsWeight && (
+                <Alert severity="error">Please Enter proper Weight !</Alert>
+              )}
+              <div>
+                <Typography
+                  variant="h6"
+                  sx={{ marginRight: 120, fontSize: 15 }}
+                >
+                  EnterDistance
+                </Typography>
+              </div>
+              <TextField
+                ref={distance}
+                id="outlined-basic"
+                label="Distance"
+                name="Distance"
+                variant="outlined"
+                value={data.distance}
+                sx={{ width: { lg: 1000, xs: 350 } }}
+                placeholder="Enter Distance in KM"
+                type="number"
+                onChange={(e) => {
+                  distance.current.value = e.target.value;
+
+                  setDistance(true);
+                  setInfo(true);
+
+                  setPrice(distance.current.value * Rate);
+                }}
+              />
+              <Box>
+                {info && (
+                  <Alert severity="info">
+                    Claculate Distance from below distance calculator
+                  </Alert>
+                )}
+                {!Distance && (
+                  <Alert severity="error">
+                    Please Enter Correct Distance !
+                  </Alert>
+                )}
+                <Box sx={{ width: { lg: 1000 } }}>
+                  <iframe
+                    className="iclass"
+                    src="https://distancecalculator.globefeed.com/India_Distance_Calculator.asp"
+                    title="distance calculator"
+                    style={{ border: 0, paddingTop: 5 }}
+                  />
+                </Box>
+              </Box>
+            </Stack>
+
+            <Stack
+              spacing={2}
+              direction="row"
+              sx={{ marginLeft: { lg: 25 }, padding: 3 }}
+            >
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{ width: { lg: 900, xs: 500 } }}
+              >
+                <Link>Save</Link>
+              </Button>
+            </Stack>
+          </Box>
+        </div>
+      </Box>
       <BasicFooter />
     </>
   );

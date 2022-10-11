@@ -1,0 +1,10 @@
+.iclass{
+    width: 1000px;
+    height: 350px;
+}
+
+@media screen and (max-width: 600px) {
+    .iclass{
+      width: 300px;
+    }
+  }

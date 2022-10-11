@@ -120,7 +120,7 @@ function MainHome() {
           </Typography>
         </Box>
         <Box>
-          <img style={{ width: 750 }} src={truck_image2} alt="truck" />
+          <img style={{ width: 375 }} src={truck_image2} alt="truck" />
         </Box>
       </Box>
       <Box

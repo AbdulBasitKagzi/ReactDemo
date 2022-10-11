@@ -89,15 +89,16 @@ function Checkout() {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.order);
   const [orderData, setOrderData] = React.useState(data);
-  const orders = JSON.parse(localStorage.getItem("orderData"));
-  console.log("order", orders);
+  const ordersdon = JSON.parse(localStorage.getItem("orderData"));
+  console.log("order", ordersdon);
 
+  // todo: Solve the error for template param
   const templateParams = {
-    pickUp: orders.pickUp,
-    destination: orders.destination,
-    goods: orders.goodsType,
-    vehicle: orders.vehicle,
-    amount: orders.price,
+    pickUp: ordersdon.pickUp,
+    destination: ordersdon.destination,
+    goods: ordersdon.goodsType,
+    vehicle: ordersdon.vehicle,
+    amount: ordersdon.price,
     note: `The truck will be at your door step on ${order.date} at ${order.time}`,
   };
   const sendEmail = (e) => {
