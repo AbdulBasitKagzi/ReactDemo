@@ -63,6 +63,9 @@ const orderSlice = createSlice({
     addOrder(state, action) {
       state.data = action.payload;
     },
+    clearData(state) {
+      state.data = "";
+    },
   },
 
   // to handle api states:fullfilled, rejected, pending

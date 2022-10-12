@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authAction } from "../store/authReducer";
+import { orderAction } from "../store/orderReducer";
 
 // mui imports
 import PropTypes from "prop-types";
@@ -126,6 +127,7 @@ function Navbar(props) {
                   setValue("");
                   setUserRole("");
                   navigate("/");
+                  dispatch(orderAction.clearData());
                   dispatch(authAction.logOut());
                 }}
               >
@@ -227,6 +229,7 @@ function Navbar(props) {
                   setValue("");
                   setUserRole("");
                   navigate("/");
+                  dispatch(orderAction.clearData());
                   dispatch(authAction.logOut());
                 }}
               >

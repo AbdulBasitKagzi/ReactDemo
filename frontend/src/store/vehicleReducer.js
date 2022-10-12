@@ -110,7 +110,7 @@ export const updateVehicles = createAsyncThunk(
           },
         }
       );
-      console.log("updateVehicle", response);
+      thunkAPI.rejectWithValue(getVehicle());
       return response;
     } catch (error) {
       console.log("thunk reject error", error);
