@@ -149,17 +149,17 @@ vehicleRoute.patch(`${api}/updateVehicle/:id`, getUserId, async (req, res) => {
     }
 
     // finding the vehicle with same number
-    // const registeredVehicle = await Vehicles.findOne({
-    //   vNumber: req.body.vNumber,
-    // });
-    // console.log(registeredVehicle);
+    const registeredVehicle = await Vehicles.findOne({
+      vNumber: req.body.vNumber,
+    });
+    console.log(registeredVehicle);
 
-    // if (registeredVehicle) {
-    //   return res.status(400).json({
-    //     success,
-    //     message: "This vehicle with this registered number is already there",
-    //   });
-    // }
+    if (registeredVehicle) {
+      return res.status(400).json({
+        success,
+        message: "The vehicle with this registered number is already there",
+      });
+    }
 
     if (req.body.type === "") {
       return res.status(400).json({ message: "Type should not be empty" });

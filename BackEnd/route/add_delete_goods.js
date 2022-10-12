@@ -97,7 +97,7 @@ goodsRoute.patch(`${api}/updateGoods/:id`, getUserId, async (req, res) => {
     if (JSON.stringify(req.userId) !== JSON.stringify(findGoods.owner)) {
       return res
         .status(400)
-        .json({ success, message: "Not eligible to delete" });
+        .json({ success, message: "Not eligible to update" });
     } else {
       if (req.body.type === "") {
         return res.status(400).json({ message: "Update Type is required" });
