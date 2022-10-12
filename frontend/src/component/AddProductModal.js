@@ -32,7 +32,7 @@ export default function AddProductModal(props) {
   const handleClose = () => props.setOpen(false);
 
   const dispatch = useDispatch();
-  const { open, add, error } = useSelector((state) => state.goods);
+  const { addOpen, add, addMessage } = useSelector((state) => state.goods);
 
   // for snackbar
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -46,7 +46,7 @@ export default function AddProductModal(props) {
   });
   const { vertical, horizontal } = state;
 
-  const handleClose1 = (event, reason) => {
+  const handleClose1 = (reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -98,7 +98,7 @@ export default function AddProductModal(props) {
             {add && (
               <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
-                open={open}
+                open={addOpen}
                 autoHideDuration={3000}
                 key={vertical + horizontal}
                 onClose={handleClose1}
@@ -108,14 +108,14 @@ export default function AddProductModal(props) {
                   severity="success"
                   sx={{ width: "100%" }}
                 >
-                  {error}
+                  {addMessage}
                 </Alert>
               </Snackbar>
             )}
-            {add === false && (
+            {!add && (
               <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
-                open={open}
+                open={addOpen}
                 autoHideDuration={3000}
                 key={vertical + horizontal}
                 onClose={handleClose1}
@@ -125,7 +125,7 @@ export default function AddProductModal(props) {
                   severity="error"
                   sx={{ width: "100%" }}
                 >
-                  {error}
+                  {addMessage}
                 </Alert>
               </Snackbar>
             )}

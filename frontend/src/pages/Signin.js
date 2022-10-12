@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { userSignin, authAction } from "../store/authReducer";
 
+// mui imports
+import CircularProgress from "@mui/material/CircularProgress";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -50,7 +52,8 @@ function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { error, token } = useSelector((state) => state.user);
+  const { error, token, isLoading } = useSelector((state) => state.user);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -122,6 +125,11 @@ function Signin() {
               <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert severity="error">{error}</Alert>
               </Stack>
+            )}
+            {isLoading && (
+              <Box sx={{ display: "flex" }}>
+                <CircularProgress />
+              </Box>
             )}
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
@@ -207,7 +215,8 @@ function Signin() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage:
+              "url(https://img.freepik.com/free-vector/hand-drawn-red-transport-truck-illustration_23-2149163911.jpg?w=740&t=st=1665565426~exp=1665566026~hmac=38e662a4b8cac3de74b7bc49780ef5514d6c3528984111a87cf2569c1e352204)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"

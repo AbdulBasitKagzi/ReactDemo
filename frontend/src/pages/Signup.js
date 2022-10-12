@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userSignup, authAction } from "../store/authReducer";
 import { useNavigate, Link } from "react-router-dom";
 
+import { userSignup, authAction } from "../store/authReducer";
+
+// mui imports
 import CircularProgress from "@mui/material/CircularProgress";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";

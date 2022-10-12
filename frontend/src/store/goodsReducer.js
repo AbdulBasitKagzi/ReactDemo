@@ -1,16 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const API = process.env.REACT_APP_URL;
 // initial state that can be updated by reducer action and can be sent to backend
 const goodsState = {
   goods: "",
   goodsType: [],
-  isLoading: "",
+  isLoadingG: "",
   error: "",
   update: "",
   updateMessage: "",
+  updateOpen: "",
+
   Delete: "",
+  deleteMessage: "",
+  deleteOpen: "",
+
   add: "",
+  addMessage: "",
+  addOpen: "",
   open: "",
 };
 
@@ -26,7 +34,7 @@ export const getGoods = createAsyncThunk("getGoods", async (body, thunkAPI) => {
         },
       }
     );
-    console.log("getgoods", response);
+
     return response;
   } catch (error) {
     console.log(error);
@@ -62,7 +70,7 @@ export const addGoods = createAsyncThunk(
   async (body, thunkAPI) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/transportgoodsservice/addGoods",
+        `http://localhost:5000/transportgoodsservice/addGoods`,
         body,
         {
           headers: {
@@ -71,7 +79,6 @@ export const addGoods = createAsyncThunk(
           },
         }
       );
-      console.log("addGoods--res", response);
 
       thunkAPI.dispatch(getGoods());
       return response;
@@ -112,10 +119,10 @@ const goodsSlice = createSlice({
   name: "goods",
   initialState: goodsState,
   reducers: {
-    clearMessage(state, action) {
-      state.update = false;
-      state.open = false;
-      state.Delete = false;
+    clearMessage(state) {
+      state.updateOpen = false;
+      state.deleteOpen = false;
+      state.addOpen = false;
     },
   },
   extraReducers: {
@@ -125,61 +132,56 @@ const goodsSlice = createSlice({
         return type;
       });
       console.log(state.goods);
-      state.isLoading = false;
+      state.isLoadingG = false;
     },
-    [getGoods.pending]: (state, action) => {
-      state.isLoading = true;
+    [getGoods.pending]: (state) => {
+      state.isLoadingG = true;
     },
     [getGoods.rejected]: (state, action) => {
-      console.log("rejected", action);
-      state.isLoading = false;
+      state.isLoadingG = false;
       state.error = action.error.message;
     },
     [deleteGoods.fulfilled]: (state, action) => {
-      state.update = true;
       state.Delete = true;
-      state.error = action.payload.data.message;
-      state.open = true;
-      console.log("successpayload", action.payload);
+      state.deleteMessage = action.payload.data.message;
+      state.deleteOpen = true;
     },
-    [deleteGoods.pending]: (state, action) => {
-      state.isLoading = true;
+    [deleteGoods.pending]: (state) => {
+      state.isLoadingG = true;
     },
     [deleteGoods.rejected]: (state, action) => {
-      console.log("errorpayload", action.payload);
-      state.error = action.payload;
+      state.deleteMessage = action.payload.response.data.message;
       state.Delete = false;
-      state.open = true;
+      state.deleteOpen = true;
     },
     [addGoods.fulfilled]: (state, action) => {
-      state.add = true;
-      state.isLoading = false;
+      state.isLoadingG = false;
       state.goods = action.payload.data.good;
-      state.open = true;
-      state.error = action.payload.data.message;
+      state.add = true;
+      state.addOpen = true;
+      state.addMessage = action.payload.data.message;
     },
     [addGoods.pending]: (state, action) => {
-      state.isLoading = true;
+      state.isLoadingG = true;
     },
     [addGoods.rejected]: (state, action) => {
       console.log(action.payload);
       state.add = false;
-      state.open = true;
-      state.error = action.payload.response.data.message;
+      state.addOpen = true;
+      state.addMessage = action.payload.response.data.message;
     },
     [updateGoods.fulfilled]: (state, action) => {
       state.update = true;
       state.updateMessage = action.payload.data.message;
-      state.open = true;
+      state.updateOpen = true;
+    },
+    [updateGoods.pending]: (state, action) => {
+      state.isLoadingG = true;
     },
     [updateGoods.rejected]: (state, action) => {
-      state.isLoading = true;
-    },
-    [updateGoods.rejected]: (state, action) => {
-      console.log("update_rejected", action.payload);
       state.update = false;
       state.updateMessage = action.payload.response.data.message;
-      state.open = true;
+      state.updateOpen = true;
     },
   },
 });

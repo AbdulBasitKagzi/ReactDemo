@@ -1,10 +1,10 @@
 import * as React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authAction } from "../store/authReducer";
 
+// mui imports
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -31,7 +31,7 @@ const newNavItems = [
   { val: "BookTruck", Link: "/user/bookTruck" },
 ];
 const adminNavItems = [
-  { val: "Home", Link: "/" },
+  { val: "Home", Link: "/admin" },
   { val: "Vehicles", Link: "/admin/vehicles" },
   { val: "Product", Link: "/admin/products" },
   { val: "Orders", Link: "/admin/orders" },
@@ -57,15 +57,21 @@ function Navbar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        Kagzi Transports
-      </Typography>
-      <Divider />
+      <Box>
+        <Typography variant="h6" sx={{ color: "white", my: 0.25 }}>
+          Kagzi Transports
+        </Typography>
+        <Divider />
+      </Box>
+
       <List style={{ textDecoration: "none" }}>
         {!value &&
           navItems.map((item, index) => (
             <ListItem key={index} disablePadding>
-              <NavLink style={{ textDecoration: "none" }} to={item.Link}>
+              <NavLink
+                style={{ textDecoration: "none", color: "white" }}
+                to={item.Link}
+              >
                 <ListItemButton sx={{ textAlign: "center" }}>
                   <ListItemText primary={item.val} />
                 </ListItemButton>
@@ -77,7 +83,10 @@ function Navbar(props) {
           userRole === "user" &&
           newNavItems.map((item, index) => (
             <ListItem key={index} disablePadding>
-              <NavLink style={{ textDecoration: "none" }} to={item.Link}>
+              <NavLink
+                style={{ textDecoration: "none", color: "white" }}
+                to={item.Link}
+              >
                 <ListItemButton sx={{ textAlign: "center" }}>
                   <ListItemText primary={item.val} />
                 </ListItemButton>
@@ -89,7 +98,10 @@ function Navbar(props) {
           userRole === "Admin" &&
           adminNavItems.map((item, index) => (
             <ListItem key={index} disablePadding>
-              <NavLink style={{ textDecoration: "none" }} to={item.Link}>
+              <NavLink
+                style={{ textDecoration: "none", color: "white" }}
+                to={item.Link}
+              >
                 <ListItemButton sx={{ textAlign: "center" }}>
                   <ListItemText primary={item.val} />
                 </ListItemButton>
@@ -101,6 +113,7 @@ function Navbar(props) {
           <ListItemButton sx={{ textAlign: "center" }}>
             {value && (
               <Button
+                sx={{ color: "white" }}
                 primary="Log Out"
                 onClick={() => {
                   const token = localStorage.getItem("token");
@@ -151,7 +164,7 @@ function Navbar(props) {
           >
             Kagzi Transports
           </Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Box component={List} sx={{ display: { xs: "none", sm: "block" } }}>
             {!value &&
               navItems.map((item, index) => (
                 <NavLink
@@ -238,6 +251,7 @@ function Navbar(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: "#e00029",
             },
           }}
         >

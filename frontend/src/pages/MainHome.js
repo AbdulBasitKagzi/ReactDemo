@@ -2,18 +2,19 @@ import React from "react";
 import Navbar from "../component/Navbar";
 import BasicFooter from "../component/BasicFooter";
 
-import truck from "../assets/truck.jpg";
-import truck_2 from "../assets/1truck_2.jpg";
-import iTruck from "../assets/iTruck.jpg";
+import "./MainHome.css";
+
+// image imports from assets folder
 import truckArt from "../assets/artTruck.jpg";
 import employeeArt from "../assets/employee.webp";
 import pricingArt from "../assets/pricing.webp";
 import truck_image from "../assets/img.jpg";
 import truck_image2 from "../assets/img1.webp";
 
+// mui imports
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import CardContent from "@mui/material/CardContent";
+
 import { Typography } from "@mui/material";
 
 function MainHome() {
@@ -120,7 +121,7 @@ function MainHome() {
           </Typography>
         </Box>
         <Box>
-          <img style={{ width: 375 }} src={truck_image2} alt="truck" />
+          <img className="truck_img" src={truck_image2} alt="truck" />
         </Box>
       </Box>
       <Box
@@ -259,7 +260,7 @@ function MainHome() {
           color: "#0e0e0e",
         }}
       >
-        <Box>
+        <Box sx={{ mt: { lg: 0.5, xs: -1 } }}>
           <Typography
             variant="h5"
             sx={{
@@ -283,7 +284,7 @@ function MainHome() {
             culpa qui officia deserunt mollit anim id est laborum."
           </Typography>
         </Box>
-        <Box>
+        <Box sx={{ mt: { lg: 0.5, xs: -1 } }}>
           <Typography
             variant="h5"
             sx={{
@@ -307,7 +308,7 @@ function MainHome() {
             culpa qui officia deserunt mollit anim id est laborum."
           </Typography>
         </Box>
-        <Box>
+        <Box sx={{ mt: { lg: 0.5, xs: -1 } }}>
           <Typography
             variant="h5"
             sx={{

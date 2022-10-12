@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addVehicle } from "../store/vehicleReducer";
 import { vehicleAction } from "../store/vehicleReducer";
 
+// mui imports
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -11,11 +12,8 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
-import { Paper } from "@mui/material";
-import { Alert } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-import Slide from "@mui/material/Slide";
 
 const style = {
   position: "absolute",
@@ -30,7 +28,6 @@ const style = {
 };
 
 function AddModal(props) {
-  
   // to close the model
   const handleClose = () => props.setOpen(false);
 
@@ -47,7 +44,7 @@ function AddModal(props) {
   const { vertical, horizontal } = state;
 
   // to close the snackbar
-  const handleClose1 = (event, reason) => {
+  const handleClose1 = (reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -60,6 +57,9 @@ function AddModal(props) {
   const [numbererror, setnumberError] = React.useState(true);
   const [initialPriceerror, setinitialPriceError] = React.useState(true);
   const [capacityerror, setcapacityError] = React.useState(true);
+  const RTOexp = RegExp(
+    "^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$"
+  );
 
   // for values
   const [type, setType] = React.useState("");
@@ -68,25 +68,26 @@ function AddModal(props) {
   const [capacity, setCapacity] = React.useState("");
 
   const dispatch = useDispatch();
-  const { add, error, open } = useSelector((state) => state.vehicle);
+  const { add, addOpen, addMessage } = useSelector((state) => state.vehicle);
 
   // function for validation and dispatch
   const handleSumbit = () => {
     // validation
-    if (
-      type === "" &&
-      vNumber === "" &&
-      initialPrice === "" &&
-      capacity === ""
-    ) {
-      settypeError(false);
-      setnumberError(false);
-      setinitialPriceError(false);
-      setcapacityError(false);
-      return;
-    }
+    // if (
+    //   type === "" &&
+    //   vNumber === "" &&
+    //   initialPrice === "" &&
+    //   capacity === ""
+    // ) {
+    //   settypeError(false);
+    //   setnumberError(false);
+    //   setinitialPriceError(false);
+    //   setcapacityError(false);
+    //   return;
+    // }
+
     if (type === "") settypeError(false);
-    if (vNumber === "") setnumberError(false);
+    if (vNumber === "" || !RTOexp.test(vNumber)) setnumberError(false);
     if (initialPrice === "" || initialPrice < 10) setinitialPriceError(false);
     if (capacity === "" || capacity < 1) {
       setcapacityError(false);
@@ -96,6 +97,7 @@ function AddModal(props) {
     if (
       type === "" ||
       vNumber === "" ||
+      !RTOexp.test(vNumber) ||
       initialPrice === "" ||
       initialPrice < 10 ||
       capacity === "" ||
@@ -140,7 +142,7 @@ function AddModal(props) {
             {add && (
               <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
-                open={open}
+                open={addOpen}
                 autoHideDuration={3000}
                 key={vertical + horizontal}
                 onClose={handleClose1}
@@ -150,7 +152,7 @@ function AddModal(props) {
                   severity="success"
                   sx={{ width: "100%" }}
                 >
-                  {error}
+                  {addMessage}
                 </Alert>
               </Snackbar>
             )}
@@ -158,7 +160,7 @@ function AddModal(props) {
             {add === false && (
               <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
-                open={open}
+                open={addOpen}
                 autoHideDuration={3000}
                 key={vertical + horizontal}
                 onClose={handleClose1}
@@ -168,7 +170,7 @@ function AddModal(props) {
                   severity="error"
                   sx={{ width: "100%" }}
                 >
-                  {error}
+                  {addMessage}
                 </Alert>
               </Snackbar>
             )}

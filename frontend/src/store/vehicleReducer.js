@@ -7,14 +7,21 @@ const vehicleState = {
   vehicleType: [],
   isLoading: "",
   error: "",
+
   update: "",
   updateMessage: "",
+  updateOpen: "",
+
   Delete: "",
+  deleteMessage: "",
+  deleteOpen: "",
+
   add: "",
-  open: "",
+  addMessage: "",
+  addOpen: "",
 };
 
-const api = process.env.REACT_APP_URL;
+const API = process.env.REACT_APP_URL;
 
 // api to get vehicles
 export const getVehicle = createAsyncThunk(
@@ -22,7 +29,7 @@ export const getVehicle = createAsyncThunk(
   async (body, thunkAPI) => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/transportgoodsservice/getVehicle",
+        `http://localhost:5000/transportgoodsservice/getVehicle`,
         {
           header: {
             "Content-Type":
@@ -69,7 +76,7 @@ export const addVehicle = createAsyncThunk(
   async (body, thunkAPI) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/transportgoodsservice/addVehicle",
+        `http://localhost:5000/transportgoodsservice/addVehicle`,
         body,
         {
           headers: {
@@ -94,7 +101,7 @@ export const updateVehicles = createAsyncThunk(
   async (body, thunkAPI) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/transportgoodsservice/updateVehicle/${body.id}`,
+        `${API}/updateVehicle/${body.id}`,
         body,
         {
           headers: {
@@ -118,20 +125,20 @@ const vehicleSlice = createSlice({
   initialState: vehicleState,
   reducers: {
     clearMessage(state, action) {
-      state.update = false;
-      state.open = false;
+      state.deleteOpen = false;
+      state.addOpen = false;
+      state.updateOpen = false;
     },
   },
   extraReducers: {
     [getVehicle.fulfilled]: (state, action) => {
-      console.log("actionfor get vehicle", action.payload.data.findVehicle);
       state.vehicles = action.payload;
       state.vehicleType = action.payload.data.findVehicle.map((type) => {
         return type;
       });
       state.isLoading = false;
     },
-    [getVehicle.pending]: (state, action) => {
+    [getVehicle.pending]: (state) => {
       state.isLoading = true;
     },
     [getVehicle.rejected]: (state, action) => {
@@ -139,46 +146,43 @@ const vehicleSlice = createSlice({
       state.error = action.error.message;
     },
     [deleteVehicle.fulfilled]: (state, action) => {
+      console.log("delvehreject", action.payload.data.message);
       state.Delete = true;
-      state.open = true;
-      console.log("fullfileed", action.payload);
-      state.error = action.payload.data.message;
+      state.deleteOpen = true;
+      state.deleteMessage = action.payload.data.message;
     },
-    [deleteVehicle.pending]: (state, action) => {
+    [deleteVehicle.pending]: (state) => {
       state.isLoading = true;
     },
     [deleteVehicle.rejected]: (state, action) => {
-      console.log("rejected", action.payload);
-      state.Delete = true;
-      state.error = action.payload.data.message;
-      state.open = true;
+      state.Delete = false;
+      state.deleteMessage = action.payload.response.data.message;
+      state.deleteOpen = true;
     },
     [addVehicle.fulfilled]: (state, action) => {
-      console.log("addVehicle---full", action.payload);
       state.vehicles = action.payload.data.newVehicle;
       state.isLoading = false;
       state.add = true;
-      state.error = action.payload.data.message;
-      state.open = true;
+      state.addMessage = action.payload.data.message;
+      state.addOpen = true;
     },
-    [addVehicle.pending]: (state, action) => {
+    [addVehicle.pending]: (state) => {
       state.isLoading = true;
     },
     [addVehicle.rejected]: (state, action) => {
-      console.log("addVehicle Rejected", action.payload);
-      state.error = action.payload.response.data.message;
+      state.addMessage = action.payload.response.data.message;
       state.isLoading = false;
       state.add = false;
-      state.open = true;
+      state.addOpen = true;
     },
     [updateVehicles.fulfilled]: (state, action) => {
-      console.log("update fulfilled", action.payload);
+      console.log("update fulfilled", action.payload.data.message);
       state.update = true;
       state.updateMessage = action.payload.data.message;
       state.isLoading = false;
-      state.open = true;
+      state.updateOpen = true;
     },
-    [updateVehicles.pending]: (state, action) => {
+    [updateVehicles.pending]: (state) => {
       state.isLoading = true;
     },
     [updateVehicles.rejected]: (state, action) => {
@@ -186,7 +190,7 @@ const vehicleSlice = createSlice({
       state.update = false;
       state.updateMessage = action.payload.response.data.message;
       state.isLoading = false;
-      state.open = true;
+      state.updateOpen = true;
     },
   },
 });

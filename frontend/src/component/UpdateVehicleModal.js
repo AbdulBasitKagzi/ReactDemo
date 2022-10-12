@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateVehicles } from "../store/vehicleReducer";
 import { vehicleAction } from "../store/vehicleReducer";
 
+// mui imports
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -11,7 +12,6 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
-
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 
@@ -46,7 +46,7 @@ export default function UpdateVehicleModal(props) {
   const { vertical, horizontal } = state;
 
   //   to close the snackbar
-  const handleClose1 = (event, reason) => {
+  const handleClose1 = (reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -59,14 +59,14 @@ export default function UpdateVehicleModal(props) {
   const [numbererror, setnumberError] = React.useState(true);
   const [initialPriceerror, setinitialPriceError] = React.useState(true);
   const [capacityerror, setcapacityError] = React.useState(true);
+  const RTOexp = RegExp(
+    "^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$"
+  );
 
   // for values
-
   const [type, setType] = React.useState();
   const [vNumber, setvNumber] = React.useState();
-  const [initialPrice, setinitialPrice] = React.useState(
-    
-  );
+  const [initialPrice, setinitialPrice] = React.useState();
   const [capacity, setCapacity] = React.useState();
   const [id, setId] = React.useState();
 
@@ -76,30 +76,31 @@ export default function UpdateVehicleModal(props) {
     setinitialPrice(props.value.initialPrice);
     setCapacity(props.value.capacity);
     setId(props.value._id);
-  });
+  }, [props.value]);
 
   const dispatch = useDispatch();
-  const { add, error, open, update, updateMessage } = useSelector(
+  const { updateOpen, update, updateMessage } = useSelector(
     (state) => state.vehicle
   );
 
   // function for validation and dispatch
   const handleSumbit = () => {
     // validation
-    if (
-      type === "" &&
-      vNumber === "" &&
-      initialPrice === "" &&
-      capacity === ""
-    ) {
-      settypeError(false);
-      setnumberError(false);
-      setinitialPriceError(false);
-      setcapacityError(false);
-      return;
-    }
+    // if (
+    //   type === "" &&
+    //   vNumber === "" &&
+    //   initialPrice === "" &&
+    //   capacity === ""
+    // ) {
+    //   settypeError(false);
+    //   setnumberError(false);
+    //   setinitialPriceError(false);
+    //   setcapacityError(false);
+    //   return;
+    // }
+
     if (type === "") settypeError(false);
-    if (vNumber === "") setnumberError(false);
+    if (vNumber === "" || !RTOexp.test(vNumber)) setnumberError(false);
     if (initialPrice === "" || initialPrice < 10) setinitialPriceError(false);
     if (capacity === "" || capacity < 1) {
       setcapacityError(false);
@@ -109,6 +110,7 @@ export default function UpdateVehicleModal(props) {
     if (
       type === "" ||
       vNumber === "" ||
+      !RTOexp.test(vNumber) ||
       initialPrice === "" ||
       initialPrice < 10 ||
       capacity === "" ||
@@ -155,7 +157,7 @@ export default function UpdateVehicleModal(props) {
             {update && (
               <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
-                open={open}
+                open={updateOpen}
                 autoHideDuration={3000}
                 key={vertical + horizontal}
                 onClose={handleClose1}
@@ -173,7 +175,7 @@ export default function UpdateVehicleModal(props) {
             {update === false && (
               <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
-                open={open}
+                open={updateOpen}
                 autoHideDuration={3000}
                 key={vertical + horizontal}
                 onClose={handleClose1}

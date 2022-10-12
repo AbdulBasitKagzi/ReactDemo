@@ -4,14 +4,15 @@ import Review from "./Review";
 import OrderPage from "./OrderPage";
 import NavBar from "../component/Navbar";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { order } from "../store/orderReducer";
 import emailjs from "@emailjs/browser";
 
+// mui imports
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-
 import Paper from "@mui/material/Paper";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -62,13 +63,7 @@ function Checkout() {
         );
 
       case 2:
-        return (
-          <Review
-            setAlertError={setErrorAlert}
-            errorAlert={errorAlert}
-            sendEmail={sendEmail}
-          />
-        );
+        return <Review setAlertError={setErrorAlert} errorAlert={errorAlert} />;
       default:
         throw new Error("Unknown step");
     }
@@ -89,18 +84,17 @@ function Checkout() {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.order);
   const [orderData, setOrderData] = React.useState(data);
-  const ordersdon = JSON.parse(localStorage.getItem("orderData"));
-  console.log("order", ordersdon);
 
-  // todo: Solve the error for template param
+  // target values which will get send in email
   const templateParams = {
-    pickUp: ordersdon.pickUp,
-    destination: ordersdon.destination,
-    goods: ordersdon.goodsType,
-    vehicle: ordersdon.vehicle,
-    amount: ordersdon.price,
-    note: `The truck will be at your door step on ${order.date} at ${order.time}`,
+    pickUp: data.pickUp,
+    destination: data.destination,
+    goods: data.goodsType,
+    vehicle: data.vehicle,
+    amount: data.price,
+    note: `The truck will be at your door step on ${data.date} at ${data.time}`,
   };
+  // to send email to the user
   const sendEmail = (e) => {
     emailjs
       .send(
@@ -112,6 +106,8 @@ function Checkout() {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
+
+  const Navigate = useNavigate();
 
   return (
     <ThemeProvider theme={theme}>
@@ -185,6 +181,9 @@ function Checkout() {
                         dispatch(order(data));
                         setErrorAlert(true);
                         sendEmail();
+                        Navigate("/user/emailpage");
+                        localStorage.removeItem("abdulOrder");
+                        localStorage.removeItem("orderData");
                       }
 
                       if (activeStep === 1) {

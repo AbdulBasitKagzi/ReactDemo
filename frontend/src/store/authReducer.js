@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import process from "process";
 
+const API = process.env.REACT_APP_URL;
 // initial state that can be updated by reducer action and can be sent to backend
 let authState = {
   user: "",
@@ -26,9 +28,7 @@ export const userSignup = createAsyncThunk(
         }
       );
       const token = res.data.token;
-      console.log(res.data.user);
 
-      // console.log("---------res-------", res.data.token);
       // setting up token and user
       localStorage.setItem("token", JSON.stringify(token).replaceAll('"', ""));
       localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -55,9 +55,9 @@ export const userSignin = createAsyncThunk(
           },
         }
       );
-      console.log("login res", res);
+
       const token = res.data.token;
-      console.log(res.data.registeredUser.role);
+
       // setting up token and user
 
       localStorage.setItem("token", JSON.stringify(token).replaceAll('"', ""));
@@ -74,12 +74,12 @@ const authSlice = createSlice({
   name: "user",
   initialState: authState,
   reducers: {
-    logOut(state, action) {
+    logOut(state) {
       state.token = "";
       state.user = "";
       state.role = "";
     },
-    clearMessage(state, action) {
+    clearMessage(state) {
       state.error = "";
     },
   },
@@ -95,26 +95,22 @@ const authSlice = createSlice({
 
       state.error = "";
     },
-    [userSignup.pending]: (state, action) => {
+    [userSignup.pending]: (state) => {
       state.isLoading = true;
     },
     [userSignup.rejected]: (state, action) => {
       state.error = action.payload;
-
       state.isLoading = false;
     },
     // signin
     [userSignin.fulfilled]: (state, action) => {
       state.user = action.payload.data.registeredUser;
       state.role = action.payload.data.registeredUser.role;
-
       state.isLoading = false;
-
       state.token = action.payload.data.token;
-
       state.error = "";
     },
-    [userSignin.pending]: (state, action) => {
+    [userSignin.pending]: (state) => {
       state.isLoading = true;
     },
     [userSignin.rejected]: (state, action) => {

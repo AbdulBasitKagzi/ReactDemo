@@ -1,10 +1,9 @@
 import * as React from "react";
-// import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
-// import Link from "@/src/Link";
+
+// mui imports
 import Box from "@mui/material/Box";
 import { Grid, Typography } from "@mui/material";
-// import Paper from "@mui/material/Paper";
 
 function BasicFooter() {
   //   const footer = ["AboutUs", "Careers", "Blog", "ContactUs", "Login", "Signup"];

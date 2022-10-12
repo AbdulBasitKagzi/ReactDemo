@@ -1,7 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import Moment from "react-moment";
 
+// mui imports
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -55,8 +54,6 @@ function OrderPage({ setError, orderData, setOrderData }) {
   // for validation
   const [pvalidation, setPValidation] = React.useState(true);
   const [dvalidation, setDValidation] = React.useState(true);
-
-  const dummy = (e) => {};
 
   // validation function
   const Validatior1 = (e) => {
@@ -183,11 +180,17 @@ function OrderPage({ setError, orderData, setOrderData }) {
           dateAdapter={AdapterDayjs}
           sx={{ display: "inherit" }}
         >
-          <Box sx={{ display: "flow-root", paddingTop: 5 }}>
-            <Stack spacing={3} sx={{ display: "flow-root" }}>
-              <Box sx={{ display: "initial", paddingLeft: 2 }}>
+          <Box sx={{ paddingTop: 5 }}>
+            <Stack spacing={3} sx={{ display: { lg: "flow-root" } }}>
+              <Box
+                sx={{
+                  display: "initial",
+                  paddingLeft: 2,
+                  ml: { lg: "", xs: 3 },
+                }}
+              >
                 <MobileDatePicker
-                  label="PickUp mobile"
+                  label="PickUp Date"
                   inputFormat="DD/MM/YYYY"
                   value={value}
                   minDate={new Date()}
@@ -195,7 +198,13 @@ function OrderPage({ setError, orderData, setOrderData }) {
                   renderInput={(params) => <TextField {...params} />}
                 />
               </Box>
-              <Box sx={{ display: "initial", paddingLeft: 2 }}>
+              <Box
+                sx={{
+                  display: "initial",
+
+                  pl: { lg: 2, xs: 5 },
+                }}
+              >
                 <TimePicker
                   label="PickUp Time"
                   value={value}

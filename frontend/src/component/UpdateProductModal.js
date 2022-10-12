@@ -41,10 +41,12 @@ export default function UpdateProductModal(props) {
   const { vertical, horizontal } = state;
 
   const dispatch = useDispatch();
-  const { update, updateMessage, open } = useSelector((state) => state.goods);
+  const { update, updateMessage, updateOpen } = useSelector(
+    (state) => state.goods
+  );
 
   //   to close the alert
-  const handleClose1 = (event, reason) => {
+  const handleClose1 = (reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -89,7 +91,7 @@ export default function UpdateProductModal(props) {
             {update && (
               <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
-                open={open}
+                open={updateOpen}
                 autoHideDuration={3000}
                 key={vertical + horizontal}
                 onClose={handleClose1}
@@ -106,7 +108,7 @@ export default function UpdateProductModal(props) {
             {update === false && (
               <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
-                open={open}
+                open={updateOpen}
                 autoHideDuration={3000}
                 key={vertical + horizontal}
                 onClose={handleClose1}

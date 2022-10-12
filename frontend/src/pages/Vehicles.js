@@ -1,13 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+
 import { getVehicle } from "../store/vehicleReducer";
 import { deleteVehicle, vehicleAction } from "../store/vehicleReducer";
-
 import Navbar from "../component/Navbar";
 import AddModal from "../component/AddModal";
 import UpdateVehicleModal from "../component/UpdateVehicleModal";
 
+// mui imports
 import Slide from "@mui/material/Slide";
 import MuiAlert from "@mui/material/Alert";
 import Table from "@mui/material/Table";
@@ -16,7 +17,6 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -47,7 +47,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // for snackbar
 function Vehicles() {
   const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="outlined" {...props} />;
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
   const dispatch = useDispatch();
@@ -59,6 +59,8 @@ function Vehicles() {
     // setTimeout(() => {
     //   dispatch(vehicleAction.clearMessage());
     // }, 3000);
+
+    // eslint-disable-next-line
   }, []);
 
   // to close the error snackbar
@@ -86,7 +88,7 @@ function Vehicles() {
   const [value, setValue] = React.useState();
 
   // data from redux
-  const { vehicleType, update, error, Delete, open } = useSelector(
+  const { vehicleType, Delete, deleteOpen, deleteMessage } = useSelector(
     (state) => state.vehicle
   );
 
@@ -109,15 +111,15 @@ function Vehicles() {
           setUpdateOpen={setUpdateOpen}
           value={value}
           typeLabel="type"
-          vnumberLabel={"vNumber"}
-          capacityLabel={"capacity"}
-          initialpriceLabel={"initialPrice"}
+          vnumberLabel="vNumber"
+          capacityLabel="capacity"
+          initialpriceLabel="initialPrice"
         />
       )}
       {Delete && (
         <Snackbar
           TransitionComponent={TransitionLeft}
-          open={open}
+          open={deleteOpen}
           autoHideDuration={3000}
           onClose={handleClose1}
         >
@@ -126,7 +128,19 @@ function Vehicles() {
             severity="success"
             sx={{ width: "100%" }}
           >
-            {error}
+            {deleteMessage}
+          </Alert>
+        </Snackbar>
+      )}
+      {!Delete && (
+        <Snackbar
+          TransitionComponent={TransitionLeft}
+          open={deleteOpen}
+          autoHideDuration={3000}
+          onClose={handleClose1}
+        >
+          <Alert onClose={handleClose1} severity="error" sx={{ width: "100%" }}>
+            {deleteMessage}
           </Alert>
         </Snackbar>
       )}
@@ -155,9 +169,14 @@ function Vehicles() {
                 align="center"
                 sx={{ border: 1 }}
               ></StyledTableCell>
+              <StyledTableCell
+                align="center"
+                sx={{ border: 1 }}
+              ></StyledTableCell>
             </StyledTableRow>
           </TableHead>
           <TableBody>
+            {vehicleType == "" && <p>No data found</p>}
             {vehicleType.map((vehicle, index) => (
               <StyledTableRow
                 key={index}
@@ -178,15 +197,8 @@ function Vehicles() {
                 <StyledTableCell align="center" sx={{ border: 1 }}>
                   {vehicle.initialPrice}
                 </StyledTableCell>
+                {/* update button */}
                 <StyledTableCell align="center" sx={{ border: 1 }}>
-                  <Button
-                    onClick={() => {
-                      const id = vehicle._id;
-                      dispatch(deleteVehicle(id));
-                    }}
-                  >
-                    Delete
-                  </Button>
                   <Button
                     onClick={() => {
                       setUpdateModal(true);
@@ -195,7 +207,19 @@ function Vehicles() {
                       console.log(vehicleType[index]);
                     }}
                   >
-                    Update
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </Button>
+                </StyledTableCell>
+
+                {/* delete button */}
+                <StyledTableCell align="center" sx={{ border: 1 }}>
+                  <Button
+                    onClick={() => {
+                      const id = vehicle._id;
+                      dispatch(deleteVehicle(id));
+                    }}
+                  >
+                    <i class="fa-solid fa-trash"></i>
                   </Button>
                 </StyledTableCell>
               </StyledTableRow>

@@ -8,13 +8,15 @@ const orderState = {
   orderData: [],
 };
 
+const API = process.env.REACT_APP_URL;
+
 // to add order
 export const order = createAsyncThunk(
   "orderSlice/order",
   async (body, thunkAPI) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/transportgoodsservice/placeOrder",
+        `http://localhost:5000/transportgoodsservice/placeOrder`,
         body,
         {
           headers: {
@@ -23,7 +25,6 @@ export const order = createAsyncThunk(
           },
         }
       );
-      console.log("orderres", response);
       return response;
     } catch (error) {
       console.log(error);
@@ -38,7 +39,7 @@ export const getOrder = createAsyncThunk(
   async (body, thunkAPI) => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/transportgoodsservice/orders",
+        `http://localhost:5000/transportgoodsservice/orders`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -66,11 +67,11 @@ const orderSlice = createSlice({
 
   // to handle api states:fullfilled, rejected, pending
   extraReducers: {
-    [order.fulfilled]: (state, action) => {
+    [order.fulfilled]: (state) => {
       state.isLoading = false;
       state.error = true;
     },
-    [order.pending]: (state, action) => {
+    [order.pending]: (state) => {
       state.isLoading = true;
       state.error = "";
     },
@@ -84,7 +85,7 @@ const orderSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [getOrder.pending]: (state, action) => {
+    [getOrder.pending]: (state) => {
       state.isLoading = true;
     },
     [getOrder.rejected]: (state, action) => {

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../store/orderReducer";
 import Navbar from "../component/Navbar";
 
-import MuiAlert from "@mui/material/Alert";
+// mui imports
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -14,8 +14,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Button from "@mui/material/Button";
-import TablePagination from "@mui/material/TablePagination";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,8 +37,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function Order() {
   const dispatch = useDispatch();
+
   React.useEffect(() => {
     dispatch(getOrder());
+
+    // eslint-disable-next-line
   }, []);
 
   const { orderData } = useSelector((state) => state.order);
@@ -55,7 +56,7 @@ function Order() {
           </Typography>
           <Table
             stickyHeader
-            sx={{ width:"95%", border: 1, mb: 2 }}
+            sx={{ width: "95%", border: 1, mb: 2 }}
             align="center"
             aria-label="sticky table"
           >
@@ -70,10 +71,10 @@ function Order() {
                   Goods
                 </StyledTableCell>
                 <StyledTableCell align="center" sx={{ border: 1 }}>
-                  Weight
+                  Vehicle
                 </StyledTableCell>
                 <StyledTableCell align="center" sx={{ border: 1 }}>
-                  Vehicle
+                  Weight
                 </StyledTableCell>
                 <StyledTableCell align="center" sx={{ border: 1 }}>
                   PickUp
@@ -87,6 +88,7 @@ function Order() {
               </StyledTableRow>
             </TableHead>
             <TableBody sx={{ border: 1 }}>
+              {orderData == "" && <p>No data found</p>}
               {orderData?.map((data, index) => (
                 <StyledTableRow
                   key={index}

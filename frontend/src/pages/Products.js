@@ -1,19 +1,17 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { getGoods, deleteGoods, goodsAction } from "../store/goodsReducer";
 
 import Navbar from "../component/Navbar";
 
+// mui imports
 import MuiAlert from "@mui/material/Alert";
-import Alert from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -57,6 +55,7 @@ function Products() {
     // setTimeout(() => {
     //   dispatch(goodsAction.clearMessage());
     // }, 3000);
+    // eslint-disable-next-line
   }, []);
 
   // for transition of the snackbar
@@ -64,14 +63,14 @@ function Products() {
     return <Slide {...props} direction="left" />;
   }
 
-  const handleClose1 = (event, reason) => {
+  const handleClose1 = (reason) => {
     if (reason === "clickaway") {
       return;
     }
     dispatch(goodsAction.clearMessage());
   };
 
-  const { goodsType, update, error, Delete, open } = useSelector(
+  const { goodsType, Delete, deleteOpen, deleteMessage } = useSelector(
     (state) => state.goods
   );
 
@@ -102,7 +101,7 @@ function Products() {
       {Delete && (
         <Snackbar
           TransitionComponent={TransitionLeft}
-          open={open}
+          open={deleteOpen}
           autoHideDuration={3000}
           onClose={handleClose1}
         >
@@ -111,7 +110,19 @@ function Products() {
             severity="success"
             sx={{ width: "100%" }}
           >
-            {error}
+            {deleteMessage}
+          </Alert>
+        </Snackbar>
+      )}
+      {Delete === false && (
+        <Snackbar
+          TransitionComponent={TransitionLeft}
+          open={deleteOpen}
+          autoHideDuration={3000}
+          onClose={handleClose1}
+        >
+          <Alert onClose={handleClose1} severity="error" sx={{ width: "100%" }}>
+            {deleteMessage}
           </Alert>
         </Snackbar>
       )}
@@ -137,9 +148,14 @@ function Products() {
                 align="center"
                 sx={{ border: 1 }}
               ></StyledTableCell>
+              <StyledTableCell
+                align="center"
+                sx={{ border: 1 }}
+              ></StyledTableCell>
             </StyledTableRow>
           </TableHead>
           <TableBody sx={{ border: 1 }}>
+            {goodsType == "" && <p>No data found</p>}
             {goodsType.map((goods, index) => (
               <StyledTableRow
                 key={index}
@@ -163,14 +179,8 @@ function Products() {
                   {goods.type}
                 </StyledTableCell>
 
+                {/* update button */}
                 <StyledTableCell align="center" sx={{ border: 1 }}>
-                  <Button
-                    onClick={() => {
-                      dispatch(deleteGoods(goods._id));
-                    }}
-                  >
-                    Delete
-                  </Button>
                   <Button
                     onClick={() => {
                       setUpdateModal(true);
@@ -181,7 +191,18 @@ function Products() {
                       setId(goodsType[index]._id);
                     }}
                   >
-                    Update
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </Button>
+                </StyledTableCell>
+
+                {/* delete button */}
+                <StyledTableCell align="center" sx={{ border: 1 }}>
+                  <Button
+                    onClick={() => {
+                      dispatch(deleteGoods(goods._id));
+                    }}
+                  >
+                    <i class="fa-solid fa-trash"></i>
                   </Button>
                 </StyledTableCell>
               </StyledTableRow>

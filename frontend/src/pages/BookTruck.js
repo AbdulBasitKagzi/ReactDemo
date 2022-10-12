@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,8 @@ import { orderAction } from "../store/orderReducer";
 
 import "./BookTruck.css";
 
-import { Paper } from "@mui/material";
+// mui imports
+import CircularProgress from "@mui/material/CircularProgress";
 import { createTheme } from "@mui/material";
 import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -92,7 +93,7 @@ function BookTruck() {
 
   // states for validations
   const [pickUpLocation, setPickUpLocation] = React.useState(true);
-  const [Pick, setPick] = React.useState();
+
   const [destinationLocation, setDestinationLocation] = React.useState(true);
   const [selectVehicle, setSelectVehicle] = React.useState(true);
   const [goodsSelectType, setGoodsSelectType] = React.useState(true);
@@ -113,8 +114,9 @@ function BookTruck() {
   const [Capacity, setCapacity] = React.useState();
 
   const dispatch = useDispatch();
-  const { vehicleType } = useSelector((state) => state.vehicle);
-  const { goodsType } = useSelector((state) => state.goods);
+
+  const { vehicleType, isLoading } = useSelector((state) => state.vehicle);
+  const { goodsType, isLoadingG } = useSelector((state) => state.goods);
   const { data } = useSelector((state) => state.order);
 
   const navigate = useNavigate();
@@ -129,6 +131,7 @@ function BookTruck() {
     setRate(data.rate);
     setCapacity(data.capacity);
     setPrice(data.price);
+    // eslint-disable-next-line
   }, []);
 
   // function to handle form submission
@@ -314,6 +317,7 @@ function BookTruck() {
               )}
 
               {/* for destination location */}
+
               <div>
                 <Typography
                   variant="h6"
@@ -354,6 +358,11 @@ function BookTruck() {
               )}
 
               {/* to select vehicle */}
+              {isLoading && (
+                <Box sx={{ display: "flex" }}>
+                  <CircularProgress />
+                </Box>
+              )}
               <div>
                 <Typography
                   variant="h6"
@@ -453,6 +462,11 @@ function BookTruck() {
               )}
 
               {/* to select goods */}
+              {isLoadingG && (
+                <Box sx={{ display: "flex" }}>
+                  <CircularProgress />
+                </Box>
+              )}
               <div>
                 <Typography
                   variant="h6"
@@ -597,7 +611,7 @@ function BookTruck() {
                 type="submit"
                 sx={{ width: { lg: 900, xs: 500 } }}
               >
-                <Link>Save</Link>
+                Save
               </Button>
             </Stack>
           </Box>

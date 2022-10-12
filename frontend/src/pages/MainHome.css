@@ -1,0 +1,9 @@
+.truck_img{
+    width: 747px;
+}
+
+@media screen and (max-width: 600px) {
+    .truck_img{
+      width: 372px;
+    }
+  }
