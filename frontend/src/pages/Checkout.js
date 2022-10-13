@@ -177,7 +177,7 @@ function Checkout() {
                         );
                         setError(false);
                       } else {
-                        // tod0:main api call
+                        //main api call
                         dispatch(order(data));
                         setErrorAlert(true);
                         sendEmail();

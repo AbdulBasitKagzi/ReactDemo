@@ -445,7 +445,7 @@ function BookTruck() {
                 <TextField
                   name="Capacity"
                   id="Capacity"
-                  label="Capacity"
+                  label="Capacity in TON"
                   value={Capacity}
                   disabled
                 ></TextField>
@@ -455,7 +455,7 @@ function BookTruck() {
                 <TextField
                   name="Rate"
                   id="Rate"
-                  label="Rate"
+                  label="Rate Per KM"
                   value={Rate}
                   disabled
                 ></TextField>
