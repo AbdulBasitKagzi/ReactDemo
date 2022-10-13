@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import process from "process";
 
 const API = process.env.REACT_APP_URL;
 // initial state that can be updated by reducer action and can be sent to backend

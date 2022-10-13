@@ -1,5 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+import { orderAction } from "../store/orderReducer";
 import BasicFooter from "../component/BasicFooter";
 import Navbar from "../component/Navbar";
 
@@ -7,6 +10,7 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/material";
 
 function EmailPage() {
+  const dispatch = useDispatch();
   return (
     <div>
       <Navbar />
@@ -23,13 +27,18 @@ function EmailPage() {
           <span
             style={{ backgroundColor: " #e60023", padding: 4, color: "white" }}
           >
-            {" "}
             Your Order
-          </span>{" "}
+          </span>
           Has been placed
         </Typography>
         <Typography>
-          <Link style={{ textDecoration: "none" }} to="/">
+          <Link
+            style={{ textDecoration: "none" }}
+            to="/"
+            onClick={() => {
+              dispatch(orderAction.clearData());
+            }}
+          >
             Click OK to continue
           </Link>
         </Typography>

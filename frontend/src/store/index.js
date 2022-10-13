@@ -14,10 +14,8 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActionPaths: ["payload.callback"],
-      },
-    }),
+      serializableCheck: false,
+    }), 
 });
 
 export default store;

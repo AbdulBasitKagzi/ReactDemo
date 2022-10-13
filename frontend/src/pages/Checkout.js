@@ -1,5 +1,5 @@
 import React from "react";
-import Payment from "./Payment";
+
 import Review from "./Review";
 import OrderPage from "./OrderPage";
 import NavBar from "../component/Navbar";
@@ -22,6 +22,7 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { orderAction } from "../store/orderReducer";
+import axios from "axios";
 
 function Copyright() {
   return (
@@ -36,11 +37,48 @@ function Copyright() {
   );
 }
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
+const steps = ["Shipping address", "Review your order"];
 
 const theme = createTheme();
 
 function Checkout() {
+  const { data } = useSelector((state) => state.order);
+
+  // for payment gateway
+  const initPayment = (data) => {
+    const options = {
+      key: "rzp_test_LWWcC0PsOPpvgj",
+      amount: data.amount,
+      currency: data.currency,
+      handler: async (response) => {
+        try {
+          const verifyUrl = "http://localhost:5000/api/payment/verify";
+          const result = await axios.post(verifyUrl, response);
+          console.log("verifyResult", result);
+        } catch (error) {
+          console.log("newError", error);
+        }
+      },
+    };
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
+  // for payment gateway
+  const handlePayment = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/payment/orders",
+        { data }
+      );
+
+      console.log("response for payment", response);
+      initPayment(response.data.data);
+    } catch (error) {
+      console.log("payment error", error);
+    }
+  };
+
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -53,22 +91,21 @@ function Checkout() {
           />
         );
       case 1:
-        return (
-          <Payment
-            setError={setError}
-            error={error}
-            setOrderData={setOrderData}
-            orderData={orderData}
-          />
-        );
-
-      case 2:
         return <Review setAlertError={setErrorAlert} errorAlert={errorAlert} />;
+
+      // case 2:
+      //   return (
+      //     <Payment
+      //       setError={setError}
+      //       error={error}
+      //       setOrderData={setOrderData}
+      //       orderData={orderData}
+      //     />
+      //   );
       default:
         throw new Error("Unknown step");
     }
   }
-
   const [error, setError] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   const [errorAlert, setErrorAlert] = React.useState(null);
@@ -82,7 +119,7 @@ function Checkout() {
   };
 
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.order);
+
   const [orderData, setOrderData] = React.useState(data);
 
   // target values which will get send in email
@@ -167,6 +204,8 @@ function Checkout() {
                         "orderData",
                         JSON.stringify(orderData)
                       );
+                      console.log("clicked");
+
                       if (activeStep !== 2) {
                         handleNext();
                         dispatch(
@@ -175,8 +214,11 @@ function Checkout() {
                             ...orderData,
                           })
                         );
+
                         setError(false);
-                      } else {
+                      }
+                      if (activeStep === 1) {
+                        handlePayment();
                         //main api call
                         dispatch(order(data));
                         setErrorAlert(true);
@@ -186,7 +228,7 @@ function Checkout() {
                         localStorage.removeItem("orderData");
                       }
 
-                      if (activeStep === 1) {
+                      if (activeStep === 0) {
                         setError(true);
                       }
                     }}
