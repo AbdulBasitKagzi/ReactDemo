@@ -22,6 +22,9 @@ const Vehicle = mongoose.Schema(
       type: Number,
       required: true,
     },
+    imageUrl: {
+      type: "string",
+    },
   },
   { timestamps: true }
 );

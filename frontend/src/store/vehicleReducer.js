@@ -37,7 +37,7 @@ export const getVehicle = createAsyncThunk(
           },
         }
       );
-      console.log("getvehicle", response);
+
       return response;
     } catch (error) {
       console.log(error);
@@ -60,7 +60,7 @@ export const deleteVehicle = createAsyncThunk(
           },
         }
       );
-      console.log(response);
+
       thunkApi.dispatch(getVehicle());
       return response;
     } catch (error) {
@@ -85,7 +85,7 @@ export const addVehicle = createAsyncThunk(
           },
         }
       );
-      console.log("addVehicle----res", response);
+
       thunkAPI.dispatch(getVehicle());
       return response;
     } catch (error) {
@@ -179,7 +179,6 @@ const vehicleSlice = createSlice({
       state.addOpen = true;
     },
     [updateVehicles.fulfilled]: (state, action) => {
-      console.log("update fulfilled", action.payload.data.message);
       state.update = true;
       state.updateMessage = action.payload.data.message;
       state.isLoading = false;
@@ -189,7 +188,6 @@ const vehicleSlice = createSlice({
       state.isLoading = true;
     },
     [updateVehicles.rejected]: (state, action) => {
-      console.log("update rejected", action.payload.response.data.message);
       state.update = false;
       state.updateMessage = action.payload.response.data.message;
       state.isLoading = false;

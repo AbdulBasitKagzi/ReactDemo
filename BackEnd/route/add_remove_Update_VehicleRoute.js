@@ -57,7 +57,7 @@ vehicleRoute.post(
     });
     console.log(registeredVehicle);
     try {
-      const { type, vNumber, capacity, initialPrice, owner } = req.body;
+      const { type, vNumber, capacity, initialPrice, imageUrl } = req.body;
 
       if (registeredVehicle) {
         return res
@@ -70,6 +70,7 @@ vehicleRoute.post(
         vNumber,
         capacity,
         initialPrice,
+        imageUrl,
       });
       success = true;
       return res
@@ -184,6 +185,7 @@ vehicleRoute.patch(`${api}/updateVehicle/:id`, getUserId, async (req, res) => {
         vNumber: req.body.vNumber,
         capacity: req.body.capacity,
         initialPrice: req.body.initialPrice,
+        imageUrl: req.body.imageUrl,
       },
       { new: true }
     );

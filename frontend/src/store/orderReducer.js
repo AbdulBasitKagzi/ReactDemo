@@ -47,7 +47,7 @@ export const getOrder = createAsyncThunk(
           },
         }
       );
-      console.log("order res---", response);
+
       return response;
     } catch (error) {
       console.log("get order error----", error);
@@ -83,7 +83,6 @@ const orderSlice = createSlice({
       state.error = action.payload;
     },
     [getOrder.fulfilled]: (state, action) => {
-      console.log("getorder fullfilled----", action.payload);
       state.orderData = action.payload.data;
       state.isLoading = false;
       state.error = action.payload;
@@ -92,7 +91,6 @@ const orderSlice = createSlice({
       state.isLoading = true;
     },
     [getOrder.rejected]: (state, action) => {
-      console.log("getorder rejected----", action.payload);
       state.isLoading = false;
       state.error = action.payload;
     },

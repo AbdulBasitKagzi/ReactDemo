@@ -94,7 +94,6 @@ export const updateGoods = createAsyncThunk(
   "goodsSlice/updateGood",
   async (body, thunkAPI) => {
     try {
-      console.log("-----", body.id);
       const response = await axios.patch(
         `http://localhost:5000/transportgoodsservice/updateGoods/${body.id}`,
         body,
@@ -131,7 +130,7 @@ const goodsSlice = createSlice({
       state.goodsType = action.payload.data.good.map((type) => {
         return type;
       });
-      console.log(state.goods);
+
       state.isLoadingG = false;
     },
     [getGoods.pending]: (state) => {
@@ -165,7 +164,6 @@ const goodsSlice = createSlice({
       state.isLoadingG = true;
     },
     [addGoods.rejected]: (state, action) => {
-      console.log(action.payload);
       state.add = false;
       state.addOpen = true;
       state.addMessage = action.payload.response.data.message;
