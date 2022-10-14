@@ -1,12 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { Image } from "cloudinary-react";
 
 import { getVehicle } from "../store/vehicleReducer";
 import { deleteVehicle, vehicleAction } from "../store/vehicleReducer";
 import Navbar from "../component/Navbar";
 import AddModal from "../component/AddModal";
 import UpdateVehicleModal from "../component/UpdateVehicleModal";
+
+import "./Vehicles.css";
 
 // mui imports
 import Slide from "@mui/material/Slide";
@@ -22,6 +25,7 @@ import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import BasicFooter from "../component/BasicFooter";
+import Paper from "@mui/material/Paper";
 
 // to style table
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -132,7 +136,7 @@ function Vehicles() {
           </Alert>
         </Snackbar>
       )}
-      {!Delete && (
+      {Delete === false && (
         <Snackbar
           TransitionComponent={TransitionLeft}
           open={deleteOpen}
@@ -144,89 +148,108 @@ function Vehicles() {
           </Alert>
         </Snackbar>
       )}
-      <TableContainer>
-        <Typography variant="h4" align="center" sx={{ p: 2 }}>
-          Vehicles
-        </Typography>
-        <Table sx={{ minWidth: 650, border: 1 }} aria-label="simple table">
-          <TableHead>
-            <StyledTableRow sx={{ border: 1 }}>
-              <StyledTableCell sx={{ border: 1 }}>No.</StyledTableCell>
+      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+        {vehicleType == "" && <Typography>No data found</Typography>}
+        <TableContainer>
+          <Typography variant="h4" align="center" sx={{ p: 2 }}>
+            Vehicles
+          </Typography>
+          <Table
+            sx={{ width: "95%", border: 1, mb: 2 }}
+            align="center"
+            aria-label="simple table"
+          >
+            <TableHead>
+              <StyledTableRow sx={{ border: 1 }}>
+                <StyledTableCell sx={{ border: 1 }}>No.</StyledTableCell>
 
-              <StyledTableCell align="center" sx={{ border: 1 }}>
-                Type
-              </StyledTableCell>
-              <StyledTableCell align="center" sx={{ border: 1 }}>
-                VNumber
-              </StyledTableCell>
-              <StyledTableCell align="center" sx={{ border: 1 }}>
-                Capacity
-              </StyledTableCell>
-              <StyledTableCell align="center" sx={{ border: 1 }}>
-                InitialPrice
-              </StyledTableCell>
-              <StyledTableCell
-                align="center"
-                sx={{ border: 1 }}
-              ></StyledTableCell>
-              <StyledTableCell
-                align="center"
-                sx={{ border: 1 }}
-              ></StyledTableCell>
-            </StyledTableRow>
-          </TableHead>
-          <TableBody>
-            {vehicleType == "" && <p>No data found</p>}
-            {vehicleType.map((vehicle, index) => (
-              <StyledTableRow
-                key={index}
-                sx={{ "&:last-child td, &:last-child th": { border: 1 } }}
-              >
-                <StyledTableCell component="th" scope="row" sx={{ border: 1 }}>
-                  {index + 1}
+                <StyledTableCell align="center" sx={{ border: 1 }}>
+                  Type
                 </StyledTableCell>
                 <StyledTableCell align="center" sx={{ border: 1 }}>
-                  {vehicle.type}
+                  VNumber
                 </StyledTableCell>
                 <StyledTableCell align="center" sx={{ border: 1 }}>
-                  {vehicle.vNumber}
+                  Capacity
                 </StyledTableCell>
                 <StyledTableCell align="center" sx={{ border: 1 }}>
-                  {vehicle.capacity}
+                  InitialPrice
                 </StyledTableCell>
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  {vehicle.initialPrice}
-                </StyledTableCell>
-                {/* update button */}
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  <Button
-                    onClick={() => {
-                      setUpdateModal(true);
-                      setUpdateOpen(true);
-                      setValue(vehicleType[index]);
-                      console.log(vehicleType[index]);
-                    }}
-                  >
-                    <i class="fa-solid fa-pen-to-square"></i>
-                  </Button>
-                </StyledTableCell>
-
-                {/* delete button */}
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  <Button
-                    onClick={() => {
-                      const id = vehicle._id;
-                      dispatch(deleteVehicle(id));
-                    }}
-                  >
-                    <i class="fa-solid fa-trash"></i>
-                  </Button>
-                </StyledTableCell>
+                <StyledTableCell
+                  align="center"
+                  sx={{ border: 1 }}
+                ></StyledTableCell>
+                <StyledTableCell
+                  align="center"
+                  sx={{ border: 1 }}
+                ></StyledTableCell>
               </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+
+            <TableBody>
+              {vehicleType.map((vehicle, index) => (
+                <StyledTableRow
+                  key={index}
+                  sx={{ "&:last-child td, &:last-child th": { border: 1 } }}
+                >
+                  <StyledTableCell
+                    component="th"
+                    scope="row"
+                    sx={{ border: 1 }}
+                  >
+                    {index + 1}
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    sx={{ border: 1, display: "flex" }}
+                  >
+                    <Image
+                      className="cloudinary_image"
+                      cloudName="dhf3mwsj8"
+                      publicId={vehicle.imageUrl}
+                    />
+                    {vehicle.type}
+                  </StyledTableCell>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    {vehicle.vNumber}
+                  </StyledTableCell>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    {vehicle.capacity}
+                  </StyledTableCell>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    {vehicle.initialPrice}
+                  </StyledTableCell>
+                  {/* update button */}
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    <Button
+                      onClick={() => {
+                        setUpdateModal(true);
+                        setUpdateOpen(true);
+                        setValue(vehicleType[index]);
+                        console.log(vehicleType[index]);
+                      }}
+                    >
+                      <i className="fa-solid fa-pen-to-square"></i>
+                    </Button>
+                  </StyledTableCell>
+
+                  {/* delete button */}
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    <Button
+                      onClick={() => {
+                        const id = vehicle._id;
+                        dispatch(deleteVehicle(id));
+                      }}
+                    >
+                      <i className="fa-solid fa-trash"></i>
+                    </Button>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
       <Button
         variant="contained"
         sx={{ ml: 40, mt: 2, width: "50%" }}

@@ -14,6 +14,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import BasicFooter from "../component/BasicFooter";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -50,6 +51,7 @@ function Order() {
     <div>
       <Navbar />
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
+        {orderData == "" && <Typography>No data found</Typography>}
         <TableContainer>
           <Typography variant="h4" align="center" sx={{ p: 2 }}>
             Orders
@@ -88,7 +90,6 @@ function Order() {
               </StyledTableRow>
             </TableHead>
             <TableBody sx={{ border: 1 }}>
-              {orderData == "" && <p>No data found</p>}
               {orderData?.map((data, index) => (
                 <StyledTableRow
                   key={index}
@@ -157,6 +158,7 @@ function Order() {
           </Table>
         </TableContainer>
       </Paper>
+      <BasicFooter />
     </div>
   );
 }

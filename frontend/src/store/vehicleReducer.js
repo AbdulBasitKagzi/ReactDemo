@@ -119,6 +119,9 @@ export const updateVehicles = createAsyncThunk(
   }
 );
 
+// api to upload image
+
+
 // reducer for vehicles
 const vehicleSlice = createSlice({
   name: "vehicle",

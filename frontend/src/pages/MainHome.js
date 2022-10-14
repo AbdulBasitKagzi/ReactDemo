@@ -351,8 +351,7 @@ function MainHome() {
                   alt="truckart"
                   style={{ width: 150, height: 150 }}
                 />
-                <Typography
-                  variant="h6"
+                <Box
                   sx={{
                     mt: { lg: 5, xs: 1 },
                     pl: 2,
@@ -370,7 +369,7 @@ function MainHome() {
                     We provide Full Truck load transportation services with
                     varied type of trucks available with the click of a button.
                   </Typography>
-                </Typography>
+                </Box>
               </Box>
               <Box sx={{ pb: 2, display: { lg: "flex", xs: "block" } }}>
                 <img
@@ -378,8 +377,7 @@ function MainHome() {
                   alt="truckart"
                   style={{ width: 150, height: 150 }}
                 />
-                <Typography
-                  variant="h6"
+                <Box
                   sx={{
                     mt: { lg: 5, xs: 1 },
                     pl: 2,
@@ -397,7 +395,7 @@ function MainHome() {
                     We provide Full Truck load transportation services with
                     varied type of trucks available with the click of a button.
                   </Typography>
-                </Typography>
+                </Box>
               </Box>
               <Box sx={{ display: { lg: "flex", xs: "block" } }}>
                 <img
@@ -405,8 +403,7 @@ function MainHome() {
                   alt="truckart"
                   style={{ width: 150, height: 150 }}
                 />
-                <Typography
-                  variant="h6"
+                <Box
                   sx={{
                     mt: { lg: 5, xs: 1 },
                     pl: 2,
@@ -429,7 +426,7 @@ function MainHome() {
                     We provide Full Truck load transportation services with
                     varied type of trucks available with the click of a button.
                   </Typography>
-                </Typography>
+                </Box>
               </Box>
             </Grid>
           </Grid>

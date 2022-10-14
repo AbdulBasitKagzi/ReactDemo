@@ -18,6 +18,7 @@ import Button from "@mui/material/Button";
 import AddProductModal from "../component/AddProductModal";
 import Snackbar from "@mui/material/Snackbar";
 import Slide from "@mui/material/Slide";
+import Paper from "@mui/material/Paper";
 
 import UpdateProductModal from "../component/UpdateProductModal";
 import BasicFooter from "../component/BasicFooter";
@@ -126,93 +127,95 @@ function Products() {
           </Alert>
         </Snackbar>
       )}
-      <TableContainer>
-        <Typography variant="h4" align="center" sx={{ p: 2 }}>
-          Products
-        </Typography>
-        <Table
-          sx={{ minWidth: 650, border: 1, width: 500, mb: 2 }}
-          align="center"
-          aria-label="simple table"
-        >
-          <TableHead sx={{ border: 1 }}>
-            <StyledTableRow sx={{ border: 1 }}>
-              <StyledTableCell align="center" sx={{ border: 1 }}>
-                No.
-              </StyledTableCell>
+      <Paper sx={{ ml: "25%", width: "50%", overflow: "hidden" }}>
+        {goodsType == "" && <Typography>No data found</Typography>}
+        <TableContainer>
+          <Typography variant="h4" align="center" sx={{ p: 2 }}>
+            Products
+          </Typography>
+          <Table
+            sx={{ minWidth: 650, border: 1, width: 500, mb: 2 }}
+            align="center"
+            aria-label="simple table"
+          >
+            <TableHead sx={{ border: 1 }}>
+              <StyledTableRow sx={{ border: 1 }}>
+                <StyledTableCell align="center" sx={{ border: 1 }}>
+                  No.
+                </StyledTableCell>
 
-              <StyledTableCell align="center" sx={{ border: 1 }}>
-                Type
-              </StyledTableCell>
-              <StyledTableCell
-                align="center"
-                sx={{ border: 1 }}
-              ></StyledTableCell>
-              <StyledTableCell
-                align="center"
-                sx={{ border: 1 }}
-              ></StyledTableCell>
-            </StyledTableRow>
-          </TableHead>
-          <TableBody sx={{ border: 1 }}>
-            {goodsType == "" && <p>No data found</p>}
-            {goodsType.map((goods, index) => (
-              <StyledTableRow
-                key={index}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 1 },
-                  border: 1,
-                }}
-              >
+                <StyledTableCell align="center" sx={{ border: 1 }}>
+                  Type
+                </StyledTableCell>
                 <StyledTableCell
-                  component="th"
-                  scope="row"
+                  align="center"
                   sx={{ border: 1 }}
-                  align="center"
-                >
-                  {index + 1}
-                </StyledTableCell>
+                ></StyledTableCell>
                 <StyledTableCell
                   align="center"
-                  sx={{ border: 1, size: "small" }}
-                >
-                  {goods.type}
-                </StyledTableCell>
-
-                {/* update button */}
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  <Button
-                    onClick={() => {
-                      setUpdateModal(true);
-                      setUpdateOpen(true);
-
-                      console.log(goodsType[index].type);
-                      setType(goodsType[index].type);
-                      setId(goodsType[index]._id);
-                    }}
-                  >
-                    <i class="fa-solid fa-pen-to-square"></i>
-                  </Button>
-                </StyledTableCell>
-
-                {/* delete button */}
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  <Button
-                    onClick={() => {
-                      dispatch(deleteGoods(goods._id));
-                    }}
-                  >
-                    <i class="fa-solid fa-trash"></i>
-                  </Button>
-                </StyledTableCell>
+                  sx={{ border: 1 }}
+                ></StyledTableCell>
               </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody sx={{ border: 1 }}>
+              {goodsType.map((goods, index) => (
+                <StyledTableRow
+                  key={index}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 1 },
+                    border: 1,
+                  }}
+                >
+                  <StyledTableCell
+                    component="th"
+                    scope="row"
+                    sx={{ border: 1 }}
+                    align="center"
+                  >
+                    {index + 1}
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    sx={{ border: 1, size: "small" }}
+                  >
+                    {goods.type}
+                  </StyledTableCell>
+
+                  {/* update button */}
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    <Button
+                      onClick={() => {
+                        setUpdateModal(true);
+                        setUpdateOpen(true);
+
+                        console.log(goodsType[index].type);
+                        setType(goodsType[index].type);
+                        setId(goodsType[index]._id);
+                      }}
+                    >
+                      <i className="fa-solid fa-pen-to-square"></i>
+                    </Button>
+                  </StyledTableCell>
+
+                  {/* delete button */}
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    <Button
+                      onClick={() => {
+                        dispatch(deleteGoods(goods._id));
+                      }}
+                    >
+                      <i className="fa-solid fa-trash"></i>
+                    </Button>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
       <Button
         variant="contained"
-        sx={{ ml: 40, mt: 2, width: "50%" }}
+        sx={{ ml: 42, mt: 2, width: "50%" }}
         onClick={() => {
           setModal(true);
           setOpen(true);
