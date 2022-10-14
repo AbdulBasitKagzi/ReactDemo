@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const style = {
   position: "absolute",
@@ -32,7 +33,9 @@ export default function AddProductModal(props) {
   const handleClose = () => props.setOpen(false);
 
   const dispatch = useDispatch();
-  const { addOpen, add, addMessage } = useSelector((state) => state.goods);
+  const { addOpen, add, addMessage, isLoadingG } = useSelector(
+    (state) => state.goods
+  );
 
   // for snackbar
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -87,6 +90,11 @@ export default function AddProductModal(props) {
       >
         <Fade in={props.Open}>
           <Box sx={style}>
+            {isLoadingG && (
+              <Box sx={{ width: "100%" }}>
+                <LinearProgress />
+              </Box>
+            )}
             <Typography
               id="transition-modal-title"
               variant="h6"
@@ -129,6 +137,7 @@ export default function AddProductModal(props) {
                 </Alert>
               </Snackbar>
             )}
+
             <Box>
               <TextField
                 sx={{ ml: 12, mt: 2 }}

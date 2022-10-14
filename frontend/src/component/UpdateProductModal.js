@@ -13,6 +13,7 @@ import { TextField } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import { updateGoods } from "../store/goodsReducer";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const style = {
   position: "absolute",
@@ -41,7 +42,7 @@ export default function UpdateProductModal(props) {
   const { vertical, horizontal } = state;
 
   const dispatch = useDispatch();
-  const { update, updateMessage, updateOpen } = useSelector(
+  const { update, updateMessage, updateOpen, isLoadingG } = useSelector(
     (state) => state.goods
   );
 
@@ -80,6 +81,11 @@ export default function UpdateProductModal(props) {
       >
         <Fade in={props.Open}>
           <Box sx={style}>
+            {isLoadingG && (
+              <Box sx={{ width: "100%" }}>
+                <LinearProgress />
+              </Box>
+            )}
             <Typography
               id="transition-modal-title"
               variant="h6"

@@ -26,6 +26,8 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import BasicFooter from "../component/BasicFooter";
 import Paper from "@mui/material/Paper";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 // to style table
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -48,8 +50,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-// for snackbar
+// for circular progressbar with number
+
 function Vehicles() {
+  // for snackbar
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
@@ -68,7 +72,7 @@ function Vehicles() {
   }, []);
 
   // to close the error snackbar
-  const handleClose1 = (event, reason) => {
+  const handleClose1 = (reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -92,9 +96,8 @@ function Vehicles() {
   const [value, setValue] = React.useState();
 
   // data from redux
-  const { vehicleType, Delete, deleteOpen, deleteMessage } = useSelector(
-    (state) => state.vehicle
-  );
+  const { vehicleType, Delete, deleteOpen, deleteMessage, isLoading } =
+    useSelector((state) => state.vehicle);
 
   return (
     <div>
@@ -147,6 +150,11 @@ function Vehicles() {
             {deleteMessage}
           </Alert>
         </Snackbar>
+      )}
+      {isLoading && (
+        <Box sx={{ display: "flex", ml: "50%" }}>
+          <CircularProgress />
+        </Box>
       )}
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         {vehicleType == "" && <Typography>No data found</Typography>}

@@ -110,7 +110,7 @@ export const updateVehicles = createAsyncThunk(
           },
         }
       );
-      thunkAPI.rejectWithValue(getVehicle());
+      thunkAPI.dispatch(getVehicle());
       return response;
     } catch (error) {
       console.log("thunk reject error", error);
@@ -121,13 +121,12 @@ export const updateVehicles = createAsyncThunk(
 
 // api to upload image
 
-
 // reducer for vehicles
 const vehicleSlice = createSlice({
   name: "vehicle",
   initialState: vehicleState,
   reducers: {
-    clearMessage(state, action) {
+    clearMessage(state) {
       state.deleteOpen = false;
       state.addOpen = false;
       state.updateOpen = false;
@@ -149,10 +148,10 @@ const vehicleSlice = createSlice({
       state.error = action.error.message;
     },
     [deleteVehicle.fulfilled]: (state, action) => {
-      console.log("delvehreject", action.payload.data.message);
       state.Delete = true;
       state.deleteOpen = true;
       state.deleteMessage = action.payload.data.message;
+      state.isLoading = false;
     },
     [deleteVehicle.pending]: (state) => {
       state.isLoading = true;
@@ -161,6 +160,7 @@ const vehicleSlice = createSlice({
       state.Delete = false;
       state.deleteMessage = action.payload.response.data.message;
       state.deleteOpen = true;
+      state.isLoading = false;
     },
     [addVehicle.fulfilled]: (state, action) => {
       state.vehicles = action.payload.data.newVehicle;

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 import { updateVehicles } from "../store/vehicleReducer";
 import { vehicleAction } from "../store/vehicleReducer";
@@ -14,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const style = {
   position: "absolute",
@@ -59,6 +61,7 @@ export default function UpdateVehicleModal(props) {
   const [numbererror, setnumberError] = React.useState(true);
   const [initialPriceerror, setinitialPriceError] = React.useState(true);
   const [capacityerror, setcapacityError] = React.useState(true);
+  const [imageError, setImageError] = React.useState(true);
   const RTOexp = RegExp(
     "^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$"
   );
@@ -69,41 +72,47 @@ export default function UpdateVehicleModal(props) {
   const [initialPrice, setinitialPrice] = React.useState();
   const [capacity, setCapacity] = React.useState();
   const [id, setId] = React.useState();
+  const [image, setImage] = React.useState();
 
   React.useEffect(() => {
     setType(props.value.type);
     setvNumber(props.value.vNumber);
     setinitialPrice(props.value.initialPrice);
     setCapacity(props.value.capacity);
+    setImage(props.value.imageUrl);
     setId(props.value._id);
   }, [props.value]);
 
   const dispatch = useDispatch();
-  const { updateOpen, update, updateMessage } = useSelector(
+  const { updateOpen, update, updateMessage, isLoading } = useSelector(
     (state) => state.vehicle
   );
 
+  const imageUpload = async () => {
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", "abdul007");
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dhf3mwsj8/image/upload",
+        formData
+      );
+      return response;
+    } catch (error) {
+      console.log("upload to cloudinary error", error);
+    }
+  };
   // function for validation and dispatch
-  const handleSumbit = () => {
-    // validation
-    // if (
-    //   type === "" &&
-    //   vNumber === "" &&
-    //   initialPrice === "" &&
-    //   capacity === ""
-    // ) {
-    //   settypeError(false);
-    //   setnumberError(false);
-    //   setinitialPriceError(false);
-    //   setcapacityError(false);
-    //   return;
-    // }
-
+  const handleSumbit = async () => {
+    // for validation
     if (type === "") settypeError(false);
     if (vNumber === "" || !RTOexp.test(vNumber)) setnumberError(false);
     if (initialPrice === "" || initialPrice < 10) setinitialPriceError(false);
     if (capacity === "" || capacity < 1) {
       setcapacityError(false);
+    }
+    if (image === "") {
+      setImageError(false);
       return;
     }
 
@@ -114,10 +123,14 @@ export default function UpdateVehicleModal(props) {
       initialPrice === "" ||
       initialPrice < 10 ||
       capacity === "" ||
-      capacity < 1
+      capacity < 1 ||
+      image === ""
     ) {
-      return "FooBar";
+      return;
     } else {
+      // uploading image to cloudinary
+      const upload = await imageUpload();
+
       // dispatch
       dispatch(
         updateVehicles({
@@ -126,6 +139,7 @@ export default function UpdateVehicleModal(props) {
           vNumber,
           initialPrice,
           capacity,
+          imageUrl: upload.data.secure_url,
         })
       );
 
@@ -189,7 +203,11 @@ export default function UpdateVehicleModal(props) {
                 </Alert>
               </Snackbar>
             )}
-
+            {isLoading && (
+              <Box sx={{ width: "100%" }}>
+                <LinearProgress />
+              </Box>
+            )}
             <Typography
               id="transition-modal-title"
               variant="h6"
@@ -198,6 +216,19 @@ export default function UpdateVehicleModal(props) {
             >
               Update Vehicle
             </Typography>
+            <TextField
+              type="file"
+              onChange={(e) => {
+                setImage(e.target.files[0]);
+                setImageError(true);
+              }}
+              sx={{ ml: 2, width: "92%" }}
+            />
+            {!imageError && (
+              <Alert severity="error" sx={{ mr: 2, fontSize: 12, height: 50 }}>
+                Please add image of the vehicle
+              </Alert>
+            )}
             <Box sx={{ display: "flex", p: 2 }}>
               <Box>
                 <TextField

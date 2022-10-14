@@ -14,6 +14,8 @@ import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import axios from "axios";
 
 const style = {
@@ -59,7 +61,6 @@ function AddModal(props) {
   const [initialPriceerror, setinitialPriceError] = React.useState(true);
   const [capacityerror, setcapacityError] = React.useState(true);
   const [imageError, setImageError] = React.useState(true);
-
   // regular expression for validation of vehicle number
   const RTOexp = RegExp(
     "^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$"
@@ -73,9 +74,12 @@ function AddModal(props) {
   const [image, setImage] = React.useState("");
 
   const dispatch = useDispatch();
-  const { add, addOpen, addMessage } = useSelector((state) => state.vehicle);
+  const { add, addOpen, addMessage, isLoading } = useSelector(
+    (state) => state.vehicle
+  );
 
   // function to upload image to cloudinary
+
   const imageUpload = async () => {
     const formData = new FormData();
     formData.append("file", image);
@@ -190,7 +194,11 @@ function AddModal(props) {
                 </Alert>
               </Snackbar>
             )}
-
+            {isLoading && (
+              <Box sx={{ width: "100%" }}>
+                <LinearProgress />
+              </Box>
+            )}
             <Typography
               id="transition-modal-title"
               variant="h6"
@@ -199,23 +207,21 @@ function AddModal(props) {
             >
               Add Vehicle
             </Typography>
+            <TextField
+              type="file"
+              onChange={(e) => {
+                setImage(e.target.files[0]);
+                setImageError(true);
+              }}
+              sx={{ ml: 2, width: "92%" }}
+            />
+            {!imageError && (
+              <Alert severity="error" sx={{ mr: 2, fontSize: 12, height: 50 }}>
+                Please add image of the vehicle
+              </Alert>
+            )}
             <Box sx={{ display: "flex", p: 2 }}>
               <Box>
-                <TextField
-                  type="file"
-                  onChange={(e) => {
-                    setImage(e.target.files[0]);
-                    setImageError(true);
-                  }}
-                />
-                {!imageError && (
-                  <Alert
-                    severity="error"
-                    sx={{ mr: 2, fontSize: 12, height: 50 }}
-                  >
-                    Please add image of the vehicle
-                  </Alert>
-                )}
                 <TextField
                   type="text"
                   id={props.typeLabel}
