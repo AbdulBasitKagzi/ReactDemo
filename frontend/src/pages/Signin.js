@@ -66,10 +66,7 @@ function Signin() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
     const userData = {
       email: data.get("email"),
       password: data.get("password"),
@@ -83,7 +80,6 @@ function Signin() {
     }
 
     if (userData.email === "" || userData.password === "") {
-      console.log("all fields must be filled");
       return;
     }
 
@@ -93,7 +89,6 @@ function Signin() {
 
   // to prevent user login without correct credentials
   useEffect(() => {
-    console.log(token);
     !error && token && navigate("/");
     emptyFields();
     // eslint-disable-next-line
@@ -157,7 +152,7 @@ function Signin() {
                 value={email}
                 onChange={(event) => {
                   setEmail(event.target.value);
-                  console.log(email);
+
                   setuEmail(false);
                   dispatch(authAction.clearMessage());
                 }}
@@ -178,7 +173,7 @@ function Signin() {
                 autoComplete="current-password"
                 onChange={(event) => {
                   setPassword(event.target.value);
-                  console.log(password);
+
                   setuPassword(false);
                   dispatch(authAction.clearMessage());
                 }}

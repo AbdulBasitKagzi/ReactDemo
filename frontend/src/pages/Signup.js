@@ -72,14 +72,6 @@ function Signup() {
 
     const data = new FormData(event.currentTarget);
 
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      confirmpassword: data.get("confirmpassword"),
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-    });
-
     const userData = {
       email: data.get("email"),
       password: data.get("password"),
@@ -88,7 +80,6 @@ function Signup() {
       lastName: data.get("lastName"),
     };
 
-    console.log(userData);
     if (userData.firstName === "") {
       setFirstName(true);
     }
@@ -112,7 +103,6 @@ function Signup() {
       confirmPassword === "" ||
       password !== confirmPassword
     ) {
-      console.log("error");
       return;
     }
 
@@ -184,7 +174,7 @@ function Signup() {
                   autoFocus
                   onChange={(event) => {
                     setFname(event.target.value);
-                    console.log(fName);
+
                     setFirstName(false);
                   }}
                 />
@@ -202,7 +192,7 @@ function Signup() {
                   value={lName}
                   onChange={(event) => {
                     setLname(event.target.value);
-                    console.log(lName);
+
                     setLastName(false);
                   }}
                 />
@@ -220,7 +210,7 @@ function Signup() {
                   value={uEmail}
                   onChange={(event) => {
                     setUemail(event.target.value);
-                    console.log(uEmail);
+
                     setEmail(false);
 
                     dispatch(authAction.clearMessage());
@@ -241,7 +231,7 @@ function Signup() {
                   value={password}
                   onChange={(event) => {
                     setPassword(event.target.value);
-                    // console.log(password);
+
                     setuPassword(false);
                   }}
                 />
@@ -264,7 +254,7 @@ function Signup() {
                   value={confirmPassword}
                   onChange={(event) => {
                     setConfirmPassword(event.target.value);
-                    // console.log(confirmPassword);
+
                     setCPassword(false);
                   }}
                 />

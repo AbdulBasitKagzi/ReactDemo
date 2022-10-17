@@ -119,7 +119,7 @@ function BasicFooter() {
               <li>
                 <Link
                   style={{ textDecoration: "none", color: "#e3e3e5" }}
-                  to="/mainhome"
+                  to="/"
                 >
                   Home
                 </Link>

@@ -15,6 +15,7 @@ import employeeArt from "../assets/employee.webp";
 import pricingArt from "../assets/pricing.webp";
 import truck_image from "../assets/img.jpg";
 import truck_image2 from "../assets/img1.webp";
+import truck_4k from "../assets/truck_4k.jpg";
 
 // mui imports
 import Box from "@mui/material/Box";
@@ -51,9 +52,10 @@ function MainHome() {
 
         <Box sx={{ mt: -6 }}>
           <img
-            src={truck_image}
+            className="truck_4k"
+            src={truck_4k}
             alt="truck"
-            style={{ width: "100%", height: 400 }}
+          
           />
           <Typography
             variant="h3"

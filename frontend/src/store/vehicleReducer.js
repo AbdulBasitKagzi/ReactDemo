@@ -21,22 +21,19 @@ const vehicleState = {
   addOpen: "",
 };
 
-const API = process.env.REACT_APP_URL;
+const api = process.env.REACT_APP_URL;
 
 // api to get vehicles
 export const getVehicle = createAsyncThunk(
   "getVehicle",
   async (body, thunkAPI) => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/transportgoodsservice/getVehicle`,
-        {
-          header: {
-            "Content-Type":
-              "application/x-www-form-urlencoded; charset=UTF-8;application/json",
-          },
-        }
-      );
+      const response = await axios.get(`${api}/getVehicle`, {
+        header: {
+          "Content-Type":
+            "application/x-www-form-urlencoded; charset=UTF-8;application/json",
+        },
+      });
 
       return response;
     } catch (error) {
@@ -51,15 +48,12 @@ export const deleteVehicle = createAsyncThunk(
   "vehicleSlice/deletevehicle",
   async (body, thunkApi) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:5000/transportgoodsservice/deletevehicle/${body}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.delete(`${api}/deletevehicle/${body}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       thunkApi.dispatch(getVehicle());
       return response;
@@ -75,16 +69,12 @@ export const addVehicle = createAsyncThunk(
   "vehicleSlice/addVehicle",
   async (body, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `http://localhost:5000/transportgoodsservice/addVehicle`,
-        body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.post(`${api}/addVehicle`, body, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       thunkAPI.dispatch(getVehicle());
       return response;
@@ -101,7 +91,7 @@ export const updateVehicles = createAsyncThunk(
   async (body, thunkAPI) => {
     try {
       const response = await axios.patch(
-        `${API}/updateVehicle/${body.id}`,
+        `${api}/updateVehicle/${body.id}`,
         body,
         {
           headers: {

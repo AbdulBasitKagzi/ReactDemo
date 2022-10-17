@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API = process.env.REACT_APP_URL;
+const api = process.env.REACT_APP_URL;
 // initial state that can be updated by reducer action and can be sent to backend
 const goodsState = {
   goods: "",
@@ -25,15 +25,12 @@ const goodsState = {
 // to fetch goods type
 export const getGoods = createAsyncThunk("getGoods", async (body, thunkAPI) => {
   try {
-    const response = await axios.get(
-      "http://localhost:5000/transportgoodsservice/getGoods",
-      {
-        header: {
-          "Content-Type":
-            "application/x-www-form-urlencoded; charset=UTF-8;application/json",
-        },
-      }
-    );
+    const response = await axios.get(`${api}/getGoods`, {
+      header: {
+        "Content-Type":
+          "application/x-www-form-urlencoded; charset=UTF-8;application/json",
+      },
+    });
 
     return response;
   } catch (error) {
@@ -46,15 +43,12 @@ export const deleteGoods = createAsyncThunk(
   "goodSlice/deletegoods",
   async (body, thunkAPI) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:5000/transportgoodsservice/deletegoods/${body}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.delete(`${api}/deletegoods/${body}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       thunkAPI.dispatch(getGoods());
       return response;
     } catch (error) {
@@ -69,16 +63,12 @@ export const addGoods = createAsyncThunk(
   "goodsSlice/addGoods",
   async (body, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `http://localhost:5000/transportgoodsservice/addGoods`,
-        body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.post(`${api}/addGoods`, body, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       thunkAPI.dispatch(getGoods());
       return response;
@@ -95,7 +85,7 @@ export const updateGoods = createAsyncThunk(
   async (body, thunkAPI) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/transportgoodsservice/updateGoods/${body.id}`,
+        `${api}/updateGoods/${body.id}`,
         body,
         {
           headers: {

@@ -8,23 +8,19 @@ const orderState = {
   orderData: [],
 };
 
-const API = process.env.REACT_APP_URL;
+const api = process.env.REACT_APP_URL;
 
 // to add order
 export const order = createAsyncThunk(
   "orderSlice/order",
   async (body, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `http://localhost:5000/transportgoodsservice/placeOrder`,
-        body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.post(`${api}/placeOrder`, body, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       return response;
     } catch (error) {
       console.log(error);
@@ -38,15 +34,12 @@ export const getOrder = createAsyncThunk(
   "orderSlice/getOrder",
   async (body, thunkAPI) => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/transportgoodsservice/orders`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.get(`${api}/orders`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       return response;
     } catch (error) {

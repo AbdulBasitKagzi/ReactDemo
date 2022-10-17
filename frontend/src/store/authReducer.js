@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API = process.env.REACT_APP_URL;
+const api = process.env.REACT_APP_URL;
 // initial state that can be updated by reducer action and can be sent to backend
 let authState = {
   user: "",
@@ -16,16 +16,12 @@ export const userSignup = createAsyncThunk(
   "authSlice/userSignup",
   async (body, thunkAPI) => {
     try {
-      const res = await axios.post(
-        "http://localhost:5000/transportgoodsservice/signup",
-        body,
-        {
-          header: {
-            "Content-Type":
-              "application/x-www-form-urlencoded; charset=UTF-8;application/json",
-          },
-        }
-      );
+      const res = await axios.post(`${api}/signup`, body, {
+        header: {
+          "Content-Type":
+            "application/x-www-form-urlencoded; charset=UTF-8;application/json",
+        },
+      });
       const token = res.data.token;
 
       // setting up token and user
@@ -44,16 +40,12 @@ export const userSignin = createAsyncThunk(
   "authSlice/userSignin",
   async (body, thunkAPI) => {
     try {
-      const res = await axios.post(
-        "http://localhost:5000/transportgoodsservice/login",
-        body,
-        {
-          header: {
-            "Content-Type":
-              "application/x-www-form-urlencoded; charset=UTF-8;application/json",
-          },
-        }
-      );
+      const res = await axios.post(`${api}/login`, body, {
+        header: {
+          "Content-Type":
+            "application/x-www-form-urlencoded; charset=UTF-8;application/json",
+        },
+      });
 
       const token = res.data.token;
 
