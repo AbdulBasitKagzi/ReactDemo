@@ -2,6 +2,16 @@
     width: 747px;
 }
 
+.progress-bar {
+  position: fixed;
+  top:64px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background:linear-gradient(to bottom right, red , blue);
+  transform-origin: 0%;
+}
+
 @media screen and (max-width: 600px) {
     .truck_img{
       width: 372px;
