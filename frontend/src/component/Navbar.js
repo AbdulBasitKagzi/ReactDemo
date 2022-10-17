@@ -56,6 +56,44 @@ function Navbar(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  // function to show drawer navbar for different roles of the user
+  const openDrawerNavbar = (navItem) => {
+    return navItem.map((item, index) => (
+      <ListItem key={index} disablePadding>
+        <NavLink
+          style={{ textDecoration: "none", color: "white" }}
+          to={item.Link}
+        >
+          <ListItemButton sx={{ textAlign: "center" }}>
+            <ListItemText primary={item.val} />
+          </ListItemButton>
+        </NavLink>
+      </ListItem>
+    ));
+  };
+
+  // function to show navbar for different user roles
+  const openNavbar = (navItem) => {
+    return navItem.map((item, index) => (
+      <NavLink style={{ textDecoration: "none" }} to={item.Link} key={index}>
+        <Button sx={{ color: "#fff" }}>{item.val}</Button>
+      </NavLink>
+    ));
+  };
+
+  // logOut/signOut function
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("role");
+    localStorage.removeItem("abdulOrder");
+    localStorage.removeItem("orderData");
+    setValue("");
+    setUserRole("");
+    navigate("/");
+    dispatch(orderAction.clearData());
+    dispatch(authAction.logOut());
+  };
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Box>
@@ -66,70 +104,23 @@ function Navbar(props) {
       </Box>
 
       <List style={{ textDecoration: "none" }}>
-        {!value &&
-          navItems.map((item, index) => (
-            <ListItem key={index} disablePadding>
-              <NavLink
-                style={{ textDecoration: "none", color: "white" }}
-                to={item.Link}
-              >
-                <ListItemButton sx={{ textAlign: "center" }}>
-                  <ListItemText primary={item.val} />
-                </ListItemButton>
-              </NavLink>
-            </ListItem>
-          ))}
+        {/* navbar for visiter */}
+        {!value && openDrawerNavbar(navItems)}
 
-        {value &&
-          userRole === "user" &&
-          newNavItems.map((item, index) => (
-            <ListItem key={index} disablePadding>
-              <NavLink
-                style={{ textDecoration: "none", color: "white" }}
-                to={item.Link}
-              >
-                <ListItemButton sx={{ textAlign: "center" }}>
-                  <ListItemText primary={item.val} />
-                </ListItemButton>
-              </NavLink>
-            </ListItem>
-          ))}
+        {/* navbar for the user of the website */}
+        {value && userRole === "user" && openDrawerNavbar(newNavItems)}
 
-        {value &&
-          userRole === "Admin" &&
-          adminNavItems.map((item, index) => (
-            <ListItem key={index} disablePadding>
-              <NavLink
-                style={{ textDecoration: "none", color: "white" }}
-                to={item.Link}
-              >
-                <ListItemButton sx={{ textAlign: "center" }}>
-                  <ListItemText primary={item.val} />
-                </ListItemButton>
-              </NavLink>
-            </ListItem>
-          ))}
+        {/* navbar for the admin */}
+        {value && userRole === "Admin" && openDrawerNavbar(adminNavItems)}
 
+        {/* logout/signout button */}
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
             {value && (
               <Button
                 sx={{ color: "white" }}
                 primary="Log Out"
-                onClick={() => {
-                  const token = localStorage.getItem("token");
-                  console.log("sdfd", token);
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("user");
-                  localStorage.removeItem("role");
-                  localStorage.removeItem("abdulOrder");
-                  localStorage.removeItem("orderData");
-                  setValue("");
-                  setUserRole("");
-                  navigate("/");
-                  dispatch(orderAction.clearData());
-                  dispatch(authAction.logOut());
-                }}
+                onClick={logout}
               >
                 Log Out
               </Button>
@@ -167,75 +158,20 @@ function Navbar(props) {
             Kagzi Transports
           </Typography>
           <Box component={List} sx={{ display: { xs: "none", sm: "block" } }}>
-            {!value &&
-              navItems.map((item, index) => (
-                <NavLink
-                  style={{ textDecoration: "none" }}
-                  to={item.Link}
-                  key={index}
-                >
-                  <Button sx={{ color: "#fff" }}>{item.val}</Button>
-                </NavLink>
-              ))}
-            {value &&
-              userRole === "user" &&
-              newNavItems.map((item, index) => (
-                <NavLink
-                  style={{ textDecoration: "none" }}
-                  to={item.Link}
-                  key={index}
-                >
-                  <Button
-                    sx={{ color: "#fff" }}
-                    onClick={() => {
-                      console.log(`${item.val} page and ${value}`);
-                    }}
-                  >
-                    {item.val}
-                  </Button>
-                </NavLink>
-              ))}
+            {/* show navbar to visiter */}
+            {!value && openNavbar(navItems)}
 
-            {value &&
-              userRole === "Admin" &&
-              adminNavItems.map((item, index) => (
-                <NavLink
-                  style={{ textDecoration: "none" }}
-                  to={item.Link}
-                  key={index}
-                >
-                  <Button
-                    sx={{ color: "#fff" }}
-                    onClick={() => {
-                      console.log(`${item.val} page and ${value}`);
-                    }}
-                  >
-                    {item.val}
-                  </Button>
-                </NavLink>
-              ))}
+            {/* show navbar to user  */}
+            {value && userRole === "user" && openNavbar(newNavItems)}
+
+            {/* show navbar to admin */}
+            {value && userRole === "Admin" && openNavbar(adminNavItems)}
+
+            {/* logout/signout button */}
             {value && (
-              // <NavLink style={{ textDecoration: "none" }} to="#">
-              <Button
-                sx={{ color: "#fff" }}
-                onClick={() => {
-                  const token = localStorage.getItem("token");
-                  console.log("sdfd", token);
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("user");
-                  localStorage.removeItem("role");
-                  localStorage.removeItem("abdulOrder");
-                  localStorage.removeItem("orderData");
-                  setValue("");
-                  setUserRole("");
-                  navigate("/");
-                  dispatch(orderAction.clearData());
-                  dispatch(authAction.logOut());
-                }}
-              >
+              <Button sx={{ color: "#fff" }} onClick={logout}>
                 Log Out
               </Button>
-              // </NavLink>
             )}
           </Box>
         </Toolbar>
