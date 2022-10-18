@@ -46,7 +46,7 @@ goodsRoute.post(`${api}/addgoods`, getUserId, async (req, res) => {
       .json({ success, good, message: "Goods Added Successfully" });
   } catch (error) {
     console.log("addgoodserror", error);
-    return res.status(500).send("Internal Server Error");
+    return res.status(400).send("somethig went wrong");
   }
 });
 
@@ -117,7 +117,7 @@ goodsRoute.patch(`${api}/updateGoods/:id`, getUserId, async (req, res) => {
         .json({ success, message: "Good Updated", updatedGood });
     }
   } catch (error) {
-    return res.status(500).send("Internal Server Error");
+    return res.status(400).send("somethig went wrong");
   }
 });
 module.exports = goodsRoute;

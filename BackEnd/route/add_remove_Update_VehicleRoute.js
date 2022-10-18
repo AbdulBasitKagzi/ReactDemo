@@ -77,7 +77,7 @@ vehicleRoute.post(
         .status(200)
         .json({ success, newVehicle, message: "New vehicle Added" });
     } catch (error) {
-      return res.status(500).send("Internal server error");
+      return res.status(400).send("somethig went wrong");
     }
   }
 );
@@ -109,7 +109,7 @@ vehicleRoute.delete(`${api}/deletevehicle/:id`, getUserId, async (req, res) => {
       .status(200)
       .json({ message: "vehicle deleted", success, deletedVehicle });
   } catch (error) {
-    return res.status(500).send("Internal server error");
+    return res.status(400).send("somethig went wrong");
   }
 });
 
@@ -126,7 +126,7 @@ vehicleRoute.get(`${api}/getVehicle`, async (req, res) => {
     return res.status(200).json({ success, findVehicle });
   } catch (error) {
     console.log("getvehcileerror", error);
-    return res.status(500).send("Internal Server Error");
+    return res.status(400).send("somethig went wrong");
   }
 });
 
@@ -195,7 +195,7 @@ vehicleRoute.patch(`${api}/updateVehicle/:id`, getUserId, async (req, res) => {
       .json({ success, message: "Vehicle Updated Successfully" });
   } catch (error) {
     console.log("update Vehicle error", error);
-    return res.status(500).send("Internal Server Error");
+    return res.status(400).send("somethig went wrong");
   }
 });
 module.exports = vehicleRoute;

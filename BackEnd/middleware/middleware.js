@@ -17,7 +17,7 @@ const getUserId = (req, res, next) => {
     next();
   } catch (error) {
     console.log("middleware error", error);
-    return res.status(500).send("Internal server error");
+    return res.status(400).send("somethig went wrong");
   }
 };
 module.exports = getUserId;

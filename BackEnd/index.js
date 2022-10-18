@@ -19,7 +19,12 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+// to serve to client
 app.use(express.static(path.join(__dirname + "/public")));
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "/public", "index.html"));
+});
 // setting up route
 app.use(route);
 app.use(customerUserRoute);

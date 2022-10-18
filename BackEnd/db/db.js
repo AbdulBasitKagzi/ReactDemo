@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 require("dotenv").config({ path: "config.env" });
 
 // function to connect to monogodb compass
-const db = process.env.DATA_BASE
+const db = process.env.MONGODB_URI;
 function connectToMongo() {
   mongoose
     .connect(db, {
@@ -13,5 +13,3 @@ function connectToMongo() {
     .catch((err) => console.log(`${err}`));
 }
 module.exports = connectToMongo;
-
-

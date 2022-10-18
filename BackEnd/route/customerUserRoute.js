@@ -93,7 +93,7 @@ customerUserRoute.post(
       return res.status(400).send({ success, error: "User is already there" });
     } catch (error) {
       // console.log("user signup", error);
-      return res.status(500).json({ error: "Internal Error occured" });
+      return res.status(400).json({ error: "something went wrong" });
     }
   }
 );
@@ -157,7 +157,7 @@ customerUserRoute.post(
       return res.status(200).json({ success, token, registeredUser });
     } catch (error) {
       // console.log("usersignuperror", error);
-      return res.status(500).json({ error: "Internal Error occured" });
+      return res.status(400).json({ error: "something went wrong" });
     }
   }
 );

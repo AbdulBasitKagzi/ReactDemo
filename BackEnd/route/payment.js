@@ -22,13 +22,13 @@ paymentRoute.post(`/api/payment/orders`, async (req, res) => {
     instance.orders.create(options, (error, order) => {
       if (error) {
         console.log(error);
-        return res.status(500).send("Something went wrong");
+        return res.status(400).send("Something went wrong");
       }
       res.status(200).json({ data: order });
     });
   } catch (error) {
     console.log("catcherror", error);
-    return res.status(500).send("Internal server error");
+    return res.status(400).send("somethig went wrong");
   }
 });
 
@@ -50,7 +50,7 @@ paymentRoute.post(`/api/payment/verify`, async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send("Internal server error");
+    res.status(400).send("somethig went wrong");
   }
 });
 

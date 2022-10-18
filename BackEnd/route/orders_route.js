@@ -73,7 +73,7 @@ orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
     return res.status(200).json(order);
   } catch (error) {
     console.log("ordererror", error);
-    return res.status(500).send("Internal Server Error");
+    return res.status(400).send("somethig went wrong");
   }
   // to find user for first name last name and id
 });
@@ -94,7 +94,11 @@ orderRoute.get(`${api}/orders`, getUserId, async (req, res) => {
     return res.status(200).json(allOrders);
   } catch (error) {
     console.log(error);
-    return res.status(500).send("Internal Server Error", error);
+    return res.status(400).send("somethig went wrong", error);
   }
+});
+
+orderRoute.get("/getAllOrders", async (req, res) => {
+  return res.status(200).json({ message: "I am working" });
 });
 module.exports = orderRoute;
