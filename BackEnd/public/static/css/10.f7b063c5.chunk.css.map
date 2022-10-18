@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/pages/Vehicles.css"],"names":[],"mappings":"AAAA,kBACI,WAAW,CACX,YAAa,CACd,gBACH,CAEA,wBACI,qCACJ","file":"10.f7b063c5.chunk.css","sourcesContent":[".cloudinary_image{\r\n    width:100px;\r\n    padding: 10px;\r\n   margin-top: -20px;\r\n}\r\n\r\n.cloudinary_image:hover{\r\n    box-shadow: 0 0 11px rgba(33,33,33,.2);\r\n}"]}

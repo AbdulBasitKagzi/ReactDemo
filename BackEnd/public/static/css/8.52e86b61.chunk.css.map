@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/pages/BookTruck.css"],"names":[],"mappings":"AAAA,QACI,YAAa,CACb,YACJ,CAEA,oCACI,QACE,WACF,CACF","file":"8.52e86b61.chunk.css","sourcesContent":[".iclass{\r\n    width: 1000px;\r\n    height: 350px;\r\n}\r\n\r\n@media screen and (max-width: 600px) {\r\n    .iclass{\r\n      width: 300px;\r\n    }\r\n  }"]}
