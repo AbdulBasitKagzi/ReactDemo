@@ -7,10 +7,10 @@ import Checkout from "./pages/Checkout";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Error from "./pages/Error";
-// import Vehicles from "./pages/Vehicles";
 // import Products from "./pages/Products";
 // import Order from "./pages/Order";
 // import MainHome from "./pages/MainHome";
+// import Vehicles from "./pages/Vehicles";
 
 import Error403 from "./pages/Error403";
 import EmailPage from "./pages/EmailPage";
@@ -48,10 +48,10 @@ function App() {
             }
           />
 
-          {/* error */}
           <Route path="*" element={<Error />} />
           <Route path="/forbidden" element={<Error403 />} />
 
+          {/* error */}
           {/* Protected Routes */}
           <Route exact path="/admin" element={<ProtectedRoute role="Admin" />}>
             <Route exact path="/admin/vehicles" element={<LazyVehicle />} />

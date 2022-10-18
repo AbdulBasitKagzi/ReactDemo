@@ -15,7 +15,7 @@ function Error403() {
         style={{ width: "100%", height: "100%" }}
       />
       <Box sx={{ mt: -20, ml: 70 }}>
-        <Link to="/mainhome">Go to Home</Link>
+        <Link to="/">Go to Home</Link>
       </Box>
     </div>
   );
