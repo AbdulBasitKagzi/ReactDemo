@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "https://kagzitransportdemo.herokuapp.com",
   "dependencies": {
     "@emailjs/browser": "^3.7.0",
     "@emotion/react": "^11.10.4",

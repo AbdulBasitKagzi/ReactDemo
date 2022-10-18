@@ -52,7 +52,7 @@ function Checkout() {
       currency: data.currency,
       handler: async (response) => {
         try {
-          const verifyUrl = "http://localhost:5000/api/payment/verify";
+          const verifyUrl = "https://kagzitransportdemo.herokuapp.com/api/payment/verify";
           const result = await axios.post(verifyUrl, response);
           console.log("verifyResult", result);
         } catch (error) {
@@ -68,7 +68,7 @@ function Checkout() {
   const handlePayment = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/payment/orders",
+        "https://kagzitransportdemo.herokuapp.com/api/payment/orders",
         { data }
       );
 
