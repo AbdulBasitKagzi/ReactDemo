@@ -129,35 +129,37 @@ function Products() {
         </Snackbar>
       )}
       <Paper sx={{ ml: "25%", width: "50%", overflow: "hidden" }}>
-        {goodsType == "" && <Typography>No data found</Typography>}
         <TableContainer>
           <Typography variant="h4" align="center" sx={{ p: 2 }}>
             Products
           </Typography>
+          {goodsType.length === 0 && <Typography>No data found</Typography>}
           <Table
-            sx={{ minWidth: 650, border: 1, width: 500, mb: 2 }}
+            sx={{ border: 1, width: 650, mb: 2 }}
             align="center"
             aria-label="simple table"
           >
-            <TableHead sx={{ border: 1 }}>
-              <StyledTableRow sx={{ border: 1 }}>
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  No.
-                </StyledTableCell>
+            {goodsType.length !== 0 && (
+              <TableHead sx={{ border: 1 }}>
+                <StyledTableRow sx={{ border: 1 }}>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    No.
+                  </StyledTableCell>
 
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  Type
-                </StyledTableCell>
-                <StyledTableCell
-                  align="center"
-                  sx={{ border: 1 }}
-                ></StyledTableCell>
-                <StyledTableCell
-                  align="center"
-                  sx={{ border: 1 }}
-                ></StyledTableCell>
-              </StyledTableRow>
-            </TableHead>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    Type
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    sx={{ border: 1 }}
+                  ></StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    sx={{ border: 1 }}
+                  ></StyledTableCell>
+                </StyledTableRow>
+              </TableHead>
+            )}
             <TableBody sx={{ border: 1 }}>
               {goodsType.map((goods, index) => (
                 <StyledTableRow

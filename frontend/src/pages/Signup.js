@@ -45,26 +45,31 @@ function Signup() {
   const navigate = useNavigate();
 
   // states for taking input values
-  const [fName, setFname] = useState("");
-  const [lName, setLname] = useState("");
-  const [uEmail, setUemail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  // const [fName, setFname] = useState("");
+  // const [lName, setLname] = useState("");
+  // const [uEmail, setUemail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [confirmPassword, setConfirmPassword] = useState("");
+  const fName = React.useRef(null);
+  const lName = React.useRef(null);
+  const uEmail = React.useRef(null);
+  const password = React.useRef(null);
+  const confirmPassword = React.useRef(null);
 
   // states to handle validation
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [upassword, setuPassword] = useState(null);
-  const [cpassword, setCPassword] = useState(null);
+  const [firstName, setFirstName] = useState(false);
+  const [lastName, setLastName] = useState(false);
+  const [email, setEmail] = useState(false);
+  const [upassword, setuPassword] = useState(false);
+  const [cpassword, setCPassword] = useState(false);
 
   // to empty fileds
   const emptyFields = () => {
-    setFname("");
-    setLname("");
-    setUemail("");
-    setPassword("");
-    setConfirmPassword("");
+    fName.current.value = "";
+    lName.current.value = "";
+    uEmail.current.value = "";
+    password.current.value = "";
+    confirmPassword.current.value = "";
   };
   //   doing form submission and handling validation
   const handleSubmit = (event) => {
@@ -89,19 +94,20 @@ function Signup() {
     if (userData.email === "") {
       setEmail(true);
     }
-    if (userData.password === "" || userData.password.length < 5) {
+    if (userData.password === "" || userData.password.length < 6) {
       setuPassword(true);
     }
     if (userData.password !== userData.confirmpassword) {
       setCPassword(true);
     }
     if (
-      fName === "" ||
-      lName === "" ||
-      email === "" ||
-      password === "" ||
-      confirmPassword === "" ||
-      password !== confirmPassword
+      fName.current.value === "" ||
+      lName.current.value === "" ||
+      uEmail.current.value === "" ||
+      password.current.value === "" ||
+      confirmPassword.current.value === "" ||
+      password.current.value !== confirmPassword.current.value ||
+      password.current.value.length < 6
     ) {
       return;
     }
@@ -109,11 +115,11 @@ function Signup() {
     // dispatching action
     dispatch(
       userSignup({
-        FirstName: fName,
-        LastName: lName,
-        email: uEmail,
-        password: password,
-        confirmPassword: confirmPassword,
+        FirstName: fName.current.value,
+        LastName: lName.current.value,
+        email: uEmail.current.value,
+        password: password.current.value,
+        confirmPassword: confirmPassword.current.value,
       })
     );
   };
@@ -164,18 +170,21 @@ function Signup() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   sx={{ pb: 1 }}
+                  ref={fName}
                   autoComplete="given-name"
                   name="firstName"
                   required
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  value={fName}
                   autoFocus
                   onChange={(event) => {
-                    setFname(event.target.value);
-
-                    setFirstName(false);
+                    fName.current.value = event.target.value;
+                    if (fName.current.value === "") {
+                      setFirstName(true);
+                    } else {
+                      setFirstName(false);
+                    }
                   }}
                 />
                 {firstName && <Alert severity="error">Enter First Name</Alert>}
@@ -189,11 +198,14 @@ function Signup() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
-                  value={lName}
+                  ref={lName}
                   onChange={(event) => {
-                    setLname(event.target.value);
-
-                    setLastName(false);
+                    lName.current.value = event.target.value;
+                    if (lName.current.value === "") {
+                      setLastName(true);
+                    } else {
+                      setLastName(false);
+                    }
                   }}
                 />
                 {lastName && <Alert severity="error">Enter Last Name</Alert>}
@@ -207,13 +219,15 @@ function Signup() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  value={uEmail}
+                  ref={uEmail}
                   onChange={(event) => {
-                    setUemail(event.target.value);
-
-                    setEmail(false);
-
-                    dispatch(authAction.clearMessage());
+                    uEmail.current.value = event.target.value;
+                    if (uEmail.current.value === "") {
+                      setEmail(true);
+                    } else {
+                      setEmail(false);
+                      dispatch(authAction.clearMessage());
+                    }
                   }}
                 />
                 {email && <Alert severity="error">Enter email address</Alert>}
@@ -228,11 +242,14 @@ function Signup() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  value={password}
+                  ref={password}
                   onChange={(event) => {
-                    setPassword(event.target.value);
-
-                    setuPassword(false);
+                    password.current.value = event.target.value;
+                    if (password.current.value === "") {
+                      setuPassword(true);
+                    } else {
+                      setuPassword(false);
+                    }
                   }}
                 />
                 {upassword && (
@@ -251,10 +268,12 @@ function Signup() {
                   type="password"
                   id="confirmpasswordpassword"
                   autoComplete="new-password"
-                  value={confirmPassword}
+                  ref={confirmPassword}
                   onChange={(event) => {
-                    setConfirmPassword(event.target.value);
-
+                    confirmPassword.current.value = event.target.value;
+                    if (confirmPassword.current.value === "") {
+                      setCPassword(true);
+                    }
                     setCPassword(false);
                   }}
                 />

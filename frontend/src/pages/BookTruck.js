@@ -546,7 +546,6 @@ function BookTruck() {
                     sx={{ width: { lg: 950, xs: 300 } }}
                     onChange={(e) => {
                       Weight.current.value = e.target.value;
-
                       setGoodsWeight(true);
 
                       // for weight validation

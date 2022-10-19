@@ -156,44 +156,45 @@ function Vehicles() {
           <CircularProgress />
         </Box>
       )}
-      <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        {vehicleType == "" && <Typography>No data found</Typography>}
+      <Paper sx={{ ml: "15%", width: "70%", overflow: "hidden" }}>
         <TableContainer>
           <Typography variant="h4" align="center" sx={{ p: 2 }}>
             Vehicles
           </Typography>
+          {vehicleType.length === 0 && <Typography>No data found</Typography>}
           <Table
-            sx={{ width: "95%", border: 1, mb: 2 }}
+            sx={{ width: 900, border: 1, mb: 2 }}
             align="center"
             aria-label="simple table"
           >
-            <TableHead>
-              <StyledTableRow sx={{ border: 1 }}>
-                <StyledTableCell sx={{ border: 1 }}>No.</StyledTableCell>
+            {vehicleType.length !== 0 && (
+              <TableHead>
+                <StyledTableRow sx={{ border: 1 }}>
+                  <StyledTableCell sx={{ border: 1 }}>No.</StyledTableCell>
 
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  Type
-                </StyledTableCell>
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  VNumber
-                </StyledTableCell>
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  Capacity
-                </StyledTableCell>
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  InitialPrice
-                </StyledTableCell>
-                <StyledTableCell
-                  align="center"
-                  sx={{ border: 1 }}
-                ></StyledTableCell>
-                <StyledTableCell
-                  align="center"
-                  sx={{ border: 1 }}
-                ></StyledTableCell>
-              </StyledTableRow>
-            </TableHead>
-
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    Type
+                  </StyledTableCell>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    VNumber
+                  </StyledTableCell>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    Capacity
+                  </StyledTableCell>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    InitialPrice
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    sx={{ border: 1 }}
+                  ></StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    sx={{ border: 1 }}
+                  ></StyledTableCell>
+                </StyledTableRow>
+              </TableHead>
+            )}
             <TableBody>
               {vehicleType.map((vehicle, index) => (
                 <StyledTableRow

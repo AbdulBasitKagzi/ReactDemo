@@ -51,44 +51,46 @@ function Order() {
     <div>
       <Navbar />
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        {orderData == "" && <Typography>No data found</Typography>}
         <TableContainer>
           <Typography variant="h4" align="center" sx={{ p: 2 }}>
             Orders
           </Typography>
+          {orderData.length === 0 && <Typography>No data found</Typography>}
           <Table
             stickyHeader
-            sx={{ width: "95%", border: 1, mb: 2 }}
+            sx={{ width: "80%", border: 1, mb: 2 }}
             align="center"
             aria-label="sticky table"
           >
-            <TableHead sx={{ border: 1 }}>
-              <StyledTableRow sx={{ border: 1 }}>
-                <StyledTableCell align="center">No.</StyledTableCell>
+            {orderData.length !== 0 && (
+              <TableHead sx={{ border: 1 }}>
+                <StyledTableRow sx={{ border: 1 }}>
+                  <StyledTableCell align="center">No.</StyledTableCell>
 
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  Name
-                </StyledTableCell>
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  Goods
-                </StyledTableCell>
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  Vehicle
-                </StyledTableCell>
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  Weight
-                </StyledTableCell>
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  PickUp
-                </StyledTableCell>
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  Destination
-                </StyledTableCell>
-                <StyledTableCell align="center" sx={{ border: 1 }}>
-                  payment
-                </StyledTableCell>
-              </StyledTableRow>
-            </TableHead>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    Name
+                  </StyledTableCell>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    Goods
+                  </StyledTableCell>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    Vehicle
+                  </StyledTableCell>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    Weight
+                  </StyledTableCell>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    PickUp
+                  </StyledTableCell>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    Destination
+                  </StyledTableCell>
+                  <StyledTableCell align="center" sx={{ border: 1 }}>
+                    payment
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableHead>
+            )}
             <TableBody sx={{ border: 1 }}>
               {orderData?.map((data, index) => (
                 <StyledTableRow

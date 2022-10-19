@@ -103,10 +103,20 @@ function Signin() {
   // };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+    <Box sx={{ backgroundColor: "red", height: 680 }}>
+      <Grid container component="main" sx={{ height: "75vh" }}>
         <CssBaseline />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} square>
+
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={5}
+          sx={{ mt: 10, width: 1000 }}
+          component={Paper}
+          elevation={5}
+          square
+        >
           <Box
             sx={{
               my: 0,
@@ -204,6 +214,7 @@ function Signin() {
             </Box>
           </Box>
         </Grid>
+
         <Grid
           item
           xs={false}
@@ -219,10 +230,11 @@ function Signin() {
                 : t.palette.grey[900],
             backgroundSize: "cover",
             backgroundPosition: "center",
+            mt: 10,
           }}
         />
       </Grid>
-    </ThemeProvider>
+    </Box>
   );
 }
 export default Signin;

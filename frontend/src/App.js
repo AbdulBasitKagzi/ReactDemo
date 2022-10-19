@@ -48,10 +48,10 @@ function App() {
             }
           />
 
+          {/* error */}
           <Route path="*" element={<Error />} />
           <Route path="/forbidden" element={<Error403 />} />
 
-          {/* error */}
           {/* Protected Routes */}
           <Route exact path="/admin" element={<ProtectedRoute role="Admin" />}>
             <Route exact path="/admin/vehicles" element={<LazyVehicle />} />
