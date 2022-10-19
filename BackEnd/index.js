@@ -22,9 +22,6 @@ app.use(express.json());
 
 // to serve to client
 app.use(express.static(path.join(__dirname + "/public")));
-app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname, "/public", "index.html"));
-});
 // setting up route
 app.use(route);
 app.use(customerUserRoute);
@@ -33,6 +30,9 @@ app.use(goodsRoute);
 app.use(orderRoute);
 app.use(paymentRoute);
 
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "/public", "index.html"));
+});
 connectToMongo();
 // starting up the server
 app.listen(port, () => {

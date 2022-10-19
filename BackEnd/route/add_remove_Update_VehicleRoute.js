@@ -115,6 +115,7 @@ vehicleRoute.delete(`${api}/deletevehicle/:id`, getUserId, async (req, res) => {
 
 // to get all vehicles
 vehicleRoute.get(`${api}/getVehicle`, async (req, res) => {
+  console.log("Check here");
   let success = false;
 
   const findVehicle = await Vehicles.find();
