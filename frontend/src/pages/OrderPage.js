@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 // mui imports
 import Grid from "@mui/material/Grid";
@@ -17,6 +18,10 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 function OrderPage({ setError, orderData, setOrderData }) {
+  
+  // to get value
+  const [pickUpAddress, setpickUpAddress] = React.useState("");
+  const [deliveryAddress, setdeliveryAddress] = React.useState("");
   const [value, setValue] = React.useState(dayjs());
 
   const handleChange = (newValue) => {
@@ -24,9 +29,7 @@ function OrderPage({ setError, orderData, setOrderData }) {
     // console.log(new Date(value));
   };
 
-  // to get value
-  const [pickUpAddress, setpickUpAddress] = React.useState("");
-  const [deliveryAddress, setdeliveryAddress] = React.useState("");
+  const { data } = useSelector((state) => state.order);
 
   // to get user data and order from localstorage
   const User = JSON.parse(localStorage.getItem("user"));
@@ -50,6 +53,10 @@ function OrderPage({ setError, orderData, setOrderData }) {
 
     // eslint-disable-next-line
   }, [value]);
+  React.useEffect(() => {
+    setpickUpAddress(data.pickUpAddress);
+    setdeliveryAddress(data.deliveryAddress);
+  }, []);
 
   // for validation
   const [pvalidation, setPValidation] = React.useState(true);
@@ -59,10 +66,11 @@ function OrderPage({ setError, orderData, setOrderData }) {
   const Validatior1 = (e) => {
     setpickUpAddress(e.target.value);
     setOrderData({ ...orderData, pickUpAddress: e.target.value });
+
     if (e.target.value.length === 0) {
       setPValidation(false);
       setError(false);
-    } else if (e.target.value.length !== 0 && deliveryAddress.length !== 0) {
+    } else if (e.target.value !== "" && deliveryAddress !== "") {
       setPValidation(true);
       setError(true);
     } else {

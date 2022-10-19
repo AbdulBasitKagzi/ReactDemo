@@ -52,7 +52,8 @@ function Checkout() {
       currency: data.currency,
       handler: async (response) => {
         try {
-          const verifyUrl = "https://kagzitransportdemo.herokuapp.com/api/payment/verify";
+          const verifyUrl =
+            "https://kagzitransportdemo.herokuapp.com/api/payment/verify";
           const result = await axios.post(verifyUrl, response);
           console.log("verifyResult", result);
         } catch (error) {
@@ -93,15 +94,6 @@ function Checkout() {
       case 1:
         return <Review setAlertError={setErrorAlert} errorAlert={errorAlert} />;
 
-      // case 2:
-      //   return (
-      //     <Payment
-      //       setError={setError}
-      //       error={error}
-      //       setOrderData={setOrderData}
-      //       orderData={orderData}
-      //     />
-      //   );
       default:
         throw new Error("Unknown step");
     }

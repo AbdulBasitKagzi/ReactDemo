@@ -123,6 +123,11 @@ function BookTruck() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
+    // to get all vehicles
+    dispatch(getVehicle());
+    // to get  all goods
+    dispatch(getGoods());
+    
     pickUp.current.value = data.pickUp;
     destination.current.value = data.destination;
     vehicle.current.value = data.vehicle;
@@ -219,12 +224,6 @@ function BookTruck() {
   };
 
   // function to fetch vehicle and goods
-  const fetchVehicles = () => {
-    dispatch(getVehicle());
-  };
-  const fetchGoods = () => {
-    dispatch(getGoods());
-  };
 
   // console.log(vehicleType);
   // code to show gmaps
@@ -416,7 +415,6 @@ function BookTruck() {
                       onChange={(e) => {
                         vehicle.current.value = e.target.value;
                       }}
-                      onClick={fetchVehicles}
                       onSelect={(e) => {
                         setSelectVehicle(true);
                         vehicle.current.value = e.target.value;
@@ -520,7 +518,6 @@ function BookTruck() {
                       onChange={(e) => {
                         GoodsType.current.value = e.target.value;
                       }}
-                      onClick={fetchGoods}
                       onSelect={(e) => {
                         setGoodsSelectType(true);
                         GoodsType.current.value = e.target.value;

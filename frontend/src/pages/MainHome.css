@@ -3,7 +3,8 @@
 }
 .truck_4k{
   width: 100%;
-   height: 400px;
+  height: 500px;
+   object-fit: cover;
 }
 .progress-bar {
   position: fixed;

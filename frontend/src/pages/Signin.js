@@ -103,8 +103,16 @@ function Signin() {
   // };
 
   return (
-    <Box sx={{ backgroundColor: "red", height: 680 }}>
-      <Grid container component="main" sx={{ height: "75vh" }}>
+    <Box sx={{ backgroundColor: "#e00029", height: { lg: 680, xs: 900 } }}>
+      <Grid
+        container
+        component="main"
+        sx={{
+          height: { lg: "100vh", xs: "50vh" },
+          width: { lg: 1100, xs: 300 },
+          ml: { lg: 15, xs: 5 },
+        }}
+      >
         <CssBaseline />
 
         <Grid
@@ -112,10 +120,10 @@ function Signin() {
           xs={12}
           sm={8}
           md={5}
-          sx={{ mt: 10, width: 1000 }}
+          sx={{ mt: { lg: 12, xs: 12 }, backgroundColor: "whitesmoke" }}
           component={Paper}
           elevation={5}
-          square
+          rounded
         >
           <Box
             sx={{
@@ -136,11 +144,28 @@ function Signin() {
                 <CircularProgress />
               </Box>
             )}
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
+            <Typography
+              variant="h4"
+              sx={{
+                mt: 2,
+                textAlign: "center",
+
+                fontFamily: "Roboto ",
+              }}
+            >
+              <span
+                style={{
+                  backgroundColor: "#e00029",
+                  color: "white",
+                  padding: 5,
+                }}
+              >
+                Kagzi
+              </span>{" "}
+              Transports
+            </Typography>
+            <Typography component="h1" variant="h6" sx={{ mt: 2 }}>
+              Sign in to your account
             </Typography>
 
             <Box
@@ -232,6 +257,7 @@ function Signin() {
             backgroundPosition: "center",
             mt: 10,
           }}
+          rounded
         />
       </Grid>
     </Box>

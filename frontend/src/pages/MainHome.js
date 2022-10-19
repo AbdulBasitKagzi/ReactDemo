@@ -51,12 +51,9 @@ function MainHome() {
         <Navbar />
 
         <Box sx={{ mt: -6 }}>
-          <img
-            className="truck_4k"
-            src={truck_4k}
-            alt="truck"
-          
-          />
+          <Box sx={{ width: "100%" }}>
+            <img className="truck_4k" src={truck_4k} alt="truck" />
+          </Box>
           <Typography
             variant="h3"
             sx={{
