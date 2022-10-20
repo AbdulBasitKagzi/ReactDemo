@@ -262,6 +262,7 @@ export default function UpdateVehicleModal(props) {
                   id={props.vnumberLabel}
                   label={props.vnumberLabel}
                   name={props.vnumberLabel}
+                  disabled
                   sx={{ ml: 2 }}
                   value={vNumber}
                   onChange={(e) => {

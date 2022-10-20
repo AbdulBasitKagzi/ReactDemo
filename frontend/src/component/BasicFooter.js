@@ -163,15 +163,17 @@ function BasicFooter() {
               Our Socials
             </Typography>
 
-            <Box display="flex" sx={{ p: 2 }}>
-              <i className="fa-brands fa-instagram fa-3x"></i>
-              <Box sx={{ p: 3 }}></Box>
-              <i className="fa-brands fa-facebook fa-3x"></i>
-            </Box>
-            <Box display="flex" sx={{ p: 2 }}>
-              <i className="fa-brands fa-square-twitter fa-3x"></i>
-              <Box sx={{ p: 3 }}></Box>
-              <i className="fa-brands fa-snapchat fa-3x"></i>
+            <Box sx={{ display: { lg: "block", xs: "flex" } }}>
+              <Box sx={{ p: 2, display: "flex" }}>
+                <i className="fa-brands fa-instagram fa-3x"></i>
+                <Box sx={{ p: 3 }}></Box>
+                <i className="fa-brands fa-facebook fa-3x"></i>
+              </Box>
+              <Box sx={{ p: 2, display: "flex" }}>
+                <i className="fa-brands fa-square-twitter fa-3x"></i>
+                <Box sx={{ p: 3 }}></Box>
+                <i className="fa-brands fa-snapchat fa-3x"></i>
+              </Box>
             </Box>
           </Grid>
         </Grid>

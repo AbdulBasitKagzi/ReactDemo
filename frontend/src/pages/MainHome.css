@@ -25,7 +25,7 @@
     }
   }
 
-  @media screen and (min-width:768px) {
+  /* @media screen and (max-width:768px) {
     .truck_4k{
       width:1112px ;
     }
@@ -33,4 +33,4 @@
       width: 600px;
     }
   }
-  
+   */
