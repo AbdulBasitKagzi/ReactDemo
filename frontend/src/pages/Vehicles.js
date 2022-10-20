@@ -156,7 +156,13 @@ function Vehicles() {
           <CircularProgress />
         </Box>
       )}
-      <Paper sx={{ ml: "15%", width: "70%", overflow: "hidden" }}>
+      <Paper
+        sx={{
+          ml: { lg: "15%", xs: "5%" },
+          width: { lg: "70%", xs: "90%" },
+          overflow: "hidden",
+        }}
+      >
         <TableContainer>
           <Typography variant="h4" align="center" sx={{ p: 2 }}>
             Vehicles
@@ -261,7 +267,7 @@ function Vehicles() {
       </Paper>
       <Button
         variant="contained"
-        sx={{ ml: 40, mt: 2, width: "50%" }}
+        sx={{ ml: { lg: 40, xs: 12, md: 30 }, mt: 2, width: "50%" }}
         onClick={() => {
           setModal(true);
           setOpen(true);

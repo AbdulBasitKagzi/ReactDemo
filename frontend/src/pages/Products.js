@@ -128,7 +128,13 @@ function Products() {
           </Alert>
         </Snackbar>
       )}
-      <Paper sx={{ ml: "25%", width: "50%", overflow: "hidden" }}>
+      <Paper
+        sx={{
+          ml: { lg: "25%", xs: "5%" },
+          width: { lg: "50%", xs: "90%" },
+          overflow: "hidden",
+        }}
+      >
         <TableContainer>
           <Typography variant="h4" align="center" sx={{ p: 2 }}>
             Products
@@ -218,7 +224,7 @@ function Products() {
       </Paper>
       <Button
         variant="contained"
-        sx={{ ml: 42, mt: 2, width: "50%" }}
+        sx={{ ml: { lg: 42, xs: 12, md: 30 }, mt: 2, width: "50%" }}
         onClick={() => {
           setModal(true);
           setOpen(true);

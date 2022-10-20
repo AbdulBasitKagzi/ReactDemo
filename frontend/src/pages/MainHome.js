@@ -5,40 +5,30 @@ import BasicFooter from "../component/BasicFooter";
 // for animation
 import { motion, useSpring, useViewportScroll } from "framer-motion";
 
-// import { Variants } from "framer-motion";
-
+// css file
 import "./MainHome.css";
 
 // image imports from assets folder
 import truckArt from "../assets/artTruck.jpg";
 import employeeArt from "../assets/employee.webp";
 import pricingArt from "../assets/pricing.webp";
-import truck_image from "../assets/img.jpg";
+
 import truck_image2 from "../assets/img1.webp";
 import truck_4k from "../assets/truck_4k.jpg";
 
 // mui imports
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-
 import { Typography } from "@mui/material";
 
 function MainHome() {
+  // for animation
   const { scrollYProgress } = useViewportScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001,
   });
-
-  const cardVariants = {
-    offScreen: {
-      x: 300,
-    },
-    onScreen: {
-      x: 0,
-    },
-  };
 
   return (
     <div>
@@ -57,13 +47,14 @@ function MainHome() {
           <Typography
             variant="h3"
             sx={{
-              mt: { lg: -35, xs: -28 },
+              mt: { lg: -35, xs: -28, md: -36 },
               ml: {
                 lg: 10,
                 xs: 2,
               },
               fontSize: {
                 lg: 60,
+                md: 60,
                 xs: 30,
               },
 
@@ -95,6 +86,7 @@ function MainHome() {
 
             display: {
               lg: "flex",
+              md: "flex",
               xs: "block",
             },
           }}
@@ -117,7 +109,9 @@ function MainHome() {
               sx={{
                 pl: 2,
                 width: {
+                  xl: 700,
                   lg: 500,
+                  md: 500,
                   xs: 350,
                 },
                 pb: 2,
@@ -151,11 +145,14 @@ function MainHome() {
         <Box
           sx={{
             display: {
+              xl: "flex",
+              // md: "flex",
               lg: "flex",
               xs: "block",
             },
             justifyContent: {
               lg: "space-evenly",
+              md: "space-between",
               xs: "none",
             },
           }}
@@ -182,6 +179,7 @@ function MainHome() {
               sx={{
                 width: {
                   lg: 500,
+                  md: 500,
                   xs: 350,
                 },
                 p: 2,
@@ -206,6 +204,7 @@ function MainHome() {
               color: "#e3e3e5",
               width: {
                 lg: 800,
+
                 xs: 380,
               },
             }}
@@ -269,10 +268,12 @@ function MainHome() {
             <hr />
           </Box>
         </Box>
+
         <Box
           sx={{
             display: {
               lg: "flex",
+              md: "flex",
               xs: "block",
             },
             justifyContent: {

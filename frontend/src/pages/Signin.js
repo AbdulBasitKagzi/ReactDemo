@@ -103,164 +103,160 @@ function Signin() {
   // };
 
   return (
-    <Box sx={{ backgroundColor: "#e00029", height: { lg: 680, xs: 900 } }}>
-      <Grid
-        container
-        component="main"
-        sx={{
-          height: { lg: "100vh", xs: "50vh" },
-          width: { lg: 1100, xs: 300 },
-          ml: { lg: 15, xs: 5 },
-        }}
-      >
-        <CssBaseline />
+    <Grid
+      container
+      component="main"
+      // sx={{
+      //   height: { lg: "100vh", xs: "50vh" },
+      //   width: { lg: 1100, xs: 300 },
+      //   ml: { lg: 15, xs: 5 },
+      // }}
+      sx={{ height: "100vh", p: 2, backgroundColor: "#e00029" }}
+    >
+      <CssBaseline />
 
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          md={5}
-          sx={{ mt: { lg: 12, xs: 12 }, backgroundColor: "whitesmoke" }}
-          component={Paper}
-          elevation={5}
-          rounded
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={5}
+        sx={{
+          backgroundColor: "whitesmoke",
+        }}
+        component={Paper}
+        elevation={5}
+        rounded
+      >
+        <Box
+          sx={{
+            my: 8,
+            mx: 4,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
-          <Box
+          {error && (
+            <Stack sx={{ width: "100%" }} spacing={2}>
+              <Alert severity="error">{error}</Alert>
+            </Stack>
+          )}
+          {isLoading && (
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress />
+            </Box>
+          )}
+          <Typography
+            variant="h4"
             sx={{
-              my: 0,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              mt: 2,
+              textAlign: "center",
+              fontFamily: "Roboto ",
             }}
           >
-            {error && (
-              <Stack sx={{ width: "100%" }} spacing={2}>
-                <Alert severity="error">{error}</Alert>
-              </Stack>
-            )}
-            {isLoading && (
-              <Box sx={{ display: "flex" }}>
-                <CircularProgress />
-              </Box>
-            )}
-            <Typography
-              variant="h4"
-              sx={{
-                mt: 2,
-                textAlign: "center",
-
-                fontFamily: "Roboto ",
+            <span
+              style={{
+                backgroundColor: "#e00029",
+                color: "white",
+                padding: 5,
               }}
             >
-              <span
-                style={{
-                  backgroundColor: "#e00029",
-                  color: "white",
-                  padding: 5,
-                }}
-              >
-                Kagzi
-              </span>{" "}
-              Transports
-            </Typography>
-            <Typography component="h1" variant="h6" sx={{ mt: 2 }}>
-              Sign in to your account
-            </Typography>
+              Kagzi
+            </span>{" "}
+            Transports
+          </Typography>
+          <Typography component="h1" variant="h6" sx={{ mt: 2 }}>
+            Sign in to your account
+          </Typography>
 
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              type="email"
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={(event) => {
+                setEmail(event.target.value);
+
+                setuEmail(false);
+                dispatch(authAction.clearMessage());
+              }}
+            />
+            {uemail && <Alert severity="error">"Enter registered email"</Alert>}
+
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              value={password}
+              autoComplete="current-password"
+              onChange={(event) => {
+                setPassword(event.target.value);
+
+                setuPassword(false);
+                dispatch(authAction.clearMessage());
+              }}
+            />
+            {upassword && (
+              <Alert severity="error">"Enter correct password"</Alert>
+            )}
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                type="email"
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={email}
-                onChange={(event) => {
-                  setEmail(event.target.value);
-
-                  setuEmail(false);
-                  dispatch(authAction.clearMessage());
-                }}
-              />
-              {uemail && (
-                <Alert severity="error">"Enter registered email"</Alert>
-              )}
-
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                value={password}
-                autoComplete="current-password"
-                onChange={(event) => {
-                  setPassword(event.target.value);
-
-                  setuPassword(false);
-                  dispatch(authAction.clearMessage());
-                }}
-              />
-              {upassword && (
-                <Alert severity="error">"Enter correct password"</Alert>
-              )}
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#">Forgot password?</Link>
-                </Grid>
-                <Grid item>
-                  <Link style={{ textDecoration: "none" }} to="/signup">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#">Forgot password?</Link>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
-            </Box>
+              <Grid item>
+                <Link style={{ textDecoration: "none" }} to="/signup">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+            <Copyright sx={{ mt: 5 }} />
           </Box>
-        </Grid>
-
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage:
-              "url(https://img.freepik.com/free-vector/hand-drawn-red-transport-truck-illustration_23-2149163911.jpg?w=740&t=st=1665565426~exp=1665566026~hmac=38e662a4b8cac3de74b7bc49780ef5514d6c3528984111a87cf2569c1e352204)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            mt: 10,
-          }}
-          rounded
-        />
+        </Box>
       </Grid>
-    </Box>
+
+      <Grid
+        item
+        xs={false}
+        md={7}
+        sm={4}
+        sx={{
+          backgroundImage:
+            "url(https://img.freepik.com/free-vector/hand-drawn-red-transport-truck-illustration_23-2149163911.jpg?w=740&t=st=1665565426~exp=1665566026~hmac=38e662a4b8cac3de74b7bc49780ef5514d6c3528984111a87cf2569c1e352204)",
+          backgroundRepeat: "no-repeat",
+          backgroundColor: (t) =>
+            t.palette.mode === "light"
+              ? t.palette.grey[50]
+              : t.palette.grey[900],
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+    </Grid>
   );
 }
 export default Signin;

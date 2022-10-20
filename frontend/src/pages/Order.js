@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getOrder } from "../store/orderReducer";
+import { getOrder, order } from "../store/orderReducer";
 import Navbar from "../component/Navbar";
 
 // mui imports
@@ -15,6 +15,7 @@ import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import BasicFooter from "../component/BasicFooter";
+import { DataGrid } from "@mui/x-data-grid";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,6 +37,50 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+// pagination table
+const columns = [
+  { field: "id", headerName: "ID", width: 70 },
+  { field: "FirstName", headerName: "First name", width: 80 },
+  { field: "LastName", headerName: "Last name", width: 80 },
+  {
+    field: "goods",
+    headerName: "Goods",
+    width: 160,
+  },
+  {
+    field: "vehicle",
+    headerName: "Vehicle",
+    width: 160,
+  },
+  {
+    field: "Weight",
+    headerName: "Weight",
+    width: 160,
+  },
+  {
+    field: "p",
+    headerName: "PickUp",
+    width: 160,
+  },
+  {
+    field: "d",
+    headerName: "Destination",
+    width: 160,
+  },
+];
+
+const rows = [
+  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
+  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
+  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
+  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
+  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
+  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
+  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
+  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
+  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+];
+
 function Order() {
   const dispatch = useDispatch();
 
@@ -47,16 +92,57 @@ function Order() {
 
   const { orderData } = useSelector((state) => state.order);
 
+  const row = orderData.map(
+    (
+      { FirstName, LastName, vehicle, goodsType, Weight, pickUp, destination },
+      index
+    ) => {
+      return {
+        id: index + 1,
+        FirstName: FirstName,
+        LastName: LastName,
+        vehicle: vehicle,
+        goods: goodsType,
+        Weight: Weight,
+        p: pickUp,
+        d: destination,
+      };
+    }
+  );
+
   return (
     <div>
       <Navbar />
-      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      {/* table */}
+      <Paper
+        sx={{
+          width: { lg: "95%", xs: "80%" },
+          overflow: "hidden",
+          p: 2,
+          ml: { lg: 2, md: 10, xs: 2 },
+        }}
+      >
+        <Typography variant="h4" align="center" sx={{ p: 2 }}>
+          Orders
+        </Typography>
+        <div style={{ height: 400, width: { lg: "90%", xs: "95%" } }}>
+          <DataGrid
+            sx={{ ml: { lg: "1%", xs: "2%" }, mb: 2 }}
+            rows={row}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+          />
+        </div>
+      </Paper>
+
+      {/* <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer>
           <Typography variant="h4" align="center" sx={{ p: 2 }}>
             Orders
-          </Typography>
-          {orderData.length === 0 && <Typography>No data found</Typography>}
-          <Table
+          </Typography> */}
+      {orderData.length === 0 && <Typography>No data found</Typography>}
+      {/* <Table
             stickyHeader
             sx={{ width: "80%", border: 1, mb: 2 }}
             align="center"
@@ -90,8 +176,8 @@ function Order() {
                   </StyledTableCell>
                 </StyledTableRow>
               </TableHead>
-            )}
-            <TableBody sx={{ border: 1 }}>
+            )} */}
+      {/* <TableBody sx={{ border: 1 }}>
               {orderData?.map((data, index) => (
                 <StyledTableRow
                   key={index}
@@ -154,12 +240,13 @@ function Order() {
                   {/* <StyledTableCell align="center" sx={{ border: 1 }}>
                     <Button>Delete</Button>
                   </StyledTableCell> */}
-                </StyledTableRow>
+      {/* </StyledTableRow>
               ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
+            </TableBody> */}
+      {/* </Table>
+        </TableContainer> */}
+      {/* </Paper> */}
+
       <BasicFooter />
     </div>
   );

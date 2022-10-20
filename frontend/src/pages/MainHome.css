@@ -24,3 +24,13 @@
       height: 275px;
     }
   }
+
+  @media screen and (min-width:768px) {
+    .truck_4k{
+      width:1112px ;
+    }
+    .truck_img{
+      width: 600px;
+    }
+  }
+  

@@ -86,9 +86,9 @@ function BasicFooter() {
               About Our Company
             </Typography>
             <Typography sx={{ p: 2 }}>
-              TruckGuru, a leading transport and logistics service provider is
-              introducing a truly innovative, modern and high-tech online
-              platform to book the truck in a few simple steps.
+              Kagzi Transports, a leading transport and logistics service
+              provider is introducing a truly innovative, modern and high-tech
+              online platform to book the truck in a few simple steps.
               <br /> With the apt use of advanced technology and rich industry
               experience, we are delivering customized and economical online
               transportation and cargo solutions to match your expectations and

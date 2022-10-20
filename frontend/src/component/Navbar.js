@@ -32,7 +32,7 @@ const newNavItems = [
   { val: "BookTruck", Link: "/user/bookTruck" },
 ];
 const adminNavItems = [
-  { val: "Home", Link: "/admin" },
+  { val: "Home", Link: "/" },
   { val: "Vehicles", Link: "/admin/vehicles" },
   { val: "Product", Link: "/admin/products" },
   { val: "Orders", Link: "/admin/orders" },
