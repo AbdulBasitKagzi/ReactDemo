@@ -15,6 +15,7 @@ import Error from "./pages/Error";
 import Error403 from "./pages/Error403";
 import EmailPage from "./pages/EmailPage";
 import "./App.css";
+import BasicHome from "./pages/BasicHome";
 
 // impelementing lagzy loading
 const LazyMainHome = React.lazy(() => import("./pages/MainHome"));
@@ -58,6 +59,8 @@ function App() {
             <Route exact path="/admin/products" element={<LazyProducts />} />
             <Route exact path="/admin/orders" element={<LazyOrder />} />
           </Route>
+
+          <Route exaxct path="/basic" element={<BasicHome />} />
         </Routes>
       </Suspense>
     </div>

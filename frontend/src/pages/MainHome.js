@@ -96,10 +96,12 @@ function MainHome() {
               variant="h4"
               sx={{
                 p: 2,
-
                 ml: {
                   lg: 10,
                   xs: 5,
+                },
+                fontSize: {
+                  xl: 60,
                 },
               }}
             >
@@ -109,10 +111,13 @@ function MainHome() {
               sx={{
                 pl: 2,
                 width: {
-                  xl: 700,
+                  xl: 900,
                   lg: 500,
                   md: 500,
                   xs: 350,
+                },
+                height: {
+                  lg: 50,
                 },
                 pb: 2,
                 ml: {
@@ -120,6 +125,9 @@ function MainHome() {
                 },
                 wordWrap: {
                   xs: "breakWord",
+                },
+                fontSize: {
+                  xl: 30,
                 },
               }}
             >
@@ -146,12 +154,12 @@ function MainHome() {
           sx={{
             display: {
               xl: "flex",
-              // md: "flex",
               lg: "flex",
               xs: "block",
             },
             justifyContent: {
               lg: "space-evenly",
+              xl: "space-between",
               md: "space-between",
               xs: "none",
             },
@@ -171,6 +179,9 @@ function MainHome() {
                   lg: 10,
                   xs: 5,
                 },
+                fontSize: {
+                  xl: 60,
+                },
               }}
             >
               Keys To Success
@@ -178,6 +189,7 @@ function MainHome() {
             <Typography
               sx={{
                 width: {
+                  xl: 920,
                   lg: 500,
                   md: 500,
                   xs: 350,
@@ -186,6 +198,9 @@ function MainHome() {
                 pb: 5,
                 ml: {
                   lg: 10,
+                },
+                fontSize: {
+                  xl: 30,
                 },
               }}
             >
@@ -204,7 +219,7 @@ function MainHome() {
               color: "#e3e3e5",
               width: {
                 lg: 800,
-
+                xl: 900,
                 xs: 380,
               },
             }}
@@ -217,6 +232,9 @@ function MainHome() {
                   lg: 10,
                   xs: 5,
                 },
+                fontSize: {
+                  xl: 60,
+                },
               }}
             >
               Comprehensive Services
@@ -228,16 +246,8 @@ function MainHome() {
                   lg: 10,
                   xs: 5,
                 },
-              }}
-            >
-              Lorem dolor sit emet
-            </Typography>
-            <hr />
-            <Typography
-              sx={{
-                ml: {
-                  lg: 10,
-                  xs: 5,
+                fontSize: {
+                  xl: 30,
                 },
               }}
             >
@@ -250,6 +260,9 @@ function MainHome() {
                   lg: 10,
                   xs: 5,
                 },
+                fontSize: {
+                  xl: 30,
+                },
               }}
             >
               Lorem dolor sit emet
@@ -260,6 +273,23 @@ function MainHome() {
                 ml: {
                   lg: 10,
                   xs: 5,
+                },
+                fontSize: {
+                  xl: 30,
+                },
+              }}
+            >
+              Lorem dolor sit emet
+            </Typography>
+            <hr />
+            <Typography
+              sx={{
+                ml: {
+                  lg: 10,
+                  xs: 5,
+                },
+                fontSize: {
+                  xl: 30,
                 },
               }}
             >
@@ -273,7 +303,6 @@ function MainHome() {
           sx={{
             display: {
               lg: "flex",
-              md: "flex",
               xs: "block",
             },
             justifyContent: {
@@ -295,11 +324,23 @@ function MainHome() {
                 },
                 pl: 5,
                 pt: 2,
+                fontSize: {
+                  xl: 60,
+                },
               }}
             >
               Why Us?
             </Typography>
-            <Typography sx={{ pt: 2, pb: 2, pl: { xs: 2 } }}>
+            <Typography
+              sx={{
+                pt: 2,
+                pb: 2,
+                pl: { xs: 2 },
+                fontSize: {
+                  xl: 25,
+                },
+              }}
+            >
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -319,11 +360,23 @@ function MainHome() {
                 },
                 pl: 5,
                 pt: 2,
+                fontSize: {
+                  xl: 60,
+                },
               }}
             >
               Who are We?
             </Typography>
-            <Typography sx={{ pt: 2, pb: 2, pl: { xs: 2 } }}>
+            <Typography
+              sx={{
+                pt: 2,
+                pb: 2,
+                pl: { xs: 2 },
+                fontSize: {
+                  xl: 25,
+                },
+              }}
+            >
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -343,11 +396,23 @@ function MainHome() {
                 },
                 pl: 5,
                 pt: 2,
+                fontSize: {
+                  xl: 60,
+                },
               }}
             >
               What we Do?
             </Typography>
-            <Typography sx={{ pt: 2, pb: 2, pl: { xs: 2 } }}>
+            <Typography
+              sx={{
+                pt: 2,
+                pb: 2,
+                pl: { xs: 2 },
+                fontSize: {
+                  xl: 25,
+                },
+              }}
+            >
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -359,12 +424,22 @@ function MainHome() {
           </Box>
         </Box>
         <Box sx={{ backgroundColor: "whitesmoke" }}>
-          <Typography variant="h4" sx={{ textAlign: "center", mb: 5, pt: 5 }}>
+          <Typography
+            variant="h4"
+            sx={{
+              textAlign: "center",
+              mb: 5,
+              pt: 5,
+              fontSize: {
+                xl: 60,
+              },
+            }}
+          >
             Our Advantages
           </Typography>
           <Box sx={{ ml: { lg: 50, xs: 10 } }}>
-            <Grid>
-              <Grid item lg={6}>
+            <Grid sx={{ pb: 2 }}>
+              <Grid item lg={12} xl={12}>
                 <motion.div
                   initial="offscreen"
                   whileInView="onscreen"
@@ -385,6 +460,7 @@ function MainHome() {
                       sx={{
                         mt: { lg: 5, xs: 1 },
                         pl: 2,
+
                         fontSize: { lg: 20, xs: 12 },
                         mr: {
                           lg: 50,
@@ -392,10 +468,24 @@ function MainHome() {
                         },
                       }}
                     >
-                      <Typography variant="h5" sx={{ pb: 1 }}>
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          pb: 1,
+                          fontSize: {
+                            xl: 35,
+                          },
+                        }}
+                      >
                         Shipping Services
                       </Typography>
-                      <Typography>
+                      <Typography
+                        sx={{
+                          fontSize: {
+                            xl: 28,
+                          },
+                        }}
+                      >
                         We provide Full Truck load transportation services with
                         varied type of trucks available with the click of a
                         button.
@@ -420,10 +510,24 @@ function MainHome() {
                       },
                     }}
                   >
-                    <Typography variant="h5" sx={{ pb: 1 }}>
-                      Shipping Services
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        pb: 1,
+                        fontSize: {
+                          xl: 35,
+                        },
+                      }}
+                    >
+                      Customer Service
                     </Typography>
-                    <Typography>
+                    <Typography
+                      sx={{
+                        fontSize: {
+                          xl: 28,
+                        },
+                      }}
+                    >
                       We provide Full Truck load transportation services with
                       varied type of trucks available with the click of a
                       button.
@@ -451,11 +555,20 @@ function MainHome() {
                       variant="h5"
                       sx={{
                         pb: 1,
+                        fontSize: {
+                          xl: 35,
+                        },
                       }}
                     >
-                      Shipping Services
+                      Affordable Rate
                     </Typography>
-                    <Typography>
+                    <Typography
+                      sx={{
+                        fontSize: {
+                          xl: 28,
+                        },
+                      }}
+                    >
                       We provide Full Truck load transportation services with
                       varied type of trucks available with the click of a
                       button.
