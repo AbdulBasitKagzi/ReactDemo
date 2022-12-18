@@ -12,14 +12,11 @@ const api = process.env.API;
 // api to order
 orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
   // to take date
-  //   const date = new Date();
-  //   console.log(new Date(date.getFullYear(), date.getMonth(), date.getDate()));
 
   try {
     // to find user
     const user = await customer.findOne({ _id: req.userId });
     if (!user) return res.status(400).json({ Message: "No user Found" });
-    console.log("orderuser", user);
 
     //   validation
     if (req.body.pickUp === "") {
@@ -48,9 +45,6 @@ orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
       return res.status(400).json({ message: "Please enter Time" });
     }
 
-    // const vehicle = await Vehicles.findOne({ type: goodsType });
-    // console.log()
-
     //   to create orders
     const order = await orders.create({
       owner: req.userId,
@@ -68,11 +62,9 @@ orderRoute.post(`${api}/placeOrder`, getUserId, async (req, res) => {
       date: req.body.date,
       time: req.body.time,
     });
-    console.log("sdfasf", order);
 
     return res.status(200).json(order);
   } catch (error) {
-    console.log("ordererror", error);
     return res.status(400).send("somethig went wrong");
   }
   // to find user for first name last name and id
@@ -83,7 +75,7 @@ orderRoute.get(`${api}/orders`, getUserId, async (req, res) => {
   try {
     // to find user role
     const findAdmin = await customer.findOne({ _id: req.userId });
-    console.log("find---", findAdmin);
+
     if (findAdmin.role !== "Admin") {
       return res
         .status(400)
@@ -93,7 +85,6 @@ orderRoute.get(`${api}/orders`, getUserId, async (req, res) => {
     const allOrders = await orders.find();
     return res.status(200).json(allOrders);
   } catch (error) {
-    console.log(error);
     return res.status(400).send("somethig went wrong", error);
   }
 });

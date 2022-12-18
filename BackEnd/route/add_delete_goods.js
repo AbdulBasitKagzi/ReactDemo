@@ -14,7 +14,6 @@ const goodsRoute = express.Router();
 goodsRoute.post(`${api}/addgoods`, getUserId, async (req, res) => {
   let success = false;
   const findUser = await customer.findById({ _id: req.userId });
-  console.log("user", findUser.role);
   try {
     if (!findUser) {
       return res.status(400).json({ success, message: "User doesnot exists" });
@@ -31,7 +30,6 @@ goodsRoute.post(`${api}/addgoods`, getUserId, async (req, res) => {
     }
     const registeredGoods = await goods.findOne({ type: req.body.type });
     if (registeredGoods) {
-      console.log(registeredGoods);
       return res
         .status(400)
         .json({ success, message: "This goods type is already there" });
@@ -45,7 +43,6 @@ goodsRoute.post(`${api}/addgoods`, getUserId, async (req, res) => {
       .status(200)
       .json({ success, good, message: "Goods Added Successfully" });
   } catch (error) {
-    console.log("addgoodserror", error);
     return res.status(400).send("somethig went wrong");
   }
 });

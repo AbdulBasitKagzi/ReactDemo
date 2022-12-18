@@ -29,7 +29,6 @@ vehicleRoute.post(
   async (req, res) => {
     let success = false;
     const errors = validationResult(req);
-    console.log(req.body);
     if (!errors.isEmpty()) {
       return res.status(422).json(
         errors
@@ -43,9 +42,6 @@ vehicleRoute.post(
 
     // to find if user is admin or not
     const userAdmin = await customer.findById({ _id: req.userId });
-    console.log("admin", userAdmin);
-    console.log(userAdmin.role);
-
     if (userAdmin.role !== "Admin") {
       return res.status(400).json({
         success,
@@ -55,7 +51,6 @@ vehicleRoute.post(
     const registeredVehicle = await Vehicles.findOne({
       vNumber: req.body.vNumber,
     });
-    console.log(registeredVehicle);
     try {
       const { type, vNumber, capacity, initialPrice, imageUrl } = req.body;
 
@@ -86,14 +81,12 @@ vehicleRoute.post(
 vehicleRoute.delete(`${api}/deletevehicle/:id`, getUserId, async (req, res) => {
   let success = false;
   const vehicleId = req.params.id;
-  console.log("vehicle id to delete", vehicleId);
 
   const findVehicle = await Vehicles.findById({ _id: ObjectId(vehicleId) });
   if (!findVehicle) {
     return res.status(400).json({ success, message: "Vehicle not found" });
   }
-  // console.log(JSON.stringify(findVehicle.owner));
-  // console.log(JSON.stringify(req.userId));
+
   try {
     if (JSON.stringify(req.userId) !== JSON.stringify(findVehicle.owner)) {
       return res
@@ -115,7 +108,6 @@ vehicleRoute.delete(`${api}/deletevehicle/:id`, getUserId, async (req, res) => {
 
 // to get all vehicles
 vehicleRoute.get(`${api}/getVehicle`, async (req, res) => {
-  console.log("Check here");
   let success = false;
 
   const findVehicle = await Vehicles.find();
@@ -123,10 +115,8 @@ vehicleRoute.get(`${api}/getVehicle`, async (req, res) => {
     if (!findVehicle) {
       return res.status(400).json({ success, message: "No data found" });
     }
-    console.log(findVehicle);
     return res.status(200).json({ success, findVehicle });
   } catch (error) {
-    console.log("getvehcileerror", error);
     return res.status(400).send("somethig went wrong");
   }
 });
@@ -182,7 +172,6 @@ vehicleRoute.patch(`${api}/updateVehicle/:id`, getUserId, async (req, res) => {
       .status(200)
       .json({ success, message: "Vehicle Updated Successfully" });
   } catch (error) {
-    console.log("update Vehicle error", error);
     return res.status(400).send("somethig went wrong");
   }
 });

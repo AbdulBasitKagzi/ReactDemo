@@ -5,18 +5,14 @@ const secret_key = process.env.SECRET_KEY;
 
 const getUserId = (req, res, next) => {
   const token = req.header("Authorization").replace("Bearer ", "");
-  console.log("token from middleware", token);
-
   if (!token) {
     return res.status(400).json({ message: "User not logged in" });
   }
   try {
     const userId = jwt.verify(token, secret_key);
     req.userId = userId.registeredUser.id;
-    // console.log("id", userId);
     next();
   } catch (error) {
-    console.log("middleware error", error);
     return res.status(400).send("somethig went wrong");
   }
 };

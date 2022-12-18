@@ -31,11 +31,7 @@ customerUserRoute.post(
   ],
   async (req, res) => {
     let success = false;
-    // console.log("sign in user", req.body);
-
     const errors = validationResult(req);
-    console.log(req.body);
-
     if (!errors.isEmpty()) {
       return res.status(422).json({
         error: errors
@@ -49,15 +45,6 @@ customerUserRoute.post(
     try {
       const { FirstName, LastName, email, password, confirmPassword, role } =
         req.body;
-
-      // comparing password and confirm password
-
-      // if (password !== confirmPassword) {
-      //   return res
-      //     .status(400)
-      //     .send("Password and Confirm Password must be same");
-      // }
-
       // finding the if the user is already there
       const registeredUser = await customer.findOne({ email: email });
 
@@ -92,7 +79,6 @@ customerUserRoute.post(
       }
       return res.status(400).send({ success, error: "User is already there" });
     } catch (error) {
-      // console.log("user signup", error);
       return res.status(400).json({ error: "something went wrong" });
     }
   }
@@ -101,18 +87,12 @@ customerUserRoute.post(
 // user log in api
 customerUserRoute.post(
   `${api}/login`,
-  [
-    body("email", "Enter valid Email").isEmail(),
-
-    // password must be at least 6 chars long
-    // body("password", "Password must be 6 characters long").isLength({ min: 6 }),
-  ],
+  [body("email", "Enter valid Email").isEmail()],
   async (req, res) => {
     success = false;
     const { email, password } = req.body;
 
     const errors = validationResult(req);
-    // console.log(req.body);
     if (!errors.isEmpty()) {
       return res.status(422).json({
         error: errors
@@ -125,8 +105,6 @@ customerUserRoute.post(
     }
     try {
       const registeredUser = await customer.findOne({ email: email });
-      console.log(registeredUser);
-
       if (!registeredUser) {
         success = false;
         return res.status(400).json({ success, error: "User  not registered" });
@@ -137,13 +115,10 @@ customerUserRoute.post(
         password,
         registeredUser.password
       );
-      // console.log(comparePass);
-      // console.log(registeredUser.password);
 
       if (!comparePass) {
         return res.status(400).json({ error: "Enter correct password" });
       }
-      // console.log("user logged in");
       const data = {
         registeredUser: {
           id: registeredUser._id,
@@ -152,11 +127,10 @@ customerUserRoute.post(
 
       //   generating user token
       const token = jwt.sign(data, secret_key);
-      // console.log("token from login", token);
+
       success = true;
       return res.status(200).json({ success, token, registeredUser });
     } catch (error) {
-      // console.log("usersignuperror", error);
       return res.status(400).json({ error: "something went wrong" });
     }
   }
