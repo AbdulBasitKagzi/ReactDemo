@@ -23,7 +23,6 @@ export const order = createAsyncThunk(
       });
       return response;
     } catch (error) {
-      console.log(error);
       thunkAPI.rejectWithValue(error);
     }
   }
@@ -43,7 +42,6 @@ export const getOrder = createAsyncThunk(
 
       return response;
     } catch (error) {
-      console.log("get order error----", error);
       thunkAPI.rejectWithValue(error);
     }
   }

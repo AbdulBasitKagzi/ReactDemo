@@ -241,7 +241,6 @@ function Vehicles() {
                         setUpdateModal(true);
                         setUpdateOpen(true);
                         setValue(vehicleType[index]);
-                        console.log(vehicleType[index]);
                       }}
                     >
                       <i className="fa-solid fa-pen-to-square"></i>

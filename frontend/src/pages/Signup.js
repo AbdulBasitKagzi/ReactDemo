@@ -5,13 +5,10 @@ import { useNavigate, Link } from "react-router-dom";
 import { userSignup, authAction } from "../store/authReducer";
 
 import "./Signup.css";
-import IMAGE from "../assets/truck.jpg";
-
 // mui imports
 import CircularProgress from "@mui/material/CircularProgress";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
@@ -20,7 +17,6 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 
 function Copyright(props) {
@@ -41,19 +37,11 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
-
 function Signup() {
   const dispatch = useDispatch();
   const { isLoading, error, token } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  // states for taking input values
-  // const [fName, setFname] = useState("");
-  // const [lName, setLname] = useState("");
-  // const [uEmail, setUemail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
   const fName = React.useRef(null);
   const lName = React.useRef(null);
   const uEmail = React.useRef(null);

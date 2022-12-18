@@ -101,7 +101,7 @@ function MainHome() {
                   xs: 5,
                 },
                 fontSize: {
-                  xl: 60,
+                  xl: 45,
                 },
               }}
             >
@@ -111,7 +111,7 @@ function MainHome() {
               sx={{
                 pl: 2,
                 width: {
-                  xl: 900,
+                  xl: 700,
                   lg: 500,
                   md: 500,
                   xs: 350,
@@ -127,7 +127,7 @@ function MainHome() {
                   xs: "breakWord",
                 },
                 fontSize: {
-                  xl: 30,
+                  xl: 20,
                 },
               }}
             >
@@ -180,7 +180,7 @@ function MainHome() {
                   xs: 5,
                 },
                 fontSize: {
-                  xl: 60,
+                  xl: 45,
                 },
               }}
             >
@@ -189,7 +189,7 @@ function MainHome() {
             <Typography
               sx={{
                 width: {
-                  xl: 920,
+                  xl: 700,
                   lg: 500,
                   md: 500,
                   xs: 350,
@@ -200,7 +200,7 @@ function MainHome() {
                   lg: 10,
                 },
                 fontSize: {
-                  xl: 30,
+                  xl: 20,
                 },
               }}
             >
@@ -233,7 +233,7 @@ function MainHome() {
                   xs: 5,
                 },
                 fontSize: {
-                  xl: 60,
+                  xl: 45,
                 },
               }}
             >
@@ -247,7 +247,7 @@ function MainHome() {
                   xs: 5,
                 },
                 fontSize: {
-                  xl: 30,
+                  xl: 20,
                 },
               }}
             >
@@ -261,7 +261,7 @@ function MainHome() {
                   xs: 5,
                 },
                 fontSize: {
-                  xl: 30,
+                  xl: 20,
                 },
               }}
             >
@@ -275,7 +275,7 @@ function MainHome() {
                   xs: 5,
                 },
                 fontSize: {
-                  xl: 30,
+                  xl: 20,
                 },
               }}
             >
@@ -289,7 +289,7 @@ function MainHome() {
                   xs: 5,
                 },
                 fontSize: {
-                  xl: 30,
+                  xl: 20,
                 },
               }}
             >
@@ -325,7 +325,7 @@ function MainHome() {
                 pl: 5,
                 pt: 2,
                 fontSize: {
-                  xl: 60,
+                  xl: 45,
                 },
               }}
             >
@@ -337,7 +337,7 @@ function MainHome() {
                 pb: 2,
                 pl: { xs: 2 },
                 fontSize: {
-                  xl: 25,
+                  xl: 20,
                 },
               }}
             >
@@ -361,7 +361,7 @@ function MainHome() {
                 pl: 5,
                 pt: 2,
                 fontSize: {
-                  xl: 60,
+                  xl: 45,
                 },
               }}
             >
@@ -373,7 +373,7 @@ function MainHome() {
                 pb: 2,
                 pl: { xs: 2 },
                 fontSize: {
-                  xl: 25,
+                  xl: 20,
                 },
               }}
             >
@@ -397,7 +397,7 @@ function MainHome() {
                 pl: 5,
                 pt: 2,
                 fontSize: {
-                  xl: 60,
+                  xl: 45,
                 },
               }}
             >
@@ -409,7 +409,7 @@ function MainHome() {
                 pb: 2,
                 pl: { xs: 2 },
                 fontSize: {
-                  xl: 25,
+                  xl: 20,
                 },
               }}
             >

@@ -137,7 +137,6 @@ export default function UpdateProductModal(props) {
                 value={props.type}
                 onChange={(e) => {
                   props.setType(e.target.value);
-                  console.log(props.type);
                   setTypeError(true);
 
                   if (e.target.value === "") {

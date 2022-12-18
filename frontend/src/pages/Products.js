@@ -19,8 +19,6 @@ import AddProductModal from "../component/AddProductModal";
 import Snackbar from "@mui/material/Snackbar";
 import Slide from "@mui/material/Slide";
 import Paper from "@mui/material/Paper";
-import LinearProgress from "@mui/material/LinearProgress";
-
 import UpdateProductModal from "../component/UpdateProductModal";
 import BasicFooter from "../component/BasicFooter";
 
@@ -196,8 +194,6 @@ function Products() {
                       onClick={() => {
                         setUpdateModal(true);
                         setUpdateOpen(true);
-
-                        console.log(goodsType[index].type);
                         setType(goodsType[index].type);
                         setId(goodsType[index]._id);
                       }}

@@ -14,7 +14,6 @@ function Review({ errorAlert }) {
   const { data } = useSelector((state) => state.order);
 
   const order = JSON.parse(localStorage.getItem("orderData"));
-  console.log("orderData", order);
 
   // objects to use data from {data} to use on this page
   const customers = [

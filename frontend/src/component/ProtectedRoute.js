@@ -10,31 +10,10 @@ export const ProtectedRoute = ({ role, ...props }) => {
 
   useEffect(() => {
     role !== getRole && navigate("/forbidden", { replace: true });
+    // eslint-disable-next-line
   }, []);
 
   return <Outlet />;
-  // navigate("/forbidden", { replace: true })
 };
-//   path,
-//   element: Component,
-//   render,
-//   requiredRole,
-//   ...rest
-// }) => {
-//   const role = localStorage.getItem("role");
-//   console.log(role);
-//   return (
-//     <Route
-//       path={path}
-//       {...rest}
-//       render={(props) => {
-//         if (role === requiredRole) {
-//           return Component ? <Component {...props} /> : render(props);
-//         } else {
-//           return <Navigate to="*" />;
-//         }
-//       }}
-//     />
-//   );
 
 export default ProtectedRoute;

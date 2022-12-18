@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import { addVehicle } from "../store/vehicleReducer";
 import { vehicleAction } from "../store/vehicleReducer";
 
@@ -91,9 +90,7 @@ function AddModal(props) {
         formData
       );
       return response;
-    } catch (error) {
-      console.log("upload to cloudinary error", error);
-    }
+    } catch (error) {}
   };
 
   // function for validation and dispatch

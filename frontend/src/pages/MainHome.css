@@ -1,35 +1,36 @@
-.truck_img{
-    width: 747px;
-    height: 350px;
+.truck_img {
+  width: 723px;
+  height: 350px;
+  object-fit: cover;
 }
-.truck_4k{
+.truck_4k {
   width: 100%;
- height: 500px;
-   object-fit: cover;
-   margin-top: -48px;
+  height: 500px;
+  object-fit: cover;
+  margin-top: -48px;
 }
 .progress-bar {
   position: fixed;
-  top:64px;
+  top: 64px;
   left: 0;
   right: 0;
   height: 10px;
-  background:linear-gradient(to bottom right, red , blue);
+  background: linear-gradient(to bottom right, red, blue);
   transform-origin: 0%;
 }
 
- @media screen and (max-width: 600px) {
-    .truck_img{
-      width: 372px;
-    }
-    .truck_4k{
-      height: 300px;
-    
-      
-    }
+@media screen and (max-width: 600px) {
+  .truck_img {
+    width: 372px;
+    object-fit: cover;
   }
+  .truck_4k {
+    height: 300px;
+    object-fit: cover;
+  }
+}
 
- /* @media screen and (max-width: 900px) {
+/* @media screen and (max-width: 900px) {
     .truck_img{
       width: 372px;
     }
@@ -40,7 +41,7 @@
     }
   } */
 
-  /* @media screen and (max-width:768px) {
+/* @media screen and (max-width:768px) {
     .truck_4k{
       width:1112px ;
     }
@@ -50,9 +51,9 @@
   }
    */
 
-   @media screen and (min-width:1920px) {
-    .truck_img{
-      width: 930px;
-      height: 500px;
-    }
-   }
+@media screen and (min-width: 1920px) {
+  .truck_img {
+    width: 930px;
+    height: 500px;
+  }
+}

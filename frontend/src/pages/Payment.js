@@ -8,7 +8,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Alert from "@mui/material/Alert";
 
-function Payment({ setError, error, setOrderData, orderData }) {
+function Payment({ setError, setOrderData, orderData }) {
   // to get daata
   const [cardHolderName, setCardHolderName] = React.useState("");
   const [cardNumber, setCardNumber] = React.useState("");

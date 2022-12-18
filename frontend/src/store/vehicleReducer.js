@@ -37,7 +37,6 @@ export const getVehicle = createAsyncThunk(
 
       return response;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -58,7 +57,6 @@ export const deleteVehicle = createAsyncThunk(
       thunkApi.dispatch(getVehicle());
       return response;
     } catch (error) {
-      console.log("FrontEnd-deletevehicleError", error);
       return thunkApi.rejectWithValue(error);
     }
   }
@@ -79,7 +77,6 @@ export const addVehicle = createAsyncThunk(
       thunkAPI.dispatch(getVehicle());
       return response;
     } catch (error) {
-      console.log("addvehiclethunk---rejected", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -103,7 +100,6 @@ export const updateVehicles = createAsyncThunk(
       thunkAPI.dispatch(getVehicle());
       return response;
     } catch (error) {
-      console.log("thunk reject error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }

@@ -34,7 +34,6 @@ export const getGoods = createAsyncThunk("getGoods", async (body, thunkAPI) => {
 
     return response;
   } catch (error) {
-    console.log(error);
     return thunkAPI.rejectWithValue(error);
   }
 });
@@ -52,7 +51,6 @@ export const deleteGoods = createAsyncThunk(
       thunkAPI.dispatch(getGoods());
       return response;
     } catch (error) {
-      console.log("delete goods rejectwith value error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -73,7 +71,6 @@ export const addGoods = createAsyncThunk(
       thunkAPI.dispatch(getGoods());
       return response;
     } catch (error) {
-      console.log("rejectwith--Error--addGoods", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -97,7 +94,6 @@ export const updateGoods = createAsyncThunk(
       thunkAPI.dispatch(getGoods());
       return response;
     } catch (error) {
-      console.log("updateGoods thunk error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }

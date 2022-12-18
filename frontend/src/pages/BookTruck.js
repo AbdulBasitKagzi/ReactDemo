@@ -61,36 +61,6 @@ function BookTruck() {
       ].join(","),
     },
   });
-  // not working code
-  // React.useEffect(() => {
-  //   const fetchToken = async () => {
-  //     try {
-  //       const response = await axios(
-  //         "https://outpost.mapmyindia.com/api/security/oauth/token",
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             "Access-Control-Allow-Origin": "strict-origin-when-cross-origin",
-  //             "Access-Control-Allow-Methods":
-  //               "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  //           },
-  //         },
-  //         {
-  //           grant_type: "client_credentials",
-  //           client_id:
-  //             "33OkryzDZsI3GQlduBa_4EehHaoznij96uYsGt0effmeahsPDuZ8fAS54HLcZft1_61G6efczKnTCnxuLKLJ_w==",
-  //           client_secret:
-  //             "lrFxI-iSEg9ymoR2JUUawgwwLZH_gY2C6bosEf8JQFk5DubwIJRzXI-cIBREFWxvGl67xKoDyx-YmNuWMjtiFDTykPNfjtiQ",
-  //         }
-  //       );
-
-  //       console.log("sdf", response);
-  //     } catch (err) {
-  //       console.log("error", err);
-  //     }
-  //   };
-  //   fetchToken();
-  // }, []);
 
   // states for validations
   const [pickUpLocation, setPickUpLocation] = React.useState(true);
@@ -127,7 +97,7 @@ function BookTruck() {
     dispatch(getVehicle());
     // to get  all goods
     dispatch(getGoods());
-    
+
     pickUp.current.value = data.pickUp;
     destination.current.value = data.destination;
     vehicle.current.value = data.vehicle;
@@ -222,32 +192,6 @@ function BookTruck() {
     );
     navigate("/user/checkout");
   };
-
-  // function to fetch vehicle and goods
-
-  // console.log(vehicleType);
-  // code to show gmaps
-  // const { isLoaded } = useJsApiLoader({
-  //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_LOCATION_API,
-  // });
-
-  // const center = { lat: 48.8584, lng: 2.2945 };
-  // const [map, setMap] = React.useState(null);
-
-  // const onLoad = React.useCallback(function callback(map) {
-  //   const bounds = new window.google.maps.LatLngBounds(center);
-  //   map.fitBounds(bounds);
-  //   setMap(map);
-  // }, []);
-
-  // if (!isLoaded) {
-  //   return (
-  //     <Box sx={{ width: "100%" }}>
-  //       <LinearProgress />
-  //     </Box>
-  //   );
-  // }
-
   return (
     <>
       <motion.div
@@ -419,15 +363,12 @@ function BookTruck() {
                         setSelectVehicle(true);
                         vehicle.current.value = e.target.value;
 
-                        console.log(vehicle.current.value);
-
                         // taking rate
                         const rate = vehicleType?.map((v) => {
                           return v.type === vehicle.current.value
                             ? v.initialPrice
                             : 0;
                         });
-                        // console.log("reate", rate);
 
                         const newRate = rate.filter((r) => {
                           if (r !== 0) {
@@ -443,7 +384,6 @@ function BookTruck() {
                             ? v.capacity
                             : 0;
                         });
-                        console.log("====capacty", capacity);
 
                         const newCapacity = capacity.filter((cap) => {
                           if (cap !== 0) {

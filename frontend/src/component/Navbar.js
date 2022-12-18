@@ -19,7 +19,11 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 
 const drawerWidth = 240;
 const navItems = [
@@ -37,9 +41,12 @@ const adminNavItems = [
   { val: "Product", Link: "/admin/products" },
   { val: "Orders", Link: "/admin/orders" },
 ];
+
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [anchorElUser, setAnchorElUser] = React.useState();
+  const [user, setUser] = React.useState();
 
   const dispatch = useDispatch();
 
@@ -81,6 +88,14 @@ function Navbar(props) {
     ));
   };
 
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   // logOut/signOut function
   const logout = () => {
     localStorage.removeItem("token");
@@ -112,7 +127,6 @@ function Navbar(props) {
 
         {/* navbar for the admin */}
         {value && userRole === "Admin" && openDrawerNavbar(adminNavItems)}
-
         {/* logout/signout button */}
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
@@ -134,6 +148,9 @@ function Navbar(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
+  React.useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+  }, []);
   return (
     <Box sx={{ display: "flex" }}>
       <AppBar component="nav" sx={{ backgroundColor: "#e00029" }}>
@@ -153,27 +170,89 @@ function Navbar(props) {
             sx={{
               flexGrow: 1,
               display: { xs: "none", sm: "block", color: "white" },
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              navigate("/");
             }}
           >
             Kagzi Transports
           </Typography>
-          <Box component={List} sx={{ display: { xs: "none", sm: "block" } }}>
+          <Box
+            component={List}
+            sx={{
+              display: { xs: "none", sm: "block" },
+              paddingRight: 5,
+            }}
+          >
             {/* show navbar to visiter */}
             {!value && openNavbar(navItems)}
-
             {/* show navbar to user  */}
             {value && userRole === "user" && openNavbar(newNavItems)}
-
             {/* show navbar to admin */}
             {value && userRole === "Admin" && openNavbar(adminNavItems)}
 
             {/* logout/signout button */}
-            {value && (
+            {/* {value && (
               <Button sx={{ color: "#fff" }} onClick={logout}>
                 Log Out
               </Button>
-            )}
+            )} */}
           </Box>
+          {value && (
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: {
+                  lg: "contents",
+                  xs: "flex",
+                },
+                justifyContent: {
+                  xs: "right",
+                },
+                marginRight: {
+                  xs: 3,
+                },
+              }}
+            >
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">
+                    {user?.FirstName}
+                    {user?.LastName}({user?.role})
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    logout();
+                  }}
+                >
+                  <Typography textAlign="center">logout</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
       <Box component="nav">

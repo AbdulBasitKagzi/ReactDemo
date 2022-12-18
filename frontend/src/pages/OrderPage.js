@@ -18,7 +18,6 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 function OrderPage({ setError, orderData, setOrderData }) {
-  
   // to get value
   const [pickUpAddress, setpickUpAddress] = React.useState("");
   const [deliveryAddress, setdeliveryAddress] = React.useState("");
@@ -26,7 +25,6 @@ function OrderPage({ setError, orderData, setOrderData }) {
 
   const handleChange = (newValue) => {
     setValue(newValue);
-    // console.log(new Date(value));
   };
 
   const { data } = useSelector((state) => state.order);
@@ -56,6 +54,7 @@ function OrderPage({ setError, orderData, setOrderData }) {
   React.useEffect(() => {
     setpickUpAddress(data.pickUpAddress);
     setdeliveryAddress(data.deliveryAddress);
+    // eslint-disable-next-line
   }, []);
 
   // for validation
@@ -76,8 +75,6 @@ function OrderPage({ setError, orderData, setOrderData }) {
     } else {
       setPValidation(true);
     }
-
-    // console.log(user);
   };
 
   // validation function
@@ -209,7 +206,6 @@ function OrderPage({ setError, orderData, setOrderData }) {
               <Box
                 sx={{
                   display: "initial",
-
                   pl: { lg: 2, xs: 5 },
                 }}
               >

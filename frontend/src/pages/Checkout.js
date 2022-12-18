@@ -52,13 +52,9 @@ function Checkout() {
       currency: data.currency,
       handler: async (response) => {
         try {
-          const verifyUrl =
-            "https://kagzitransportdemo.herokuapp.com/api/payment/verify";
-          const result = await axios.post(verifyUrl, response);
-          console.log("verifyResult", result);
-        } catch (error) {
-          console.log("newError", error);
-        }
+          const verifyUrl = "/api/payment/verify";
+          await axios.post(verifyUrl, response);
+        } catch (error) {}
       },
     };
     const rzp1 = new window.Razorpay(options);
@@ -68,16 +64,10 @@ function Checkout() {
   // for payment gateway
   const handlePayment = async () => {
     try {
-      const response = await axios.post(
-        "https://kagzitransportdemo.herokuapp.com/api/payment/orders",
-        { data }
-      );
+      const response = await axios.post("/api/payment/orders", { data });
 
-      console.log("response for payment", response);
       initPayment(response.data.data);
-    } catch (error) {
-      console.log("payment error", error);
-    }
+    } catch (error) {}
   };
 
   function getStepContent(step) {
@@ -105,7 +95,6 @@ function Checkout() {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
-  console.log("step", activeStep);
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
@@ -196,8 +185,6 @@ function Checkout() {
                         "orderData",
                         JSON.stringify(orderData)
                       );
-                      console.log("clicked");
-
                       if (activeStep !== 2) {
                         handleNext();
                         dispatch(
